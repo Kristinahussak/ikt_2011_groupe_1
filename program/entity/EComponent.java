@@ -10,17 +10,18 @@ import acquaintance.*;
  * Created on 03-12-2012
  */
 
-public class EComponent
+public class EComponent implements IAComponent
 {   
     private int OID;
     private int state;
+    private boolean needUpdate = false;
     
-    public boolean add(EComponent item)
+    public boolean add(IAComponent item)
     {
         return false;
     }
     
-    public EComponent remove(String itemType)
+    public IAComponent remove(int barcode)
     {
         return null;
     }
@@ -30,9 +31,9 @@ public class EComponent
         return null;        
     }
     
-    public boolean update()
+    public boolean updated()
     {
-        return false;
+        return needUpdate;
     }
 
     public int getOID() {
