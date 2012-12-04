@@ -1,5 +1,5 @@
 package entity;
-
+import acquaintance.*;
 import java.util.TreeSet;
 
 /**
@@ -17,15 +17,15 @@ public class EOrder extends EComposite
     public EOrder() {}
     
     @Override
-    public boolean add(EComponent item)
+    public boolean add(IAComponent item)
     {
-        return false;
+        return super.add(item);
     }
     
     @Override
-    public EComponent remove(String itemType)
+    public IAComponent remove(int barcode)
     {
-        return null;
+        return super.remove(barcode);
     }
     
     @Override
@@ -34,11 +34,8 @@ public class EOrder extends EComposite
         return null;        
     }
     
-    @Override
-    public boolean update()
-    {
-        return false;
-    }
+    
+    // public boolean update() implementeret på EComponent
     
     public boolean processOrder()
     {

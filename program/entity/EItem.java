@@ -1,5 +1,5 @@
 package entity;
-
+import acquaintance.*;
 import java.util.TreeSet;
 
 /**
@@ -15,18 +15,18 @@ public class EItem extends EComponent
     private int stockPosition;
     private EItemType type;
 
-    public EItem(int stockPosition, String itemType) {
+    public EItem(int stockPosition) {
         this.stockPosition = stockPosition;        
     }
     
     @Override
-    public boolean add(EComponent item)
+    public boolean add(IAComponent item)
     {
         return false;
     }
     
     @Override
-    public EComponent remove(String itemType)
+    public IAComponent remove(int barcode)
     {
         return null;
     }
@@ -37,11 +37,12 @@ public class EItem extends EComponent
         return null;        
     }
     
-    @Override
-    public boolean update()
-    {
-        return false;
-    }
+    
+    //  public boolean updated()
+    // Bruger EComponents metode. Når tilstand ændres OID state mm sættes needUpdate = true;
+    
+    public EItemType getItemType(){return type;}
+    public boolean setItemType(EItemType type){this.type=type;return true;}
     
     public boolean retrieveItem()
     {
