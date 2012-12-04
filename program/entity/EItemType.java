@@ -23,9 +23,30 @@ public class EItemType
         //this.picutre = picutre;
         this.price = price;
     }
-    
-    
-    
+
+    public int getBarcode() {
+        return barcode;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public double getPrice() {
+        return price;
+    }
+
+    public void setBarcode(int barcode) {
+        this.barcode = barcode;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setPrice(double price) {
+        this.price = price;
+    }
     
     
 }

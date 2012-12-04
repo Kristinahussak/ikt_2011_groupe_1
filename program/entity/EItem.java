@@ -12,8 +12,6 @@ import java.util.TreeSet;
 
 public class EItem extends EComponent
 {   
-    private int OID;
-    private int state;
     private int stockPosition;
     private EItemType type;
 
@@ -39,6 +37,7 @@ public class EItem extends EComponent
         return null;        
     }
     
+    @Override
     public boolean update()
     {
         return false;

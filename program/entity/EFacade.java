@@ -47,8 +47,5 @@ public class EFacade
     private void verifyItemType(String itemType)
     {        
         
-    }   
-    
-    
-    
+    }  
 }

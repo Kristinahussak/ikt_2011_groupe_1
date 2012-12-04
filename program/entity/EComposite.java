@@ -12,8 +12,6 @@ import java.util.TreeSet;
 
 public class EComposite extends EComponent
 {
-    private int OID;
-    private int state;
     private TreeSet items;
 
     public EComposite() {}   
@@ -32,8 +30,9 @@ public class EComposite extends EComponent
     
     @Override
     public int[] getPositions()
-    {
+    {        
         return null;        
     }
+
     
 }

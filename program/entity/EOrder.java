@@ -12,9 +12,6 @@ import java.util.TreeSet;
 
 public class EOrder extends EComposite
 {    
-    
-    private int OID;
-    private int state;
     private TreeSet items;
 
     public EOrder() {}
@@ -37,6 +34,12 @@ public class EOrder extends EComposite
         return null;        
     }
     
+    @Override
+    public boolean update()
+    {
+        return false;
+    }
+    
     public boolean processOrder()
     {
         return false;
@@ -46,4 +49,6 @@ public class EOrder extends EComposite
     {
         
     }
+    
+    
 }
