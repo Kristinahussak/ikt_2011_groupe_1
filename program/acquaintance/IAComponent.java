@@ -8,7 +8,7 @@ package acquaintance;
  * Created on 03-12-2012
  */
 
-public interface Component
+public interface IAComponent
 {    
     
 }
