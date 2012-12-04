@@ -10,6 +10,7 @@ package acquaintance;
 
 public interface IAPersistence
 {    
-    
+    //hej test kommentar HF
+	//så prøver jeg også lige
 }
 
