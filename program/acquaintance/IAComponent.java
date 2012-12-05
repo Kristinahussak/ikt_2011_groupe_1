@@ -8,7 +8,18 @@ package acquaintance;
  * Created on 03-12-2012
  */
 
-public interface IAComponent{    
+// Testkommentar kan fjernes igen HF
+public interface IAComponent{   
+	
+	//States
+	public final static int ORDER_OPEN = 101;
+	public final static int ORDER_CLOSED = 102;
+	public final static int ITEM_AVAILABLE = 201;
+	public final static int ITEM_RESERVED = 202;
+	public final static int ITEM_SHIPPED = 203;
+	public final static int STOCK_FULL = 301;
+	public final static int STOCK_AVAILABLE = 302;
+	public final static int STOCK_EMPTY = 303;	
  	
 	public boolean add(IAComponent item);
     
