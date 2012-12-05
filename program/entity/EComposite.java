@@ -1,5 +1,6 @@
 package entity;
-
+import acquaintance.*;
+//import entity.EItem;
 import java.util.TreeSet;
 
 /**
@@ -12,20 +13,21 @@ import java.util.TreeSet;
 
 public class EComposite extends EComponent
 {
-    private TreeSet items;
+    private TreeSet<IAComponent> items = new TreeSet<IAComponent>();
 
     public EComposite() {}   
     
     @Override
-    public boolean add(EComponent item)
+    public boolean add(IAComponent item)
     {
+        if(!(item==null)) return items.add(item);
         return false;
     }
     
     @Override
-    public EComponent remove(String itemType)
+    public IAComponent remove(int barcode)
     {
-        return null;
+        return null; // implementeres
     }
     
     @Override

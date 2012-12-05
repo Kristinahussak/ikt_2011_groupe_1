@@ -8,8 +8,23 @@ package acquaintance;
  * Created on 03-12-2012
  */
 
-public interface IAComponent
-{    
+public interface IAComponent{    
+ 	
+	public boolean add(IAComponent item);
     
+	public IAComponent remove(int barcode);
+	
+	public int[] getPositions();
+	
+	public boolean updated();
+		    
+	public int getOID();
+
+	public int getState();
+
+	public void setOID(int OID);
+	    
+	public void setState(int state);
+
 }
 

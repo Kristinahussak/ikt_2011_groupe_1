@@ -1,5 +1,5 @@
 package entity;
-
+import acquaintance.*;
 import java.util.TreeSet;
 
 /**
@@ -12,32 +12,28 @@ import java.util.TreeSet;
 
 public class EStock extends EComposite
 {  
-    private TreeSet items;
+    private TreeSet<IAComponent> items = new TreeSet<IAComponent>();
 
     public EStock() {}   
     
-    @Override
-    public boolean add(EComponent item)
+   
+    public boolean add(IAComponent item)
     {
-        return false;
+        return super.add(item);// skal fjernes hvis ikke yderligere implementation
     }
     
     @Override
-    public EComponent remove(String itemType)
+    public IAComponent remove(int barcode)
     {
-        return null;
+        return super.remove(barcode); // skal fjernes hvis ikke yderligere implementation
     }
     
     @Override
     public int[] getPositions()
     {
-        return null;        
+        return super.getPositions();        
     }
     
-    @Override
-    public boolean update()
-    {
-        return false;
-    }
+   
     
 }
