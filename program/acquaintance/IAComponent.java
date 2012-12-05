@@ -16,7 +16,7 @@ public interface IAComponent{
 	
 	public int[] getPositions();
 	
-	public boolean updated();
+	public boolean isUpdated();
 		    
 	public int getOID();
 

@@ -31,7 +31,7 @@ public class EComponent implements IAComponent
         return null;        
     }
     
-    public boolean updated()
+    public boolean isUpdated()
     {
         return needUpdate;
     }
