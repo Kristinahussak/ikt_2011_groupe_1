@@ -8,6 +8,7 @@ package acquaintance;
  * Created on 03-12-2012
  */
 
+// Testkommentar kan fjernes igen HF
 public interface IAComponent{   
 	
 	//States
