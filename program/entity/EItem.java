@@ -16,20 +16,10 @@ public class EItem extends EComponent
     private EItemType type;
 
     public EItem(int stockPosition) {
-        this.stockPosition = stockPosition;        
+        this.stockPosition = stockPosition;  
+        state = IAComponent.ITEM_AVAILABLE;
     }
-    
-    @Override
-    public boolean add(IAComponent item)
-    {
-        return false;
-    }
-    
-    @Override
-    public IAComponent remove(int barcode)
-    {
-        return null;
-    }
+  
     
     @Override
     public int[] getPositions()
