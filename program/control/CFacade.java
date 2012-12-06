@@ -22,7 +22,7 @@ public class CFacade implements ICManager, ICAdmin
 
     @Override
      public TreeSet<EComponent> viewOrders(int orderState) {
-        throw new UnsupportedOperationException("Not supported yet.");
+        return EFacade.getInstance().viewOrders(orderState);
     }
     
     @Override

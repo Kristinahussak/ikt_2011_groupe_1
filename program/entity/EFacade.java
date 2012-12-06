@@ -14,13 +14,22 @@ import java.util.TreeSet;
 public class EFacade
 {
     private TreeSet<EComponent> orders;
+    private static EFacade instance = null;
 
     public EFacade() {
         this.orders = new TreeSet<EComponent>();
+        
+        orders.add(new EComponent()));
+    }
+    
+    public static EFacade getInstance()
+    {
+    	if(instance == null){instance = new EFacade();}
+    	return instance;
     }
 
     public TreeSet<EComponent> viewOrders(int orderState)
-    { 
+    {     	
         return orders;
     }
     

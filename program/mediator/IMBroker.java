@@ -1,5 +1,7 @@
 package mediator;
 import entity.*;
+import acquaintance.*;
+
 
 /**
  * MBroker.java
@@ -12,6 +14,8 @@ import entity.*;
 public interface IMBroker {
 
 	//public IMBroker getBroker();
+	public boolean setDB(ADBInfo info);
+	public boolean close();
 	public boolean updateItem(EItem item);
 	public boolean updateOrder(EOrder order);
 }

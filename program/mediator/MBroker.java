@@ -2,6 +2,8 @@ package mediator;
 
 import entity.EItem;
 import entity.EOrder;
+import acquaintance.*;
+import foundation.*;
 
 /**
  * MBroker.java
@@ -13,12 +15,27 @@ import entity.EOrder;
 
 public class MBroker implements IMBroker{
 
-	public static MBroker broker = null;
+	private static MBroker broker = null;
+	private FDBBroker db = null;
 	
-	public static IMBroker getMBroker() {
+	public static MBroker getMBrokerInstance() {
 		// Singleton
 		if(broker==null) broker = new MBroker();
 		return broker;
+	}
+	
+	private MBroker(){}
+	
+	public boolean setDB(ADBInfo dbInfo){
+		if(db==null) db = new FDBBroker(); else db.closeDBConnection();
+		return db.setDBConnection(dbInfo);
+	
+	}
+	
+	public boolean close(){
+		if(!(db==null)) {return db.closeDBConnection();} 
+		return true;
+	
 	}
 
 	@Override
