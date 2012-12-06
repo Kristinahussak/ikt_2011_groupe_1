@@ -12,6 +12,7 @@ package acquaintance;
 public interface IAComponent{   
 	
 	//States
+	
 	public final static int ORDER_OPEN = 101;
 	public final static int ORDER_CLOSED = 102;
 	public final static int ITEM_AVAILABLE = 201;
@@ -20,6 +21,7 @@ public interface IAComponent{
 	public final static int STOCK_FULL = 301;
 	public final static int STOCK_AVAILABLE = 302;
 	public final static int STOCK_EMPTY = 303;	
+ 	public final static int NOT_INITIALIZED = 401;
  	
 	public boolean add(IAComponent item);
     
