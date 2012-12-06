@@ -27,13 +27,15 @@ public class MBroker implements IMBroker{
 	private MBroker(){}
 	
 	public boolean setDB(ADBInfo dbInfo){
-		if(db==null) db = new FDBBroker();
+		if(db==null) db = new FDBBroker(); else db.closeDBConnection();
 		return db.setDBConnection(dbInfo);
 	
 	}
 	
-	public boolean closeDB(){
+	public boolean close(){
+		if(!(db==null)) {return db.closeDBConnection();} 
 		return true;
+	
 	}
 
 	@Override

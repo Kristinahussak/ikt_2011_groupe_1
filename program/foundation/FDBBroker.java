@@ -1,6 +1,14 @@
 package foundation;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.PrintWriter;
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Statement;
 
 import acquaintance.*;
@@ -18,8 +26,11 @@ public class FDBBroker
     private ADBInfo dbInfo = null;
     private Connection dbcon = null; 
     private Statement dbstat = null;
+    private ResultSet dbresult = null;
+    private String[] sqlLines = null;
     
     public boolean setDBConnection(ADBInfo info){
+    	if(!(dbcon==null)) closeDBConnection();
     	dbInfo = info;
     	try{
 			Class.forName(info.getDriver());
@@ -28,9 +39,45 @@ public class FDBBroker
 		}
     	catch (ClassNotFoundException e) {e.printStackTrace();return false;}
 		catch (Exception e){e.printStackTrace();return false;}
-    	finally{return true;}
-
+    	return buildCSSSchema();
+    }
+    
+    private boolean buildCSSSchema(){
+    	String[] sqlLine = new String[30];
+    
+    	try {
+			BufferedReader reader = new BufferedReader(new FileReader("css_sql_lines.txt"));
+			int line=0;
+			do{
+				sqlLine[line]=reader.readLine();
+				if(!(sqlLine[line].contains("//"))) line++;
+			}
+			while(!(sqlLine[line-1].contains("eof")));
+			reader.close();
+			// debug for(String s:sqlLine) System.out.println(s);
+		}
+    	catch (Exception e) {e.printStackTrace();}
     	
+    	try{
+    		// Create CSS Schema: line 0-1
+    		for(int k=0;k<2;k++) dbstat.execute(sqlLine[k]);
+    	
+    	}
+    	catch(SQLException sqle){sqle.printStackTrace();return false;}
+    	
+    	/*;
+
+*/
+    return true;	
+    }
+    
+    public boolean closeDBConnection(){
+    	if(!(dbcon==null)) try {
+    		dbcon.close();
+    	}
+    	catch(SQLException sqle){sqle.printStackTrace();return false;}
+    	
+    	return true;
     }
     
 }
