@@ -12,9 +12,9 @@ import acquaintance.*;
 
 public class EComponent implements IAComponent
 {   
-    private int OID;
-    private int state;
-    private boolean needUpdate = false;
+    protected int OID = -1; // = Ikke sat
+    protected int state = IAComponent.NOT_INITIALIZED;
+    protected boolean updated = false;
     
     public boolean add(IAComponent item)
     {
@@ -33,7 +33,7 @@ public class EComponent implements IAComponent
     
     public boolean isUpdated()
     {
-        return needUpdate;
+        return updated;
     }
 
     public int getOID() {
@@ -46,9 +46,11 @@ public class EComponent implements IAComponent
 
     public void setOID(int OID) {
         this.OID = OID;
+        updated = false;
     }
 
     public void setState(int state) {
         this.state = state;
+        updated = false;
     }
 }
