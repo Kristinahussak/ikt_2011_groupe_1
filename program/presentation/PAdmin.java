@@ -11,12 +11,13 @@ import control.*;
 
 public class PAdmin
 {
+	private ICManager controlInterface;
 
     public PAdmin() {}
     
     public void viewOrders(int orderState)
     {
-        
+    	controlInterface.viewOrders(orderState).toString();        
     }    
     
 }

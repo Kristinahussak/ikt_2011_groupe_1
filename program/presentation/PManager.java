@@ -11,12 +11,13 @@ import control.*;
 
 public class PManager
 {
+	private ICManager controlInterface;
 
     public PManager() {}
     
     public void viewOrders(int orderState)
     {
-        
+    	controlInterface.viewOrders(orderState).toString();   	        
     }
     
     public void processOrder(int orderNo)
