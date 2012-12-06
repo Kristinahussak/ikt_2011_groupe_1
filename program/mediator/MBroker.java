@@ -50,6 +50,6 @@ public class MBroker implements IMBroker{
 		return false;
 	}
 	
-  
+	public IAEntityMapper getEntityMapper(){return db.getEntityMapper();}
     
 }

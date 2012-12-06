@@ -10,6 +10,8 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
 
 import acquaintance.*;
 
@@ -28,6 +30,7 @@ public class FDBBroker
     private Statement dbstat = null;
     private ResultSet dbresult = null;
     private String[] sqlLines = null;
+    private List<IAEntityMapper> entities = new ArrayList<IAEntityMapper>();
     
     public boolean setDBConnection(ADBInfo info){
     	if(!(dbcon==null)) closeDBConnection();
@@ -78,6 +81,12 @@ public class FDBBroker
     	catch(SQLException sqle){sqle.printStackTrace();return false;}
     	
     	return true;
+    }
+    
+    public IAEntityMapper getEntityMapper(){
+    	IAEntityMapper map = new FEntityMapper(this);
+    	entities.add(map);
+    	return map;
     }
     
 }
