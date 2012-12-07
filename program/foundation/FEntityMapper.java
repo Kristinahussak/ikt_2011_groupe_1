@@ -34,7 +34,7 @@ public class FEntityMapper implements IAEntityMapper{
 			   if(relaCount>0){
 				   // register her
 					registered = true;
-			   
+					owner.registerMapper(this);
 			   }
 		}
 		
@@ -51,12 +51,12 @@ public class FEntityMapper implements IAEntityMapper{
 	}
 
 	@Override
-	public void SetEntity(String entity) {
+	public void setEntity(String entity) {
 		this.entity = entity;
 	}
 
 	@Override
-	public void SetRelation(String field, String colName, String type, String keys) {
+	public void setRelation(String field, String colName, String type, String keys) {
 		if(relaCount<relaMax){
 			// ingen kontrol af de 4 felters syntaks
 			relations[relaCount] = new String[4];
@@ -69,6 +69,8 @@ public class FEntityMapper implements IAEntityMapper{
 		
 	}
 
+	// gettere
 	
+	public String getSchema(){return schema;}
 	
 }

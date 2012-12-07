@@ -84,9 +84,22 @@ public class FDBBroker
     }
     
     public IAEntityMapper getEntityMapper(){
-    	IAEntityMapper map = new FEntityMapper(this);
-    	entities.add(map); 
-    	return map;
+    	IAEntityMapper mapper = new FEntityMapper(this);
+    	return mapper;
+    }
+    
+    public boolean registerMapper(IAEntityMapper mapper){
+    	entities.add(mapper);
+    	// kontroller databasen
+    	try {
+			dbstat.execute("CREATE SCHEMA IF NOT EXISTS "+mapper.getSchema());
+			
+			return true;
+		}
+    	catch (SQLException e) {e.printStackTrace();}
+    	
+    	
+    	return false;
     }
     
 }

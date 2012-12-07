@@ -28,10 +28,10 @@ public interface IAEntityMapper {
 	public void setTable(String tableName);  
 	// Tilknyttet sql tabel f.eks. "items"
 	
-	public void SetEntity(String entity);    
+	public void setEntity(String entity);    
 	// Navn på Entity f.eks. "EItem"
 	
-	public void SetRelation(String field,String colName,String type,String keys);
+	public void setRelation(String field,String colName,String type,String keys);
 	// Sætter en relation mellem et felt i en class og en kolonne i en sql tabel 
  	// f.eks. EItem : "id" , "barcode" og "int" og EM_PRIMARY_KEY
 	
@@ -48,6 +48,6 @@ public interface IAEntityMapper {
 	 * 
 	 */
 	
-	
+	public String getSchema();
 	
 }
