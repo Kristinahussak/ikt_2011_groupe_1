@@ -13,6 +13,7 @@ import acquaintance.*;
 public class EComponent implements IAComponent
 {   
     protected int OID = -1; // = Ikke sat
+    protected int ownerOID = -1;
     protected int state = IAComponent.NOT_INITIALIZED;
     protected boolean updated = false;
     
@@ -39,6 +40,10 @@ public class EComponent implements IAComponent
     public int getOID() {
         return OID;
     }
+ 
+    public int getOwnerOID() {
+        return ownerOID;
+    }
 
     public int getState() {
         return state;
@@ -46,6 +51,11 @@ public class EComponent implements IAComponent
 
     public void setOID(int OID) {
         this.OID = OID;
+        updated = false;
+    }
+
+    public void setOwnerOID(int OID) {
+        this.ownerOID = OID;
         updated = false;
     }
 
