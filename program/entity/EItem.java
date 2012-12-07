@@ -12,7 +12,9 @@ import java.util.TreeSet;
 
 public class EItem extends EComponent
 {   
-    private int stockPosition;
+    private int stockPosition = -1;  
+    private int barcode = -1;
+  
     private EItemType type;
 
     public EItem(int stockPosition) {
@@ -32,7 +34,7 @@ public class EItem extends EComponent
     // Bruger EComponents metode. Når tilstand ændres OID state mm sættes needUpdate = true;
     
     public EItemType getItemType(){return type;}
-    public boolean setItemType(EItemType type){this.type=type;return true;}
+    public boolean setItemType(EItemType type){this.type=type;this.barcode = type.getBarcode();return true;}
     
     public boolean retrieveItem()
     {
