@@ -2,6 +2,7 @@ package control;
 import entity.*;
 import mediator.*;
 
+import java.util.ArrayList;
 import java.util.TreeSet;
 
 /**
@@ -14,6 +15,6 @@ import java.util.TreeSet;
 
 public interface ICAdmin
 {    
-     public TreeSet<EComponent> viewOrders(int orderState);         
+     public ArrayList<String> viewOrders(int orderState);         
 }
 

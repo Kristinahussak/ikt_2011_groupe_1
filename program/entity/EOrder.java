@@ -1,5 +1,6 @@
 package entity;
 import acquaintance.*;
+
 import java.util.TreeSet;
 
 /**
@@ -13,8 +14,11 @@ import java.util.TreeSet;
 public class EOrder extends EComposite
 {    
     private TreeSet items;
+   
 
-    public EOrder() {}
+    public EOrder() {
+    	this.state = IAComponent.ORDER_OPEN;
+    }
     
     @Override
     public boolean add(IAComponent item)
@@ -46,6 +50,4 @@ public class EOrder extends EComposite
     {
         
     }
-    
-    
 }

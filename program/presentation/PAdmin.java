@@ -1,4 +1,7 @@
 package presentation;
+import java.util.ArrayList;
+import java.util.TreeSet;
+
 import control.*;
 
 /**
@@ -11,13 +14,13 @@ import control.*;
 
 public class PAdmin
 {
-	private ICManager controlInterface;
+	private ICManager controlInterface = new CFacade();
 
     public PAdmin() {}
     
-    public void viewOrders(int orderState)
+    public ArrayList<String> viewOrders(int orderState)
     {
-    	controlInterface.viewOrders(orderState).toString();        
+    	return controlInterface.viewOrders(orderState);        
     }    
     
 }

@@ -2,8 +2,7 @@ package control;
 import entity.*;
 import mediator.*;
 
-import entity.EItem;
-import entity.EOrder;
+import java.util.ArrayList;
 import java.util.TreeMap;
 import java.util.TreeSet;
 
@@ -21,13 +20,25 @@ public class CFacade implements ICManager, ICAdmin
     public CFacade() {}    
 
     @Override
-     public TreeSet<EComponent> viewOrders(int orderState) {
-        return EFacade.getInstance().viewOrders(orderState);
+     public ArrayList<String> viewOrders(int orderState) {
+    	
+    	ArrayList<EOrder> temp  = EFacade.getInstance().viewOrders(orderState);
+
+    	ArrayList<String> orders = new ArrayList<String>();
+    	
+    	for (int i = 0; i < temp.size(); i++)
+    	{
+    		temp.get(i).get	
+		}
+    	
+    	
+    	
+        return orders;
     }
     
     @Override
     public boolean processOrder(int orderNo) {
-        throw new UnsupportedOperationException("Not supported yet.");
+        return EFacade.getInstance().processOrder(orderNo);
     }
 
     @Override

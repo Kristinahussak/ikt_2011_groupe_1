@@ -1,5 +1,8 @@
 package presentation;
+import java.util.ArrayList;
+
 import control.*;
+import entity.EComponent;
 
 /**
  * PManager.java
@@ -15,14 +18,14 @@ public class PManager
 
     public PManager() {}
     
-    public void viewOrders(int orderState)
+    public ArrayList<EOrder> viewOrders(int orderState)
     {
-    	controlInterface.viewOrders(orderState).toString();   	        
+    	return controlInterface.viewOrders(orderState);   	        
     }
     
-    public void processOrder(int orderNo)
+    public boolean processOrder(int orderNo)
     {
-        
+    	return controlInterface.processOrder(orderNo);  	        
     }
     
     public void storeItem()

@@ -1,6 +1,7 @@
 package entity;
 import acquaintance.*;
 
+import java.util.ArrayList;
 import java.util.TreeSet;
 
 /**
@@ -13,13 +14,11 @@ import java.util.TreeSet;
 
 public class EFacade
 {
-    private TreeSet<EComponent> orders;
+    private ArrayList<EOrder> orders;
     private static EFacade instance = null;
 
     public EFacade() {
-        this.orders = new TreeSet<EComponent>();
-        
-        orders.add(new EComponent()));
+        this.orders = new ArrayList<EOrder>();  
     }
     
     public static EFacade getInstance()
@@ -28,14 +27,23 @@ public class EFacade
     	return instance;
     }
 
-    public TreeSet<EComponent> viewOrders(int orderState)
-    {     	
-        return orders;
-    }
-    
+	public ArrayList<EOrder> viewOrders(int orderState)
+	{
+		ArrayList<EOrder> orderList = new ArrayList<EOrder>();
+
+		for (int x = 0; x < orders.size(); x++)
+		{
+			if (orders.get(x).getState() == orderState)
+			{
+				orderList.add(orders.get(x));
+			}
+		}
+		return orderList;
+	}
+
     public boolean processOrder(int orderNo)
     {
-        return false;        
+        return false; 
     }
     
     public boolean createOrder(String packetInfo)
