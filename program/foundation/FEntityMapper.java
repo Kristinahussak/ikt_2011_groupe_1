@@ -1,4 +1,7 @@
 package foundation;
+import java.lang.reflect.Field;
+import java.sql.SQLException;
+
 import acquaintance.*;
 
 /**
@@ -16,6 +19,8 @@ public class FEntityMapper implements IAEntityMapper{
 	private String schema = null; 
 	private String tableName = null;
 	private String entity = null;
+	private String primaryKey = null;
+	private String columns = "";
 	private boolean registered = false;
 	private final int relaMax = 100;
 	private int relaCount = 0;
@@ -34,7 +39,9 @@ public class FEntityMapper implements IAEntityMapper{
 			   if(relaCount>0){
 				   // register her
 					registered = true;
-					owner.registerMapper(this);
+					try {
+						owner.registerMapper(this);
+					} catch (SQLException e) {e.printStackTrace();	}
 			   }
 		}
 		
@@ -42,28 +49,30 @@ public class FEntityMapper implements IAEntityMapper{
 	}
 
 	public void setSchema(String schema) {
-		this.schema = schema;
+		this.schema = "`"+schema+"`";
 	}
 
 	@Override
 	public void setTable(String tableName) {
-		this.tableName = tableName;
+		this.tableName = "`"+tableName+"`";
 	}
 
 	@Override
 	public void setEntity(String entity) {
-		this.entity = entity;
+		this.entity = (entity);
 	}
 
 	@Override
-	public void setRelation(String field, String colName, String type, String keys) {
+	public void setRelation(String field, String colName, String type, String attributes,int keys) {
 		if(relaCount<relaMax){
 			// ingen kontrol af de 4 felters syntaks
+			String vtype = type;if(vtype.contains("String")){vtype = "varchar(1024)";}
 			relations[relaCount] = new String[4];
 			relations[relaCount][0] = field;
-			relations[relaCount][1] = colName;
-			relations[relaCount][2] = type;
-			relations[relaCount][3] = keys;
+			relations[relaCount][1] = "`"+colName+"`";
+			relations[relaCount][2] = vtype;
+			relations[relaCount][3] = attributes;
+			if((keys==IAEntityMapper.EM_PRIMARY_KEY)){primaryKey = "primary key (`"+colName+"`)";}
 			relaCount++;
 				}
 		
@@ -73,4 +82,46 @@ public class FEntityMapper implements IAEntityMapper{
 	
 	public String getSchema(){return schema;}
 	
+	public String getTableName(){return tableName;}
+	
+	public String getEntity(){return entity;}
+	
+	public String getColumns(){
+		String s="(";
+		for(int k=0;k<relaCount;k++) {s=s+relations[k][1]+" "+relations[k][2]+" "+relations[k][3]+",";}
+		s=s+primaryKey+")";
+		return s;
+	}
+	
+	
+	private Field getField(Class c,String fname) throws NoSuchFieldException{
+		// bruges af getvalues
+		try {return c.getDeclaredField(fname);}
+		catch (NoSuchFieldException e) {
+		      Class superClass = c.getSuperclass();
+		      if (superClass == null) {throw e;}
+		      else {return getField(superClass, fname);}
+		}
+	}
+	
+	public String getValues(Object entity){
+		// kaldes af fdbbroker. entity passer til dette map (er kontrolleret)
+		String s="(";
+		for(int k=0;k<relaCount;k++){
+			Field field;
+			try {
+				System.out.println("debug getvalues : "+relations[k][0]);
+				field = getField(entity.getClass(),relations[k][0]);
+				field.setAccessible(true);
+				s=s+field.get(entity)+",";
+			}
+			catch (SecurityException e) {e.printStackTrace();}
+			catch (NoSuchFieldException e) {e.printStackTrace();}
+			catch (IllegalArgumentException e) {e.printStackTrace();}
+			catch (IllegalAccessException e) {e.printStackTrace();}
+		}
+		s=s.substring(0,s.length()-1)+")";
+		
+		return s;
+	}
 }

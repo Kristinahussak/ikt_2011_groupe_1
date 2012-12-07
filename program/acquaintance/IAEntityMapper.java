@@ -10,13 +10,16 @@ package acquaintance;
 
 public interface IAEntityMapper {
 	
-	public static String EM_PRIMARY_KEY = "primary key";
-	public static String EM_SECONDARY_KEY = "foreign key";
-	public static String EM_AUTO_INCREMENT = "auto increment";
+	public static int    EM_NO_KEY = 0;
+	public static int    EM_PRIMARY_KEY = 1;
+	public static int    EM_FOREIGN_KEY = 1;
+	public static String EM_SECONDARY_KEY = "foreign key ";
+	public static String EM_AUTO_INCREMENT = "auto_increment ";
+	public static String EM_NOT_NULL = "not null ";
 	
-	public static String EM_STRING = "String";
-	public static String EM_INT = "int";
-	public static String EM_DOUBLE = "Double";
+	public static String EM_STRING = "String ";
+	public static String EM_INT = "int ";
+	public static String EM_DOUBLE = "Double ";
 
 	public boolean registerMap();
 	
@@ -31,7 +34,7 @@ public interface IAEntityMapper {
 	public void setEntity(String entity);    
 	// Navn på Entity f.eks. "EItem"
 	
-	public void setRelation(String field,String colName,String type,String keys);
+	public void setRelation(String field,String colName,String type,String attributes,int keys);
 	// Sætter en relation mellem et felt i en class og en kolonne i en sql tabel 
  	// f.eks. EItem : "id" , "barcode" og "int" og EM_PRIMARY_KEY
 	
@@ -48,6 +51,6 @@ public interface IAEntityMapper {
 	 * 
 	 */
 	
-	public String getSchema();
+
 	
 }

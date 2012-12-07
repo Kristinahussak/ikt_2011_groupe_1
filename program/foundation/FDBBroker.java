@@ -30,7 +30,7 @@ public class FDBBroker
     private Statement dbstat = null;
     private ResultSet dbresult = null;
     private String[] sqlLines = null;
-    private List<IAEntityMapper> entities = new ArrayList<IAEntityMapper>();
+    private List<FEntityMapper> entities = new ArrayList<FEntityMapper>();
     
     public boolean setDBConnection(ADBInfo info){
     	if(!(dbcon==null)) closeDBConnection();
@@ -42,10 +42,12 @@ public class FDBBroker
 		}
     	catch (ClassNotFoundException e) {e.printStackTrace();return false;}
 		catch (Exception e){e.printStackTrace();return false;}
-    	return buildCSSSchema();
+    	return true;
+    	//return buildCSSSchema(); // Kun til test!!!!!!
     }
     
-    private boolean buildCSSSchema(){
+  /*  private boolean buildCSSSchema(){
+    	// Test metode!!!
     	String[] sqlLine = new String[30];
     
     	try {
@@ -64,22 +66,14 @@ public class FDBBroker
     	try{
     		// Create CSS Schema: line 0-1
     		for(int k=0;k<2;k++) dbstat.execute(sqlLine[k]);
-    	
     	}
     	catch(SQLException sqle){sqle.printStackTrace();return false;}
-    	
-    	/*;
-
-*/
     return true;	
-    }
+    }*/
     
     public boolean closeDBConnection(){
-    	if(!(dbcon==null)) try {
-    		dbcon.close();
-    	}
+    	if(!(dbcon==null)) try {dbcon.close();}
     	catch(SQLException sqle){sqle.printStackTrace();return false;}
-    	
     	return true;
     }
     
@@ -88,18 +82,42 @@ public class FDBBroker
     	return mapper;
     }
     
-    public boolean registerMapper(IAEntityMapper mapper){
-    	entities.add(mapper);
-    	// kontroller databasen
-    	try {
-			dbstat.execute("CREATE SCHEMA IF NOT EXISTS "+mapper.getSchema());
-			
-			return true;
-		}
+    private void executeSQLLine(String sqlString){
+    	try {dbstat.execute(sqlString);} 
     	catch (SQLException e) {e.printStackTrace();}
-    	
-    	
-    	return false;
+    	System.out.println("SQL: "+sqlString);
     }
+    
+    public boolean registerMapper(IAEntityMapper mapper) throws SQLException{
+    	// er egentlig private men kan kun 'ses' af MBroker der ikke bruger den.
+    	// Kaldes fra FEntityMapper.registerMapper()
+    	FEntityMapper map = (FEntityMapper)mapper;
+    	entities.add(map);
+    	executeSQLLine("CREATE SCHEMA IF NOT EXISTS "+map.getSchema()+";");
+    	executeSQLLine("CREATE TABLE IF NOT EXISTS "+map.getSchema()+"."+map.getTableName()+map.getColumns()+";");
+ 		return true;
+    }
+    
+    public boolean updateEntity(Object entity){
+    	// er entitys OID<0 er den ikke i Databasen endnu og skal indsættes ellers updates
+    	String entityName = entity.getClass().getCanonicalName();
+    	FEntityMapper map = null;
+    	for(FEntityMapper m:entities){if(m.getEntity().equals(entityName)){map=m;}}
+    	if(!(map==null)){
+    		System.out.println("debug - map ok - values"+map.getValues(entity));
+    		String s="insert into table "+map.getTableName()+" values "+map.getValues(entity);
+    		try {
+				dbstat.executeUpdate(s+";");
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+    		
+    	}
+    	else return false; // pågældende entity findes ikke blandt maps!
+    	
+    	return true;
+    }
+    
     
 }

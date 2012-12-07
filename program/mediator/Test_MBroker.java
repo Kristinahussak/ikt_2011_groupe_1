@@ -21,14 +21,16 @@ public class Test_MBroker {
 		
 		IAEntityMapper mapper = broker.getEntityMapper();
 		mapper.setEntity( ((Object)item).getClass().getCanonicalName() ); // eller blot "EItem"
-		mapper.setSchema("CSS4");
+		mapper.setSchema("CSS7");
 		mapper.setTable("items");
-		mapper.setRelation("OID","item_id","int",mapper.EM_PRIMARY_KEY);
+		mapper.setRelation("OID","item_id","int",mapper.EM_NOT_NULL+mapper.EM_AUTO_INCREMENT,mapper.EM_PRIMARY_KEY);
+		mapper.setRelation("stockPosition","stock_position","int","",mapper.EM_NO_KEY);
+		//mapper.setRelation("halleluja","nudetjul","String","",mapper.EM_NO_KEY);
 		//... flere relations her
 		
 		if(mapper.registerMap())System.out.println("Map Registered");
 		
-		
+		if(broker.updateEntity(item)) System.out.println("updated test ok");
 		System.out.println("Test a MBroker færdig med "+errors+" fejl.");
 	}
 }
