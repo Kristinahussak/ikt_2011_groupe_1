@@ -1,9 +1,12 @@
 package mediator;
 import acquaintance.*;
+import entity.*; // Af testhensyn
+
 import foundation.*;
 
 public class Test_MBroker {
 
+	EItem item = new EItem();
 	
 	public static void main(String[] args){
 		

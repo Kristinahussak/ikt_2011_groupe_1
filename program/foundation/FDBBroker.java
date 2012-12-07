@@ -85,7 +85,7 @@ public class FDBBroker
     
     public IAEntityMapper getEntityMapper(){
     	IAEntityMapper map = new FEntityMapper(this);
-    	entities.add(map);
+    	entities.add(map); 
     	return map;
     }
     
