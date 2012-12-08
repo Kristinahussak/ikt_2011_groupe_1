@@ -16,8 +16,15 @@ public class EStock extends EComposite
 {  
 	private ArrayList<IAComponent> items = new ArrayList<IAComponent>();  
 	private TreeSet<Integer> freePositions = new TreeSet<Integer>();
+	private int stockSize = 100;
 
-    public EStock() {}   
+    public EStock()
+    {
+    	for (int i = 0; i < stockSize; i++) 
+    	{
+    		freePositions.add(i);   
+		}
+    }   
     
    
     public boolean add(IAComponent item)
@@ -35,6 +42,11 @@ public class EStock extends EComposite
     public int[] getPositions()
     {
         return super.getPositions();        
+    }
+    
+    public int getFirstFreePosition()
+    {
+    	return freePositions.pollFirst();
     }
     
     @Override

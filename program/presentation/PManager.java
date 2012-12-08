@@ -14,7 +14,7 @@ import entity.EComponent;
 
 public class PManager
 {
-	private ICManager controlInterface;
+	private ICManager controlInterface = new CFacade();
 
     public PManager() {}
     
@@ -28,9 +28,9 @@ public class PManager
     	return controlInterface.processOrder(orderNo);  	        
     }
     
-    public void storeItem()
+    public boolean storeItem()
     {
-        
+    	return controlInterface.storeItem();        
     }
     
 }

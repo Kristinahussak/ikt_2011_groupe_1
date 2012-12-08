@@ -20,7 +20,15 @@ public class ERCSAdapter implements IERCS
 
     @Override
     public String scanItem() {
-        throw new UnsupportedOperationException("Not supported yet.");
+    	//IMPLEMENT SCANITEM TO BRADLEY ALLEN
+    	System.out.println("Item has been scanned");
+        return "323456789999";
     }
+
+	@Override
+	public boolean storeItem(int stockPosition) {
+		System.out.println("Item has been stored on stockposition:" +stockPosition);
+		return true;
+	}
     
 }

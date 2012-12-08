@@ -17,6 +17,7 @@ public class EFacade
     private ArrayList<EOrder> orders;
     private ArrayList<EItemType> itemTypes;    
     private static EFacade instance = null;
+    private EStock stock = new EStock();
 
     public EFacade() {
         this.orders = new ArrayList<EOrder>();  
@@ -95,19 +96,40 @@ public class EFacade
         return false;
     }
     
-    public boolean lookUpStockPosition(int state)
-    {
-        return false;
+    public boolean storeItem()
+    {    
+    	String scannedBarcode = EItem.scanItem();    	
+    	int itemtypeIndex = verifyItemType(scannedBarcode);
+    	if(itemtypeIndex < 0){return false;}
+    	
+    	else
+    	{
+    		int freePosition = stock.getFirstFreePosition();
+    		EItemType itemType = itemTypes.get(itemtypeIndex);    		   		
+    		stock.add(new EItem(freePosition,itemType));
+    		
+    		EItem.storeItem(freePosition);
+    		
+    		return true;
+    	}   
     }
     
-    public String scanItem()
-    {
-        return null;
-    }
-    
-    private void verifyItemType(String itemType)
-    {        
-        
+    private int verifyItemType(String barcode)
+    {    
+    	boolean typeExists = false;
+    	
+    	int x = 0;    	
+    	while(!typeExists && x < itemTypes.size())
+    	{    	
+    		if(itemTypes.get(x).getBarcode() == barcode){
+    			typeExists = true;
+    		}    	
+    		x++;
+    	}
+    	
+    	if(!typeExists){System.out.println();x = -1;}
+    	
+    	return x-1;        
     }  
 
 }

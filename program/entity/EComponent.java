@@ -86,4 +86,10 @@ public class EComponent implements IAComponent
 	public ArrayList<IAComponent> getItems() {
 		return items;
 	}
+
+	@Override
+	public int getFirstFreePosition() {
+		return -1;
+	}
+
 }

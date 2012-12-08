@@ -44,6 +44,8 @@ public interface IAComponent{
 	public ArrayList<String> entityToString();
 	
 	public ArrayList<IAComponent> getItems();
+	
+	public int getFirstFreePosition();
 
 }
 

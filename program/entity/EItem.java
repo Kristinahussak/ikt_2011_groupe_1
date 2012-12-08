@@ -14,6 +14,7 @@ import java.util.TreeSet;
 
 public class EItem extends EComponent
 {   
+	private static IERCS rcsInterface = new ERCSAdapter();
     private int stockPosition = -1;  
     private EItemType type;
 
@@ -38,12 +39,18 @@ public class EItem extends EComponent
         
     public boolean retrieveItem()
     {
+    	
         return false;        
     }
     
-    public String scanItem()
-    {
-        return null;
+    public static String scanItem()
+    {  
+        return rcsInterface.scanItem();
+    }
+    
+    public static boolean storeItem(int stockPosition)
+    {  
+        return rcsInterface.storeItem(stockPosition);
     }
     
     @Override

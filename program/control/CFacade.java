@@ -31,7 +31,7 @@ public class CFacade implements ICManager, ICAdmin
 
     @Override
     public boolean storeItem() {
-        throw new UnsupportedOperationException("Not supported yet.");
+        return EFacade.getInstance().storeItem();
     }
 
 }
