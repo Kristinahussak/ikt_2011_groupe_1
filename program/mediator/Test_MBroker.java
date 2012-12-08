@@ -15,7 +15,9 @@ public class Test_MBroker {
 		ADBInfo info = new ADBInfo();
 		boolean test = broker.setDB(info);
 		
-		EItem item = new EItem(3042);
+		EItem item = new EItem(3042); //HEJ HENNING - EITEM CONSTRUCTOR ER ÆNDRET
+									  //DA EFACADE NU HOLDER EN LISTE AF EITEMTYPES
+									  //KOMMER TYPEN MED SOM EN CONSTRUCTOR PARAMETER
 		item.setOID(32117);
 		item.setOwnerOID(240);
 		
