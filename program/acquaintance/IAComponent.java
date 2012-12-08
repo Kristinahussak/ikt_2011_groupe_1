@@ -1,5 +1,7 @@
 package acquaintance;
 
+import java.util.ArrayList;
+
 /**
  * IAComponent.java
  * @author 3. Semester Projekt, Gruppe 1
@@ -38,6 +40,10 @@ public interface IAComponent{
 	public void setOID(int OID);
 	    
 	public void setState(int state);
+	
+	public ArrayList<String> entityToString();
+	
+	public ArrayList<IAComponent> getItems();
 
 }
 

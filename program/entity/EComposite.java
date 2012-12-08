@@ -1,5 +1,7 @@
 package entity;
 import acquaintance.*;
+
+import java.util.ArrayList;
 //import entity.EItem;
 import java.util.TreeSet;
 
@@ -13,7 +15,7 @@ import java.util.TreeSet;
 
 public class EComposite extends EComponent
 {
-    private TreeSet<IAComponent> items = new TreeSet<IAComponent>();
+	private ArrayList<IAComponent> items = new ArrayList<IAComponent>();  
 
     public EComposite() {}   
     
@@ -35,6 +37,14 @@ public class EComposite extends EComponent
     {        
         return null;        
     }
-
     
+    @Override
+	public ArrayList<String> entityToString() {		
+		return null;
+	}
+    
+    @Override
+	public ArrayList<IAComponent> getItems() {
+		return items;
+	}
 }

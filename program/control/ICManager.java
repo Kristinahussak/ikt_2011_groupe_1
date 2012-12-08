@@ -16,7 +16,7 @@ import java.util.TreeSet;
 
 public interface ICManager
 {  
-    public ArrayList<String> viewOrders(int orderState);   
+    public ArrayList<ArrayList<String>> viewOrders(int orderState);   
     
     public boolean processOrder(int orderNo);
     

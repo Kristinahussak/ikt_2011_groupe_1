@@ -15,6 +15,6 @@ import java.util.TreeSet;
 
 public interface ICAdmin
 {    
-     public ArrayList<String> viewOrders(int orderState);         
+     public ArrayList<ArrayList<String>> viewOrders(int orderState);         
 }
 

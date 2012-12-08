@@ -1,5 +1,7 @@
 package entity;
 import acquaintance.*;
+
+import java.util.ArrayList;
 import java.util.TreeSet;
 
 /**
@@ -12,7 +14,8 @@ import java.util.TreeSet;
 
 public class EStock extends EComposite
 {  
-    private TreeSet<IAComponent> items = new TreeSet<IAComponent>();
+	private ArrayList<IAComponent> items = new ArrayList<IAComponent>();  
+	private TreeSet<Integer> freePositions = new TreeSet<Integer>();
 
     public EStock() {}   
     
@@ -34,6 +37,12 @@ public class EStock extends EComposite
         return super.getPositions();        
     }
     
-   
+    @Override
+	public ArrayList<String> entityToString() {
+		ArrayList<String> info = new ArrayList<String>();
+		info.add("I am stock.");    	
+    	return info;
+    
+	}
     
 }

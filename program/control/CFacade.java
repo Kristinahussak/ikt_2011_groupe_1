@@ -20,20 +20,8 @@ public class CFacade implements ICManager, ICAdmin
     public CFacade() {}    
 
     @Override
-     public ArrayList<String> viewOrders(int orderState) {
-    	
-    	ArrayList<EOrder> temp  = EFacade.getInstance().viewOrders(orderState);
-
-    	ArrayList<String> orders = new ArrayList<String>();
-    	
-    	for (int i = 0; i < temp.size(); i++)
-    	{
-    		temp.get(i).get	
-		}
-    	
-    	
-    	
-        return orders;
+     public ArrayList<ArrayList<String>> viewOrders(int orderState) {    	
+        return EFacade.getInstance().viewOrders(orderState);
     }
     
     @Override

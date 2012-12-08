@@ -1,5 +1,7 @@
 package entity;
 import acquaintance.*;
+
+import java.util.ArrayList;
 import java.util.TreeSet;
 
 /**
@@ -13,29 +15,27 @@ import java.util.TreeSet;
 public class EItem extends EComponent
 {   
     private int stockPosition = -1;  
-    private int barcode = -1;
-  
     private EItemType type;
 
-    public EItem(int stockPosition) {
-        this.stockPosition = stockPosition;  
-        state = IAComponent.ITEM_AVAILABLE;
+    public EItem(int stockPosition, EItemType type)
+    {
+        this.stockPosition = stockPosition; 
+        this.type = type;
+        this.setState(IAComponent.ITEM_AVAILABLE);
     }
-  
-    
+      
     @Override
     public int[] getPositions()
     {
-        return null;        
-    }
+    	int[] position = {stockPosition};
+        return position;        
+    }    
     
-    
-    //  public boolean updated()
+    // public boolean updated()
     // Bruger EComponents metode. Når tilstand ændres OID state mm sættes needUpdate = true;
     
     public EItemType getItemType(){return type;}
-    public boolean setItemType(EItemType type){this.type=type;this.barcode = type.getBarcode();return true;}
-    
+        
     public boolean retrieveItem()
     {
         return false;        
@@ -45,4 +45,25 @@ public class EItem extends EComponent
     {
         return null;
     }
+    
+    @Override
+	public ArrayList<IAComponent> getItems() {
+    	ArrayList<IAComponent> temp = new ArrayList<IAComponent>();    	
+    	temp.add(this);
+		return temp;
+	}
+    
+    @Override
+	public ArrayList<String> entityToString() {	
+    	ArrayList<String> info = new ArrayList<String>();   
+    	
+    	info.add(getItemType().getName()+";"+
+    		     this.stockPosition+";"+
+    			 getItemType().getBarcode()+";"+
+    			 getItemType().getPrice());
+    	
+		return info;
+	}
+    
+    
 }

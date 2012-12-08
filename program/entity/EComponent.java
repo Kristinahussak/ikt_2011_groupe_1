@@ -1,5 +1,9 @@
 package entity;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+
 import acquaintance.*;
 
 /**
@@ -12,10 +16,11 @@ import acquaintance.*;
 
 public class EComponent implements IAComponent
 {   
-    protected int OID = -1; // = Ikke sat
-    protected int ownerOID = -1;
-    protected int state = IAComponent.NOT_INITIALIZED;
-    protected boolean updated = false;
+    private int OID = -1; // = Ikke sat
+    private int ownerOID = -1;
+    private int state = IAComponent.NOT_INITIALIZED;
+    private boolean updated = false;
+    private ArrayList<IAComponent> items = new ArrayList<IAComponent>();  
     
     public boolean add(IAComponent item)
     {
@@ -64,5 +69,21 @@ public class EComponent implements IAComponent
         updated = false;
     }
 
+	@Override
+	public ArrayList<String> entityToString() {		
+		return null;
+	}
+	
+	public String getDate() {
+		DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd/HH:mm:ss");
+		// getcurrent date time with Date()
+		java.util.Date date = new java.util.Date();
+		
+		return dateFormat.format(date);
+	}
 
+	@Override
+	public ArrayList<IAComponent> getItems() {
+		return items;
+	}
 }

@@ -13,18 +13,16 @@ import javax.swing.ImageIcon;
 public class EItemType
 {   
     private String name;
-    private int barcode;
-    //private ImageIcon picutre;
+    private String barcode;
     private double price;
 
-    public EItemType(String name, int barcode, ImageIcon picutre, double price) {
+    public EItemType(String name, String barcode, double price) {
         this.name = name;
         this.barcode = barcode;
-        //this.picutre = picutre;
         this.price = price;
     }
 
-    public int getBarcode() {
+    public String getBarcode() {
         return barcode;
     }
 
@@ -36,7 +34,7 @@ public class EItemType
         return price;
     }
 
-    public void setBarcode(int barcode) {
+    public void setBarcode(String barcode) {
         this.barcode = barcode;
     }
 

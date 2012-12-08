@@ -1,6 +1,8 @@
 package entity;
 import acquaintance.*;
 
+import java.sql.Date;
+import java.util.ArrayList;
 import java.util.TreeSet;
 
 /**
@@ -13,17 +15,24 @@ import java.util.TreeSet;
 
 public class EOrder extends EComposite
 {    
-    private TreeSet items;
-   
+    private ArrayList<IAComponent> items = new ArrayList<IAComponent>();  
+    private String storeInfo;
+    private String shippingDate = "Not shipped yet";
+    private String receivedDate;  
+    
 
-    public EOrder() {
-    	this.state = IAComponent.ORDER_OPEN;
+    public EOrder(String storeInfo) {
+    	this.setState(IAComponent.ORDER_OPEN);
+    	this.receivedDate = this.getDate();  
+    	this.storeInfo = storeInfo;
+    	
     }
     
     @Override
     public boolean add(IAComponent item)
     {
-        return super.add(item);
+    	this.items.add(item);
+        return true;
     }
     
     @Override
@@ -50,4 +59,23 @@ public class EOrder extends EComposite
     {
         
     }
+    
+    @Override
+	public ArrayList<String> entityToString() {	
+    	ArrayList<String> info = new ArrayList<String>();    
+    	
+    	info.add(this.getOID()+";"+this.storeInfo+";"+this.receivedDate+";"+this.shippingDate);    	
+    	for (int i = 0; i < this.getItems().size(); i++) 
+    	{
+    		info.add(items.get(i).entityToString().get(0));    		    					
+		}
+		return info;
+	}
+    
+    @Override
+	public ArrayList<IAComponent> getItems() {
+		return this.items;
+	}
+    
+    
 }

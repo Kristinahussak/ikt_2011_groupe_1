@@ -18,7 +18,7 @@ public class PAdmin
 
     public PAdmin() {}
     
-    public ArrayList<String> viewOrders(int orderState)
+    public ArrayList<ArrayList<String>> viewOrders(int orderState)
     {
     	return controlInterface.viewOrders(orderState);        
     }    
