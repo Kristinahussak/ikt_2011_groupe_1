@@ -88,7 +88,38 @@ public class EFacade
 
     public boolean processOrder(int orderNo)
     {
-        return false; 
+    	boolean orderFound = false;
+    	IAComponent currentOrder = null;
+    	
+    	//Get the specific order
+    	while(!orderFound)
+    	{
+    		for (int j = 0; j < orders.size(); j++)
+        	{
+    			if(orders.get(j).getOID() == orderNo)
+    			{
+    				currentOrder = orders.get(j);
+    				orderFound = true;
+    			}
+    		}
+    	}
+    	
+    	//Iterate over all items
+    	ArrayList<IAComponent> itemList = currentOrder.getItems();
+		for (int i = 0; i < itemList.size(); i++)
+		{
+			IAComponent currentItem = itemList.get(i);			
+			if(EItem.retrieveItem(currentItem.getPositions()[0]))
+			{
+				itemList.remove(currentItem);
+				
+				//CALL AN UPDATE ORDER HERE
+			}
+			
+						
+		}
+    	
+    	return false;    	
     }
     
     public boolean createOrder(String packetInfo)

@@ -28,7 +28,7 @@ public class EItem extends EComponent
     @Override
     public int[] getPositions()
     {
-    	int[] position = {stockPosition};
+    	int[] position = {this.stockPosition};
         return position;        
     }    
     
@@ -37,9 +37,9 @@ public class EItem extends EComponent
     
     public EItemType getItemType(){return type;}
         
-    public boolean retrieveItem()
+    public static boolean retrieveItem(int stockPosition)
     {
-    	
+    	rcsInterface.retrieveItem(stockPosition);
         return false;        
     }
     
@@ -50,7 +50,13 @@ public class EItem extends EComponent
     
     public static boolean storeItem(int stockPosition)
     {  
-        return rcsInterface.storeItem(stockPosition);
+    	boolean success = false;
+    	success = rcsInterface.storeItem(stockPosition);
+    	
+    	//UPDATE IN DATABASE HERE
+    	//BY CALLING UPDATEITEM()
+    	
+        return success;
     }
     
     @Override
