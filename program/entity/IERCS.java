@@ -8,8 +8,7 @@ package entity;
 
 public interface IERCS
 {    
-    public boolean retrieveItem(int stockPosition);
-    
+    public boolean retrieveItem(int stockPosition);    
     public String scanItem();
 	public boolean storeItem(int stockPosition);
     
