@@ -24,9 +24,9 @@ public class Test_MBroker {
 		
 		IAEntityMapper mapper = broker.getEntityMapper();
 		mapper.setEntity( ((Object)item).getClass().getCanonicalName() ); // eller blot "EItem"
-		mapper.setSchema("CSS1");
+		mapper.setSchema("CSS5");
 		mapper.setTable("items");
-		mapper.setRelation("OID","item_id","int",mapper.EM_NOT_NULL+mapper.EM_AUTO_INCREMENT,mapper.EM_PRIMARY_KEY);
+		mapper.setRelation("OID","OID","int",mapper.EM_NOT_NULL+mapper.EM_AUTO_INCREMENT,mapper.EM_PRIMARY_KEY);
 		mapper.setRelation("stockPosition","stock_position","int","",mapper.EM_NO_KEY);
 		mapper.setRelation("ownerOID","owner_id","int","",mapper.EM_NO_KEY);
 		//mapper.setRelation("halleluja","nudetjul","String","",mapper.EM_NO_KEY);
@@ -36,6 +36,8 @@ public class Test_MBroker {
 		
 		if(broker.updateEntity(item)) System.out.println("created test ok");
 		item.setOwnerOID(250);
+		if(broker.updateEntity(item)) System.out.println("updated test ok");
+		item.setOwnerOID(260);
 		if(broker.updateEntity(item)) System.out.println("updated test ok");
 		System.out.println("Test a MBroker færdig med "+errors+" fejl.");
 	}

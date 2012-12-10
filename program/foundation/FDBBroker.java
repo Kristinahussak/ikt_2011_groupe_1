@@ -97,14 +97,15 @@ public class FDBBroker
     	FEntityMapper map = (FEntityMapper)mapper;
     	entities.add(map);
     	executeSQLLine("CREATE SCHEMA IF NOT EXISTS "+map.getSchema()+";");
-    	executeSQLLine("CREATE TABLE IF NOT EXISTS "+map.getSchema()+".`oid`(`next_oid` INT NOT NULL DEFAULT 1,PRIMARY KEY (`next_oid`));");
-    	(result = dbstat.executeQuery("SELECT MAX(`next_oid`) FROM `oid`;")).first();
+    	
+    	executeSQLLine("CREATE TABLE IF NOT EXISTS "+map.getSchema()+".`oid` (`next_oid` INT ,PRIMARY KEY (`next_oid`));");
+    	(result = dbstat.executeQuery("SELECT MAX(`next_oid`) FROM "+map.getSchema()+".`oid`;")).first();
     	nextOID = (result.getInt(1));
-    	if(nextOID==-1){
+    	if(nextOID<1){
     		nextOID=1;
-    		dbstat.executeUpdate("INSERT INTO "+map.getSchema()+".`oid` SET `next_oid` = 1;");
+      		executeSQLLine("INSERT INTO "+map.getSchema()+".`oid` SET `next_oid` = 1;");
     	}
-    	System.out.println("DEBUG First OID = "+nextOID);
+    	//System.out.println("DEBUG First OID = "+nextOID);
     	if(map.getDebugDropTable()){executeSQLLine("DROP TABLE IF EXISTS "+map.getSchema()+"."+map.getTableName()+";");}
     	executeSQLLine("CREATE TABLE IF NOT EXISTS "+map.getSchema()+"."+map.getTableName()+map.getCreateColumns()+";");
  		return true;
@@ -132,25 +133,18 @@ public class FDBBroker
     		try {
     			String s = null;
     			if(map.getOID()<0){
-       				System.out.println("Debug select : "+s+" , next id : "+nextOID);
+       				//System.out.println("Debug select : "+s+" , next id : "+nextOID);
   					Field f = getField(entity.getClass(),map.getPKField());
   					f.setAccessible(true);
   					f.setInt(entity, (nextOID));
   					nextOID++;
-  					dbstat.executeUpdate("UPDATE "+map.getSchema()+".`next_oid` SET `next_oid` = "+nextOID+" WHERE `next_oid` = "+(nextOID-1)+";");
+  					dbstat.executeUpdate("UPDATE "+map.getSchema()+".`oid` SET `next_oid` = "+nextOID+" WHERE `next_oid` = "+(nextOID-1)+";");
   					s = "INSERT INTO "+map.getSchema()+"."+map.getTableName()+map.getColumns()+" values "+map.getValues(entity)+";";
-    				
- 	   			}
-   				else{
-   					s = "UPDATE "+map.getSchema()+"."+map.getTableName()+map.getColumns()+" values "+map.getValues(entity)+";";
-   					s=map.getUpdateString(entity);
-   				} 
-      			System.out.println("SQL: exeUpd. : "+s);
-      		  	dbstat.executeUpdate(s);
-   			    				
-        		//dbstat.executeUpdate("insert into 'CSS4'.'items' ('item_id','stock_position') values(25,50);");
-        		//dbstat.executeUpdate(s+";");
-			}
+      			}
+   				else{s=map.getUpdateString(entity);} 
+      			//System.out.println("SQL: exeUpd. : "+s);
+      		  	executeSQLLine(s);
+   		}
     		catch (SQLException e) {e.printStackTrace();}
 			catch (SecurityException e) {e.printStackTrace();}
 			catch (NoSuchFieldException e) {e.printStackTrace();} catch (IllegalArgumentException e) {

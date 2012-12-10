@@ -142,17 +142,19 @@ public class FEntityMapper implements IAEntityMapper{
 	}
 	
 	public String getUpdateString(Object entity){
-		String s ="UPDATE "+schema+"."+tableName;
+		String s ="UPDATE "+schema+"."+tableName+" SET ";
 		Field f;
 		try {
 			for(int k=0;k<relaCount;k++){
-				System.out.println("Debug getUpdString Loop: "+relations[k][0]);
-				f = (entity.getClass()).getField(relations[k][0]);
-				f.setAccessible(true);
-				s = s+" SET ";
-				s=s+ relations[k][1]+" = "+f.get(entity.getClass())+",";
-				s=s.substring(0,s.length()-1)+" WHERE "+pkField+" =";
+				//System.out.println("Debug getUpdString Loop: "+relations[k][0]);
+				if(!(relations[k][0]==pkField)){
+					f = getField(entity.getClass(),relations[k][0]);
+					f.setAccessible(true);
+				
+					s=s+ relations[k][1]+" = "+f.get(entity)+",";
+				}
 			}
+			s=s.substring(0,s.length()-1)+" WHERE "+pkField+" = "+OID+";";
 		}
 		catch (SecurityException e) {e.printStackTrace();}
 		catch (NoSuchFieldException e) {e.printStackTrace();}
