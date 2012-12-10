@@ -18,7 +18,7 @@ public class CDSSHandler
 {
 	private static ServerSocket serverSocket;
 	//Hvilken port bruger vi?
-	private static final int PORT = 12345;
+	private static final int PORT = 55555;
 
 	
     public CDSSHandler() {
