@@ -24,7 +24,7 @@ public class Test_MBroker {
 		
 		IAEntityMapper mapper = broker.getEntityMapper();
 		mapper.setEntity( ((Object)item).getClass().getCanonicalName() ); // eller blot "EItem"
-		mapper.setSchema("CSS6");
+		mapper.setSchema("CSS1");
 		mapper.setTable("items");
 		mapper.setRelation("OID","item_id","int",mapper.EM_NOT_NULL+mapper.EM_AUTO_INCREMENT,mapper.EM_PRIMARY_KEY);
 		mapper.setRelation("stockPosition","stock_position","int","",mapper.EM_NO_KEY);

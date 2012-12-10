@@ -113,7 +113,7 @@ public class FEntityMapper implements IAEntityMapper{
 		try {return c.getDeclaredField(fname);}
 		catch (NoSuchFieldException e) {
 		      Class superClass = c.getSuperclass();
-		      if (superClass == null) {throw e;}
+		      if (superClass == null) {System.out.println("GetField fejl");throw e;}
 		      else {return getField(superClass, fname);}
 		}
 	}
@@ -143,19 +143,22 @@ public class FEntityMapper implements IAEntityMapper{
 	
 	public String getUpdateString(Object entity){
 		String s ="UPDATE "+schema+"."+tableName;
-		for(int k=0;k<relaCount;k++){
-			Field f;
-			try {
-				f = entity.getClass().getField(relations[k][0]);
+		Field f;
+		try {
+			for(int k=0;k<relaCount;k++){
+				System.out.println("Debug getUpdString Loop: "+relations[k][0]);
+				f = (entity.getClass()).getField(relations[k][0]);
 				f.setAccessible(true);
-				s = s+" SET "+ relations[k][1]+" = "+f.get(entity.getClass())+",";
+				s = s+" SET ";
+				s=s+ relations[k][1]+" = "+f.get(entity.getClass())+",";
 				s=s.substring(0,s.length()-1)+" WHERE "+pkField+" =";
 			}
-			catch (SecurityException e) {e.printStackTrace();}
-			catch (NoSuchFieldException e) {e.printStackTrace();}
-			catch (IllegalArgumentException e) {e.printStackTrace();}
-			catch (IllegalAccessException e) {e.printStackTrace();}
 		}
+		catch (SecurityException e) {e.printStackTrace();}
+		catch (NoSuchFieldException e) {e.printStackTrace();}
+		catch (IllegalArgumentException e) {e.printStackTrace();}
+		catch (IllegalAccessException e) {e.printStackTrace();}
+		
 		return s;
 	}
 	

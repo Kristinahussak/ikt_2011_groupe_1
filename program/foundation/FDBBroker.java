@@ -26,6 +26,7 @@ import acquaintance.*;
 
 public class FDBBroker
 {    
+	private int nextOID = -1;
     private ADBInfo dbInfo = null;
     private Connection dbcon = null; 
     private Statement dbstat = null;
@@ -92,9 +93,18 @@ public class FDBBroker
     public boolean registerMapper(IAEntityMapper mapper) throws SQLException{
     	// er egentlig private men kan kun 'ses' af MBroker der ikke bruger den.
     	// Kaldes fra FEntityMapper.registerMapper()
+    	ResultSet result = null;
     	FEntityMapper map = (FEntityMapper)mapper;
     	entities.add(map);
     	executeSQLLine("CREATE SCHEMA IF NOT EXISTS "+map.getSchema()+";");
+    	executeSQLLine("CREATE TABLE IF NOT EXISTS "+map.getSchema()+".`oid`(`next_oid` INT NOT NULL DEFAULT 1,PRIMARY KEY (`next_oid`));");
+    	(result = dbstat.executeQuery("SELECT MAX(`next_oid`) FROM `oid`;")).first();
+    	nextOID = (result.getInt(1));
+    	if(nextOID==-1){
+    		nextOID=1;
+    		dbstat.executeUpdate("INSERT INTO "+map.getSchema()+".`oid` SET `next_oid` = 1;");
+    	}
+    	System.out.println("DEBUG First OID = "+nextOID);
     	if(map.getDebugDropTable()){executeSQLLine("DROP TABLE IF EXISTS "+map.getSchema()+"."+map.getTableName()+";");}
     	executeSQLLine("CREATE TABLE IF NOT EXISTS "+map.getSchema()+"."+map.getTableName()+map.getCreateColumns()+";");
  		return true;
@@ -122,13 +132,12 @@ public class FDBBroker
     		try {
     			String s = null;
     			if(map.getOID()<0){
-       				s = "SELECT max(`"+map.getPKColumn()+"`) FROM "+map.getSchema()+"."+map.getTableName()+" ";
-    				(result = dbstat.executeQuery(s)).first();
-    				int maxPK = result.getInt(1);
-    				System.out.println("Debug select : "+s+" , next id : "+maxPK);
+       				System.out.println("Debug select : "+s+" , next id : "+nextOID);
   					Field f = getField(entity.getClass(),map.getPKField());
   					f.setAccessible(true);
-  					f.setInt(entity, (maxPK+1));
+  					f.setInt(entity, (nextOID));
+  					nextOID++;
+  					dbstat.executeUpdate("UPDATE "+map.getSchema()+".`next_oid` SET `next_oid` = "+nextOID+" WHERE `next_oid` = "+(nextOID-1)+";");
   					s = "INSERT INTO "+map.getSchema()+"."+map.getTableName()+map.getColumns()+" values "+map.getValues(entity)+";";
     				
  	   			}
