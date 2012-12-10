@@ -15,7 +15,8 @@ public class Test_MBroker {
 		ADBInfo info = new ADBInfo();
 		boolean test = broker.setDB(info);
 		
-		EItem item = new EItem(3042); //HEJ HENNING - EITEM CONSTRUCTOR ER ÆNDRET
+		EItemType etype = new EItemType("Solsikker","123456789012",145.50);
+		EItem item = new EItem(12345,etype); //HEJ HENNING - EITEM CONSTRUCTOR ER ÆNDRET
 									  //DA EFACADE NU HOLDER EN LISTE AF EITEMTYPES
 									  //KOMMER TYPEN MED SOM EN CONSTRUCTOR PARAMETER
 		item.setOID(32117);
@@ -23,7 +24,7 @@ public class Test_MBroker {
 		
 		IAEntityMapper mapper = broker.getEntityMapper();
 		mapper.setEntity( ((Object)item).getClass().getCanonicalName() ); // eller blot "EItem"
-		mapper.setSchema("CSS7");
+		mapper.setSchema("CSS1");
 		mapper.setTable("items");
 		mapper.setRelation("OID","item_id","int",mapper.EM_NOT_NULL+mapper.EM_AUTO_INCREMENT,mapper.EM_PRIMARY_KEY);
 		mapper.setRelation("stockPosition","stock_position","int","",mapper.EM_NO_KEY);

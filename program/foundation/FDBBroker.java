@@ -94,7 +94,7 @@ public class FDBBroker
     	FEntityMapper map = (FEntityMapper)mapper;
     	entities.add(map);
     	executeSQLLine("CREATE SCHEMA IF NOT EXISTS "+map.getSchema()+";");
-    	executeSQLLine("CREATE TABLE IF NOT EXISTS "+map.getSchema()+"."+map.getTableName()+map.getColumns()+";");
+    	executeSQLLine("CREATE TABLE IF NOT EXISTS "+map.getSchema()+"."+map.getTableName()+map.getCreateColumns()+";");
  		return true;
     }
     
@@ -105,8 +105,9 @@ public class FDBBroker
     	for(FEntityMapper m:entities){if(m.getEntity().equals(entityName)){map=m;}}
     	if(!(map==null)){
     		System.out.println("debug - map ok - values"+map.getValues(entity));
-    		String s="insert into table "+map.getTableName()+" values "+map.getValues(entity);
+    		String s="insert into table "+map.getSchema()+"."+map.getTableName()+map.getColumns()+" values "+map.getValues(entity);
     		try {
+    			System.out.println("SQL: exeUpd. : "+s);
 				dbstat.executeUpdate(s+";");
 			} catch (SQLException e) {
 				// TODO Auto-generated catch block

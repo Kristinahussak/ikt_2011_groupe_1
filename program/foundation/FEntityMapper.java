@@ -88,6 +88,13 @@ public class FEntityMapper implements IAEntityMapper{
 	
 	public String getColumns(){
 		String s="(";
+		for(int k=0;k<relaCount;k++) {s=s+relations[k][1]+",";}
+		s=s.substring(0,s.length()-1)+")";
+		return s;
+	}
+
+	public String getCreateColumns(){
+		String s="(";
 		for(int k=0;k<relaCount;k++) {s=s+relations[k][1]+" "+relations[k][2]+" "+relations[k][3]+",";}
 		s=s+primaryKey+")";
 		return s;
@@ -110,7 +117,7 @@ public class FEntityMapper implements IAEntityMapper{
 		for(int k=0;k<relaCount;k++){
 			Field field;
 			try {
-				System.out.println("debug getvalues : "+relations[k][0]);
+				//System.out.println("debug getvalues : "+relations[k][0]);
 				field = getField(entity.getClass(),relations[k][0]);
 				field.setAccessible(true);
 				s=s+field.get(entity)+",";
