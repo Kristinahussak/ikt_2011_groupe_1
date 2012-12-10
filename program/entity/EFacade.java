@@ -124,7 +124,8 @@ public class EFacade
     
     public boolean createOrder(String packetInfo)
     {
-        return false;
+    	System.out.println(packetInfo);
+        return true;
     }
     
     public boolean storeItem()
