@@ -4,6 +4,8 @@ import acquaintance.*;
 import java.util.ArrayList;
 import java.util.TreeSet;
 
+import presentation.PManager;
+
 /**
  * EFacade.java
  * @author 3. Semester Projekt, Gruppe 1
@@ -30,9 +32,9 @@ public class EFacade
         itemTypes.add(itemtype2);
         itemTypes.add(itemtype3);
         
-        EOrder order1 = new EOrder("IKEA Göteborg");
-        EOrder order2 = new EOrder("IKEA Odense");
-        EOrder order3 = new EOrder("IKEA Aarhus");   
+        EOrder order1 = new EOrder("IKEA Göteborg", "2012-12-12");
+        EOrder order2 = new EOrder("IKEA Odense", "2012-12-12");
+        EOrder order3 = new EOrder("IKEA Aarhus", "2012-12-12");   
         
         EItem item1 = new EItem(1,itemTypes.get(0));
         EItem item2 = new EItem(2,itemTypes.get(0));              
@@ -40,7 +42,21 @@ public class EFacade
         EItem item4 = new EItem(4,itemTypes.get(1));
         EItem item5 = new EItem(5,itemTypes.get(1));
         EItem item6 = new EItem(6,itemTypes.get(1));   
-        EItem item7 = new EItem(7,itemTypes.get(2));  
+        EItem item7 = new EItem(7,itemTypes.get(2));
+        //item på stock
+        EItem item8 = new EItem(8,itemTypes.get(0));
+        EItem item9 = new EItem(9,itemTypes.get(0)); 
+        EItem item10 = new EItem(10,itemTypes.get(1)); 
+        EItem item11 = new EItem(11,itemTypes.get(1)); 
+        EItem item12 = new EItem(12,itemTypes.get(1));
+        EItem item13 = new EItem(13,itemTypes.get(2));
+        
+        stock.add(item8);
+        stock.add(item9);
+        stock.add(item10);
+        stock.add(item11);
+        stock.add(item12);
+        stock.add(item13);
         
         order1.add(item1);
         order1.add(item2);
@@ -124,8 +140,42 @@ public class EFacade
     
     public boolean createOrder(String packetInfo)
     {
-    	System.out.println(packetInfo);
-        return true;
+    	String[] tempPacketInfo;
+    	tempPacketInfo = packetInfo.split(";");
+    	//laver ordre udfra packetInfo
+    	System.out.println(tempPacketInfo[0]);
+    	if(tempPacketInfo[0].equals("01")){
+    	System.out.println("det er en 01 pakke");
+    	EOrder tempOrder = new EOrder(tempPacketInfo[1], tempPacketInfo[3]);
+    	//int numberOfItemTypes = Integer.parseInt(tempPacketInfo[4]);
+    	//System.out.println("antal itemtype: " + numberOfItemTypes);
+    	//String currentBarcode=tempPacketInfo[5];
+    	//EItemType currentItemType;
+    	
+			//for (int i = 0; i < numberOfItemTypes; i++) {
+				//System.out.println("første loop");
+				for (int k = 4; k < tempPacketInfo.length; k = k+2) {
+					System.out.println("andet loop");
+					int currentNumberOfItems = Integer
+							.parseInt(tempPacketInfo[k + 1]);
+					System.out.println("currentNumberOfItems: "+ currentNumberOfItems);
+					for (int j = 0; j < currentNumberOfItems; j++){
+						System.out.println("tredje loop");
+						tempOrder.add(stock.remove(tempPacketInfo[k]));}
+				}
+    	//}
+		orders.add(tempOrder);
+    	System.out.println(this.orders.size());
+    	//update order i DB
+    	System.out.println(tempOrder.entityToString());
+    	//System.out.println(packetInfo);
+    	return true;
+    	}
+    	else{
+    		return false;
+    	}
+    	
+        
     }
     
     public boolean storeItem()

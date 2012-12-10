@@ -21,10 +21,11 @@ public class EOrder extends EComposite
     private String receivedDate;  
     
 
-    public EOrder(String storeInfo) {
+    public EOrder(String storeInfo, String shippingDate) {
     	this.setState(IAComponent.ORDER_OPEN);
     	this.receivedDate = this.getDate();  
     	this.storeInfo = storeInfo;
+    	this.shippingDate = shippingDate;
     	
     }
     
@@ -36,9 +37,11 @@ public class EOrder extends EComposite
     }
     
     @Override
-    public IAComponent remove(int barcode)
+    public IAComponent remove(String barcode)
     {
-        return super.remove(barcode);
+    	
+    	
+        return null;
     }
     
     @Override

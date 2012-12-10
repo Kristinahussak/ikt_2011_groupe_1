@@ -27,7 +27,7 @@ public class EComponent implements IAComponent
         return false;
     }
     
-    public IAComponent remove(int barcode)
+    public IAComponent remove(String barcode)
     {
         return null;
     }
@@ -75,7 +75,7 @@ public class EComponent implements IAComponent
 	}
 	
 	public String getDate() {
-		DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd/HH:mm:ss");
+		DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 		// getcurrent date time with Date()
 		java.util.Date date = new java.util.Date();
 		

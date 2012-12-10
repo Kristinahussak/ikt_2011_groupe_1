@@ -27,7 +27,7 @@ public class EComposite extends EComponent
     }
     
     @Override
-    public IAComponent remove(int barcode)
+    public IAComponent remove(String barcode)
     {
         return null; // implementeres
     }

@@ -36,6 +36,8 @@ public class EItem extends EComponent
     // Bruger EComponents metode. Når tilstand ændres OID state mm sættes needUpdate = true;
     
     public EItemType getItemType(){return type;}
+    
+    public String getBarcode(){return type.getBarcode();}
         
     public static boolean retrieveItem(int stockPosition)
     {

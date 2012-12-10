@@ -29,13 +29,30 @@ public class EStock extends EComposite
    
     public boolean add(IAComponent item)
     {
-        return super.add(item);// skal fjernes hvis ikke yderligere implementation
+    	
+        return this.items.add(item);
     }
     
     @Override
-    public IAComponent remove(int barcode)
+    public IAComponent remove(String barcode)
     {
-        return super.remove(barcode); // skal fjernes hvis ikke yderligere implementation
+    	System.out.println("items size: " + items.size());
+    	EItem currentItem = null;
+    	boolean itemFound = false;
+    	int count = 0;
+    	for(int i = 0;0<items.size() && !itemFound;i++)
+    	{
+    		
+    		currentItem = (EItem) items.get(i);
+    		System.out.println(count);
+    		count++;
+    		if(barcode.equals(currentItem.getBarcode()))
+    		{
+    			items.remove(i);
+    			itemFound = true;
+    		}
+    	}
+        return currentItem;
     }
     
     @Override
