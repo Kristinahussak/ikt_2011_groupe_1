@@ -5,6 +5,7 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.PrintWriter;
+import java.lang.reflect.Field;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
@@ -94,22 +95,59 @@ public class FDBBroker
     	FEntityMapper map = (FEntityMapper)mapper;
     	entities.add(map);
     	executeSQLLine("CREATE SCHEMA IF NOT EXISTS "+map.getSchema()+";");
+    	if(map.getDebugDropTable()){executeSQLLine("DROP TABLE IF EXISTS "+map.getSchema()+"."+map.getTableName()+";");}
     	executeSQLLine("CREATE TABLE IF NOT EXISTS "+map.getSchema()+"."+map.getTableName()+map.getCreateColumns()+";");
  		return true;
     }
     
+	private Field getField(Class c,String fname) throws NoSuchFieldException{
+		// bruges af getvalues
+		try {return c.getDeclaredField(fname);}
+		catch (NoSuchFieldException e) {
+		      Class superClass = c.getSuperclass();
+		      if (superClass == null) {throw e;}
+		      else {return getField(superClass, fname);}
+		}
+	}
+
     public boolean updateEntity(Object entity){
     	// er entitys OID<0 er den ikke i Databasen endnu og skal indsættes ellers updates
+    	int oid = -1;
+    	ResultSet result = null;
     	String entityName = entity.getClass().getCanonicalName();
     	FEntityMapper map = null;
     	for(FEntityMapper m:entities){if(m.getEntity().equals(entityName)){map=m;}}
     	if(!(map==null)){
-    		System.out.println("debug - map ok - values"+map.getValues(entity));
-    		String s="insert into table "+map.getSchema()+"."+map.getTableName()+map.getColumns()+" values "+map.getValues(entity);
+    		//System.out.println("debug - map ok - values"+map.getValues(entity));
     		try {
-    			System.out.println("SQL: exeUpd. : "+s);
-				dbstat.executeUpdate(s+";");
-			} catch (SQLException e) {
+    			String s = null;
+    			if(map.getOID()<0){
+       				s = "SELECT max(`"+map.getPKColumn()+"`) FROM "+map.getSchema()+"."+map.getTableName()+" ";
+    				(result = dbstat.executeQuery(s)).first();
+    				int maxPK = result.getInt(1);
+    				System.out.println("Debug select : "+s+" , next id : "+maxPK);
+  					Field f = getField(entity.getClass(),map.getPKField());
+  					f.setAccessible(true);
+  					f.setInt(entity, (maxPK+1));
+  					s = "INSERT INTO "+map.getSchema()+"."+map.getTableName()+map.getColumns()+" values "+map.getValues(entity)+";";
+    				
+ 	   			}
+   				else{
+   					s = "UPDATE "+map.getSchema()+"."+map.getTableName()+map.getColumns()+" values "+map.getValues(entity)+";";
+   					s=map.getUpdateString(entity);
+   				} 
+      			System.out.println("SQL: exeUpd. : "+s);
+      		  	dbstat.executeUpdate(s);
+   			    				
+        		//dbstat.executeUpdate("insert into 'CSS4'.'items' ('item_id','stock_position') values(25,50);");
+        		//dbstat.executeUpdate(s+";");
+			}
+    		catch (SQLException e) {e.printStackTrace();}
+			catch (SecurityException e) {e.printStackTrace();}
+			catch (NoSuchFieldException e) {e.printStackTrace();} catch (IllegalArgumentException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (IllegalAccessException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}

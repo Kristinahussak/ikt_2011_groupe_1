@@ -25,7 +25,10 @@ public class FEntityMapper implements IAEntityMapper{
 	private final int relaMax = 100;
 	private int relaCount = 0;
 	private String[][] relations = new String[relaMax][]; // = 50 relationer
-
+    private boolean debugDropTable = false;
+	private int OID = -1;
+	private String pkField = "";
+	private String pkColumn = "";
 	
 	public FEntityMapper(FDBBroker owner){
 		this.owner = owner;
@@ -72,7 +75,11 @@ public class FEntityMapper implements IAEntityMapper{
 			relations[relaCount][1] = "`"+colName+"`";
 			relations[relaCount][2] = vtype;
 			relations[relaCount][3] = attributes;
-			if((keys==IAEntityMapper.EM_PRIMARY_KEY)){primaryKey = "primary key (`"+colName+"`)";}
+			if((keys==IAEntityMapper.EM_PRIMARY_KEY)){
+				primaryKey = "primary key (`"+colName+"`)";
+				pkField = field;
+				pkColumn = colName;
+			}
 			relaCount++;
 				}
 		
@@ -111,16 +118,18 @@ public class FEntityMapper implements IAEntityMapper{
 		}
 	}
 	
+	
 	public String getValues(Object entity){
 		// kaldes af fdbbroker. entity passer til dette map (er kontrolleret)
 		String s="(";
 		for(int k=0;k<relaCount;k++){
-			Field field;
+			Field field = null;
 			try {
 				//System.out.println("debug getvalues : "+relations[k][0]);
 				field = getField(entity.getClass(),relations[k][0]);
 				field.setAccessible(true);
 				s=s+field.get(entity)+",";
+				if(relations[k][0]=="OID"){OID = (Integer)field.get(entity);}
 			}
 			catch (SecurityException e) {e.printStackTrace();}
 			catch (NoSuchFieldException e) {e.printStackTrace();}
@@ -131,4 +140,32 @@ public class FEntityMapper implements IAEntityMapper{
 		
 		return s;
 	}
+	
+	public String getUpdateString(Object entity){
+		String s ="UPDATE "+schema+"."+tableName;
+		for(int k=0;k<relaCount;k++){
+			Field f;
+			try {
+				f = entity.getClass().getField(relations[k][0]);
+				f.setAccessible(true);
+				s = s+" SET "+ relations[k][1]+" = "+f.get(entity.getClass())+",";
+				s=s.substring(0,s.length()-1)+" WHERE "+pkField+" =";
+			}
+			catch (SecurityException e) {e.printStackTrace();}
+			catch (NoSuchFieldException e) {e.printStackTrace();}
+			catch (IllegalArgumentException e) {e.printStackTrace();}
+			catch (IllegalAccessException e) {e.printStackTrace();}
+		}
+		return s;
+	}
+	
+	public void setDebugDropTable(boolean drop){debugDropTable = drop;};
+	public boolean getDebugDropTable(){return debugDropTable;}
+	
+	public int getOID(){return OID;}
+	
+	public String getPKField(){return pkField;}
+	public String getPKColumn(){return pkColumn;}
+		
+	
 }
