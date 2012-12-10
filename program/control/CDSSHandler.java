@@ -17,7 +17,7 @@ import java.util.*;
 public class CDSSHandler
 {
 	private static ServerSocket serverSocket;
-	//Hvilken port bruger vi?
+
 	private static final int PORT = 55555;
 
 	
