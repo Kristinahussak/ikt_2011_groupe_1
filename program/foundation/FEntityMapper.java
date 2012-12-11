@@ -69,7 +69,7 @@ public class FEntityMapper implements IAEntityMapper{
 	public void setRelation(String field, String colName, String type, String attributes,int keys) {
 		if(relaCount<relaMax){
 			// ingen kontrol af de 4 felters syntaks
-			String vtype = type;if(vtype.contains("String")){vtype = "varchar(1024)";}
+			String vtype = type;if(vtype.contains("String")){vtype = "text";}
 			relations[relaCount] = new String[4];
 			relations[relaCount][0] = field;
 			relations[relaCount][1] = "`"+colName+"`";

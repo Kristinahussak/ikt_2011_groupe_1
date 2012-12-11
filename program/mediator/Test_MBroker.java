@@ -28,7 +28,7 @@ public class Test_MBroker {
 		mapper.setTable("items");
 		mapper.setRelation("OID","OID","int",mapper.EM_NOT_NULL+mapper.EM_AUTO_INCREMENT,mapper.EM_PRIMARY_KEY);
 		mapper.setRelation("stockPosition","stock_position","int","",mapper.EM_NO_KEY);
-		mapper.setRelation("ownerOID","owner_id","int","",mapper.EM_NO_KEY);
+		mapper.setRelation("ownerOID","owner_id","String","",mapper.EM_NO_KEY);
 		//mapper.setRelation("halleluja","nudetjul","String","",mapper.EM_NO_KEY);
 		//... flere relations her
 		
