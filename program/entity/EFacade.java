@@ -137,47 +137,27 @@ public class EFacade
     	
     	return false;    	
     }
-    
-    public boolean createOrder(String packetInfo)
-    {
-    	String[] tempPacketInfo;
-    	tempPacketInfo = packetInfo.split(";");
-    	//laver ordre udfra packetInfo
-    	System.out.println(tempPacketInfo[0]);
-    	if(tempPacketInfo[0].equals("01")){
-    	System.out.println("det er en 01 pakke");
-    	EOrder tempOrder = new EOrder(tempPacketInfo[1], tempPacketInfo[3]);
-    	//int numberOfItemTypes = Integer.parseInt(tempPacketInfo[4]);
-    	//System.out.println("antal itemtype: " + numberOfItemTypes);
-    	//String currentBarcode=tempPacketInfo[5];
-    	//EItemType currentItemType;
-    	
-			//for (int i = 0; i < numberOfItemTypes; i++) {
-				//System.out.println("første loop");
-				for (int k = 4; k < tempPacketInfo.length; k = k+2) {
-					System.out.println("andet loop");
-					int currentNumberOfItems = Integer
-							.parseInt(tempPacketInfo[k + 1]);
-					System.out.println("currentNumberOfItems: "+ currentNumberOfItems);
-					for (int j = 0; j < currentNumberOfItems; j++){
-						System.out.println("tredje loop");
-						tempOrder.add(stock.remove(tempPacketInfo[k]));}
+    //Creates a Order from at requestOrder
+	public boolean createOrder(String packetInfo) {
+		String[] tempPacketInfo;
+		tempPacketInfo = packetInfo.split(";");
+		if (tempPacketInfo[0].equals("01")) {
+			EOrder tempOrder = new EOrder(tempPacketInfo[1], tempPacketInfo[3]);
+			for (int k = 4; k < tempPacketInfo.length; k = k + 2) {
+				int currentNumberOfItems = Integer
+						.parseInt(tempPacketInfo[k + 1]);
+				for (int j = 0; j < currentNumberOfItems; j++) {
+					tempOrder.add(stock.remove(tempPacketInfo[k]));
 				}
-    	//}
-		orders.add(tempOrder);
-    	System.out.println(this.orders.size());
-    	//update order i DB
-    	System.out.println(tempOrder.entityToString());
-    	//System.out.println(packetInfo);
-    	return true;
-    	}
-    	else{
-    		return false;
-    	}
-    	
-        
-    }
-    
+			}
+			orders.add(tempOrder);
+			return true;
+		} else {
+			return false;
+		}
+
+	}
+
     public boolean storeItem()
     {    
     	String scannedBarcode = EItem.scanItem();    	

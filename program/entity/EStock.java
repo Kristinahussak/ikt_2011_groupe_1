@@ -36,16 +36,15 @@ public class EStock extends EComposite
     @Override
     public IAComponent remove(String barcode)
     {
-    	System.out.println("items size: " + items.size());
     	EItem currentItem = null;
     	boolean itemFound = false;
-    	int count = 0;
+
     	for(int i = 0;0<items.size() && !itemFound;i++)
     	{
     		
     		currentItem = (EItem) items.get(i);
-    		System.out.println(count);
-    		count++;
+ 
+
     		if(barcode.equals(currentItem.getBarcode()))
     		{
     			items.remove(i);

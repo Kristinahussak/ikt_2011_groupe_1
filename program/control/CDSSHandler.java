@@ -30,23 +30,18 @@ public class CDSSHandler
 		}
 
 		do {
-			// Wait for client...
 			Socket client = null;
 			try {
 				client = serverSocket.accept();
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 
 			System.out.println("\nNew client accepted.\n");
 
-			// Create a thread to handle communication with
-			// this client and pass the constructor for this
-			// thread a reference to the relevant socket...
 			ClientHandler handler = new ClientHandler(client);
 			handler.setRunning(true);
-			handler.start();// As usual, this method calls run.
+			handler.start();
 		} while (true);
 	}
 }
@@ -59,7 +54,6 @@ public class CDSSHandler
   
     	
     	public ClientHandler(Socket socket) {
-    		// Set up reference to associated socket...
     		client = socket;
 
     		try {

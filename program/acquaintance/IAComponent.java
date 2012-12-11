@@ -27,7 +27,7 @@ public interface IAComponent{
  	
 	public boolean add(IAComponent item);
     
-	public IAComponent remove(int barcode);
+	public IAComponent remove(String barcode);
 	
 	public int[] getPositions();
 	
