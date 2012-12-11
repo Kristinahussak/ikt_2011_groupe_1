@@ -12,7 +12,8 @@ import javax.swing.ImageIcon;
 
 public class EItemType
 {   
-    private String name;
+    private int OID = -1;
+	private String name;
     private String barcode;
     private double price;
 

@@ -147,13 +147,8 @@ public class FDBBroker
    		}
     		catch (SQLException e) {e.printStackTrace();}
 			catch (SecurityException e) {e.printStackTrace();}
-			catch (NoSuchFieldException e) {e.printStackTrace();} catch (IllegalArgumentException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			} catch (IllegalAccessException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+			catch (NoSuchFieldException e) {e.printStackTrace();} catch (IllegalArgumentException e) {e.printStackTrace();}
+    		catch (IllegalAccessException e) {e.printStackTrace();}
     		
     	}
     	else return false; // pågældende entity findes ikke blandt maps!
