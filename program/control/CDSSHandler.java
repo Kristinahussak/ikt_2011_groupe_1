@@ -39,13 +39,13 @@ public class CDSSHandler
 
 			System.out.println("\nNew client accepted.\n");
 
-			ClientHandler handler = new ClientHandler(client);
+			DSSHandler handler = new DSSHandler(client);
 			handler.setRunning(true);
 			handler.start();
 		} while (true);
 	}
 }
-    class ClientHandler extends Thread {
+    class DSSHandler extends Thread {
     	private Socket client;
     	private Scanner input;
     	private PrintWriter output;
@@ -53,7 +53,7 @@ public class CDSSHandler
     	
   
     	
-    	public ClientHandler(Socket socket) {
+    	public DSSHandler(Socket socket) {
     		client = socket;
 
     		try {
