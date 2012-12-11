@@ -75,12 +75,17 @@ public class CDSSHandler
     {
     	String orderString;
     	orderString = input.nextLine();
-
+    	boolean result = EFacade.getInstance().createOrder(orderString);
+    	if(result==true){
+    		output.println("Order accepted");
+    	
+    	}
+    	else{
+    		output.println("Order not accepted");
+    	}
+    	return result;
     	
     	
-    	EFacade.getInstance().createOrder(orderString);
-    	
-        return false;
     }    
     
 
