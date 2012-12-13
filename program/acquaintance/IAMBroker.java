@@ -1,6 +1,4 @@
-package mediator;
-import entity.*;
-import acquaintance.*;
+package acquaintance;
 
 
 /**
@@ -11,11 +9,11 @@ import acquaintance.*;
  * Created on 03-12-2012
  */
 
-public interface IMBroker {
+public interface IAMBroker {
 
 	//public IMBroker getBroker();
 	public boolean setDB(ADBInfo info);
 	public boolean close();
-	public boolean updateItem(EItem item);
-	public boolean updateOrder(EOrder order);
+	public boolean updateEntity(Object entity);
+	
 }

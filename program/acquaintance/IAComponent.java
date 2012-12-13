@@ -25,6 +25,9 @@ public interface IAComponent{
 	public final static int STOCK_EMPTY = 303;	
  	public final static int NOT_INITIALIZED = 401;
  	
+	public int getOwnerOID();
+	public void setOwnerOID(int OID);
+	 	
 	public boolean add(IAComponent item);
     
 	public IAComponent remove(String barcode);

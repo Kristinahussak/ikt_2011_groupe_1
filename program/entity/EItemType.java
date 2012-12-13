@@ -23,6 +23,8 @@ public class EItemType
         this.price = price;
     }
 
+    public int getOID(){return OID;}
+    
     public String getBarcode() {
         return barcode;
     }

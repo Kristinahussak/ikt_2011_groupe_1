@@ -32,6 +32,7 @@ public class EOrder extends EComposite
     @Override
     public boolean add(IAComponent item)
     {
+    	item.setOwnerOID(getOID());
     	this.items.add(item);
         return true;
     }

@@ -48,31 +48,6 @@ public class FDBBroker
     	//return buildCSSSchema(); // Kun til test!!!!!!
     }
     
-  /*  private boolean buildCSSSchema(){
-    	// Test metode!!!
-    	String[] sqlLine = new String[30];
-    
-    	try {
-			BufferedReader reader = new BufferedReader(new FileReader("css_sql_lines.txt"));
-			int line=0;
-			do{
-				sqlLine[line]=reader.readLine();
-				if(!(sqlLine[line].contains("//"))) line++;
-			}
-			while(!(sqlLine[line-1].contains("eof")));
-			reader.close();
-			// debug for(String s:sqlLine) System.out.println(s);
-		}
-    	catch (Exception e) {e.printStackTrace();}
-    	
-    	try{
-    		// Create CSS Schema: line 0-1
-    		for(int k=0;k<2;k++) dbstat.execute(sqlLine[k]);
-    	}
-    	catch(SQLException sqle){sqle.printStackTrace();return false;}
-    return true;	
-    }*/
-    
     public boolean closeDBConnection(){
     	if(!(dbcon==null)) try {dbcon.close();}
     	catch(SQLException sqle){sqle.printStackTrace();return false;}

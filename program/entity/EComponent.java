@@ -17,7 +17,7 @@ import acquaintance.*;
 public class EComponent implements IAComponent
 {   
     private int OID = -1; // = Ikke sat
-    private int ownerOID = -1;
+    protected int ownerOID = -1;
     private int state = IAComponent.NOT_INITIALIZED;
     private boolean updated = false;
     private ArrayList<IAComponent> items = new ArrayList<IAComponent>();  

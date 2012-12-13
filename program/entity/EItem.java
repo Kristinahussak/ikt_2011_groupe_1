@@ -17,14 +17,19 @@ public class EItem extends EComponent
 	private static IERCS rcsInterface = new ERCSAdapter();
     private int stockPosition = -1;  
     private EItemType type;
+    protected int typeOID = -1;
+    protected int orderOID = -1;
 
     public EItem(int stockPosition, EItemType type)
     {
         this.stockPosition = stockPosition; 
         this.type = type;
+        this.typeOID = type.getOID();
         this.setState(IAComponent.ITEM_AVAILABLE);
     }
       
+    protected  void setOrderOID(int orderOID){this.orderOID = orderOID;}
+    
     @Override
     public int[] getPositions()
     {

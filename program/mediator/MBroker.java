@@ -13,7 +13,7 @@ import foundation.*;
  * Created on 03-12-2012
  */
 
-public class MBroker implements IMBroker{
+public class MBroker implements IAMBroker{
 
 	private static MBroker broker = null;
 	private FDBBroker db = null;
@@ -38,18 +38,6 @@ public class MBroker implements IMBroker{
 	
 	}
 
-	@Override
-	public boolean updateItem(EItem item) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public boolean updateOrder(EOrder order) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-	
 	public IAEntityMapper getEntityMapper(){return db.getEntityMapper();}
 	
 	public boolean updateEntity(Object entity){return db.updateEntity(entity);}
