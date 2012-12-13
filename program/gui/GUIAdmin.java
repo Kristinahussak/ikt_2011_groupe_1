@@ -801,13 +801,8 @@ public class GUIAdmin
         ArrayList<String> order;
         JPanel ordersPanel;
         JButton searchButton, refreshButton;        
-        DrawablePanel mainPanel;
-        
-        private ImageIcon searchButtonImg = new ImageIcon("images/viewMenu/searchButton.png");
-        private ImageIcon searchButtonDownImg = new ImageIcon("images/viewMenu/searchButtonDown.png");
-        private ImageIcon refreshButtonImg = new ImageIcon("images/viewMenu/refreshButton.png");
-        private ImageIcon refreshButtonDownImg = new ImageIcon("images/viewMenu/refreshButtonDown.png");      
-        
+        DrawablePanel mainPanel;    
+        JLabel orderDescription;
         
         public ViewItems(ArrayList<String> order)
         {    
@@ -867,6 +862,11 @@ public class GUIAdmin
             
             mainPanel.add(scrollPane);
             
+            orderDescription = new JLabel("Viewing blabla bla for bla bla by blabla");
+            orderDescription.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+            orderDescription.setBounds(237,40,300,15);
+            mainPanel.add(orderDescription);
+            
             ordersPanel = new JPanel();
             scrollPane.setViewportView(ordersPanel);
             ordersPanel.setBackground(Color.WHITE);
@@ -882,7 +882,8 @@ public class GUIAdmin
             if(currentItems.size() < 9){gridSize = 9;}
             else{gridSize = currentItems.size();}
         	        	
-            
+            String[] tempOrder = currentItems.get(0).split(";");
+            orderDescription.setText("Viewing items for order: "+tempOrder[0]+ ", by " +tempOrder[1]+".");
             
             ordersPanel.setLayout(new GridLayout(gridSize,1));
             
@@ -908,10 +909,30 @@ public class GUIAdmin
                 
                 ordersPanel.add(items[i]);  
                 
-                if(i < currentItems.size()){
+                
+                
+                if(i < currentItems.size() && i > 0){
                 String delimiter = ";";
                 String[] temp = currentItems.get(i).split(delimiter); 
-                System.out.println(temp[0]+";"+temp[1]+";"+temp[2]+";"+temp[3]+";");
+                
+                JLabel stockPosition = new JLabel(temp[1], JLabel.CENTER);
+                stockPosition.setBounds(5,0,90,20);
+                items[i-1].add(stockPosition);
+                
+                JLabel name = new JLabel(temp[0]);
+                name.setBounds(110,0,220,20);
+                items[i-1].add(name);
+                
+                JLabel barcode = new JLabel(temp[2]);
+                barcode.setBounds(338,0,100,20);
+                items[i-1].add(barcode);
+                
+                JLabel price = new JLabel(temp[3], JLabel.CENTER);
+                price.setBounds(445,0,80,20);
+                items[i-1].add(price);
+                
+               
+                
                 }
             }
             
@@ -925,18 +946,6 @@ public class GUIAdmin
             }
         }
         
-    }
-    
-    
-    
-    public class CreateUser extends JPanel
-    {
-        public CreateUser()
-        {
-            
-            
-            
-        }
     }
     
     public static void main(String[] args)

@@ -51,6 +51,8 @@ public class EFacade
         EItem item12 = new EItem(12,itemTypes.get(1));
         EItem item13 = new EItem(13,itemTypes.get(2));
         
+        order1.setState(IAComponent.ORDER_CLOSED);
+        
         stock.add(item8);
         stock.add(item9);
         stock.add(item10);
@@ -61,13 +63,50 @@ public class EFacade
         order1.add(item1);
         order1.add(item2);
         order1.add(item7);
+        order1.add(item1);
+        order1.add(item2);
+        order1.add(item7);
+        order1.add(item1);
+        order1.add(item2);
+        order1.add(item7);
+        order1.add(item1);
+        order1.add(item2);
+        order1.add(item7);
         
         order2.add(item3);
         order2.add(item4);
         order2.add(item5);
+        order2.add(item3);
+        order2.add(item4);
+        order2.add(item5);
+        order2.add(item3);
+        order2.add(item4);
+        order2.add(item5);
+        
         
         order3.add(item6);
+        order3.add(item6);
+        order3.add(item6);
+        order3.add(item6);
+        order3.add(item6);
+        order3.add(item6);
+        order3.add(item6);
         
+        orders.add(order1);
+        orders.add(order2);
+        orders.add(order3);
+        orders.add(order1);
+        orders.add(order2);
+        orders.add(order3);
+        orders.add(order1);
+        orders.add(order2);
+        orders.add(order3);
+        orders.add(order1);
+        orders.add(order2);
+        orders.add(order3);
+        orders.add(order1);
+        orders.add(order2);
+        orders.add(order3);
         orders.add(order1);
         orders.add(order2);
         orders.add(order3);
