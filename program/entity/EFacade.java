@@ -138,7 +138,7 @@ public class EFacade
     	return false;    	
     }
     //Creates a Order from at requestOrder
-	public boolean createOrder(String packetInfo) {
+	public synchronized boolean createOrder(String packetInfo) {
 		String[] tempPacketInfo;
 		tempPacketInfo = packetInfo.split(";");
 		if (tempPacketInfo[0].equals("01")) {
