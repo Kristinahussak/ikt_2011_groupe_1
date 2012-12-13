@@ -67,7 +67,12 @@ public class EOrder extends EComposite
 	public ArrayList<String> entityToString() {	
     	ArrayList<String> info = new ArrayList<String>();    
     	
-    	info.add(this.getOID()+";"+this.storeInfo+";"+this.receivedDate+";"+this.shippingDate);    	
+    	String stringState = "";
+    	
+    	if(this.getState() == IAComponent.ORDER_OPEN){stringState = "Open";}
+    	else if(this.getState() == IAComponent.ORDER_CLOSED){stringState = "Closed";}
+    	
+    	info.add(this.getOID()+";"+this.storeInfo+";"+this.receivedDate+";"+this.shippingDate+";"+stringState);    	
     	for (int i = 0; i < this.getItems().size(); i++) 
     	{
     		info.add(items.get(i).entityToString().get(0));    		    					

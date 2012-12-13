@@ -68,9 +68,25 @@ public class EFacade
         
         order3.add(item6);
         
+        order1.setState(IAComponent.ORDER_CLOSED);
+        
         orders.add(order1);
         orders.add(order2);
         orders.add(order3);
+        orders.add(order3);
+        orders.add(order1);
+        orders.add(order2);
+        orders.add(order3);
+        orders.add(order3);
+        orders.add(order3);
+        orders.add(order1);
+        orders.add(order2);
+        orders.add(order2);
+        orders.add(order2);
+        orders.add(order2);
+        orders.add(order1);
+        orders.add(order2);
+        orders.add(order2);
         
     }
     
