@@ -33,6 +33,7 @@ public class FDBBroker
     private ResultSet dbresult = null;
     private String[] sqlLines = null;
     private List<FEntityMapper> entities = new ArrayList<FEntityMapper>();
+    private Class lastSuperClass = null;
     
     public boolean setDBConnection(ADBInfo info){
     	if(!(dbcon==null)) closeDBConnection();
@@ -60,9 +61,9 @@ public class FDBBroker
     }
     
     private void executeSQLLine(String sqlString){
-    	try {dbstat.execute(sqlString);} 
+       	System.out.println("SQL: "+sqlString);
+        try {dbstat.execute(sqlString);} 
     	catch (SQLException e) {e.printStackTrace();}
-    	System.out.println("SQL: "+sqlString);
     }
     
     public boolean registerMapper(IAEntityMapper mapper) throws SQLException{
@@ -73,13 +74,9 @@ public class FDBBroker
     	entities.add(map);
     	executeSQLLine("CREATE SCHEMA IF NOT EXISTS "+map.getSchema()+";");
     	
-    	executeSQLLine("CREATE TABLE IF NOT EXISTS "+map.getSchema()+".`oid` (`next_oid` INT ,PRIMARY KEY (`next_oid`));");
-    	(result = dbstat.executeQuery("SELECT MAX(`next_oid`) FROM "+map.getSchema()+".`oid`;")).first();
-    	nextOID = (result.getInt(1));
-    	if(nextOID<1){
-    		nextOID=1;
-      		executeSQLLine("INSERT INTO "+map.getSchema()+".`oid` SET `next_oid` = 1;");
-    	}
+    	executeSQLLine("CREATE TABLE IF NOT EXISTS "+map.getSchema()+".`oid` (`oid` INT ,`entity` TEXT,PRIMARY KEY (`oid`));");
+    	nextOID = getLastOID(map.getSchema());
+    	if(nextOID<0){nextOID=0;}
     	//System.out.println("DEBUG First OID = "+nextOID);
     	if(map.getDebugDropTable()){executeSQLLine("DROP TABLE IF EXISTS "+map.getSchema()+"."+map.getTableName()+";");}
     	executeSQLLine("CREATE TABLE IF NOT EXISTS "+map.getSchema()+"."+map.getTableName()+map.getCreateColumns()+";");
@@ -88,17 +85,31 @@ public class FDBBroker
     
 	private Field getField(Class c,String fname) throws NoSuchFieldException{
 		// bruges af getvalues
-		try {return c.getDeclaredField(fname);}
+		try {
+			lastSuperClass = c;
+			return c.getDeclaredField(fname);}
 		catch (NoSuchFieldException e) {
 		      Class superClass = c.getSuperclass();
-		      if (superClass == null) {throw e;}
-		      else {return getField(superClass, fname);}
+		      lastSuperClass = superClass;
+		     if (superClass == null) {throw e;}
+		     else {return getField(superClass, fname);}
 		}
 	}
 
-    public boolean updateEntity(Object entity){
+	
+	private int getLastOID(String schema){
+		ResultSet result = null;
+    	try {
+			(result = dbstat.executeQuery("SELECT MAX(`oid`) FROM "+schema+".`oid`;")).first();
+			return result.getInt(1);
+		}
+    	catch (SQLException e) {e.printStackTrace();}
+ 		return 0;
+	}
+	
+    public boolean updateEntity(IAEntity entity) {
     	// er entitys OID<0 er den ikke i Databasen endnu og skal indsættes ellers updates
-    	int oid = -1;
+    	Integer oid = entity.getOID();
     	ResultSet result = null;
     	String entityName = entity.getClass().getCanonicalName();
     	FEntityMapper map = null;
@@ -107,28 +118,35 @@ public class FDBBroker
     		//System.out.println("debug - map ok - values"+map.getValues(entity));
     		try {
     			String s = null;
-    			if(map.getOID()<0){
+    			Field f = getField(entity.getClass(),map.getPKField());
+    			f.setAccessible(true);
+    			//Class c = entity.getClass();while(!(c.getSuperClass()==null)){c = c.getSuperclass();}
+    			if(entity.getOID()<0){ // entity er uinitialiseret!!!
        				//System.out.println("Debug select : "+s+" , next id : "+nextOID);
-  					Field f = getField(entity.getClass(),map.getPKField());
-  					f.setAccessible(true);
-  					f.setInt(entity, (nextOID));
-  					nextOID++;
-  					dbstat.executeUpdate("UPDATE "+map.getSchema()+".`oid` SET `next_oid` = "+nextOID+" WHERE `next_oid` = "+(nextOID-1)+";");
+       				entity.setOID(1+getLastOID(map.getSchema()));
+       			   	s="INSERT INTO "+map.getSchema()+".`oid`(`oid`,`entity`) VALUES ("+entity.getOID()+",'"+entityName+"');";
+    				executeSQLLine(s);
+    				//executeSQLLine("INSERT INTO "+map.getSchema()+".`oid` (`oid`,`entity`) VALUES ("+entity.getOID()+",'"+entityName+"');");
   					s = "INSERT INTO "+map.getSchema()+"."+map.getTableName()+map.getColumns()+" values "+map.getValues(entity)+";";
-      			}
+    			}
    				else{s=map.getUpdateString(entity);} 
       			//System.out.println("SQL: exeUpd. : "+s);
       		  	executeSQLLine(s);
    		}
-    		catch (SQLException e) {e.printStackTrace();}
+    		//catch (SQLException e) {e.printStackTrace();}
 			catch (SecurityException e) {e.printStackTrace();}
 			catch (NoSuchFieldException e) {e.printStackTrace();} catch (IllegalArgumentException e) {e.printStackTrace();}
-    		catch (IllegalAccessException e) {e.printStackTrace();}
     		
     	}
     	else return false; // pågældende entity findes ikke blandt maps!
     	
     	return true;
+    }
+    
+    public Object get(int OID){
+    	
+    	return null;
+    	
     }
     
     

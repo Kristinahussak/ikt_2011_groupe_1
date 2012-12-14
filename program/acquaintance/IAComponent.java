@@ -11,7 +11,7 @@ import java.util.ArrayList;
  */
 
 // Testkommentar kan fjernes igen HF
-public interface IAComponent{   
+public interface IAComponent extends IAEntity{   
 	
 	//States
 	

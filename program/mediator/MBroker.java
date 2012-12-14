@@ -40,6 +40,6 @@ public class MBroker implements IAMBroker{
 
 	public IAEntityMapper getEntityMapper(){return db.getEntityMapper();}
 	
-	public boolean updateEntity(Object entity){return db.updateEntity(entity);}
+	public boolean updateEntity(IAEntity entity){return db.updateEntity(entity);}
     
 }
