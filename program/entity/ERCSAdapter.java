@@ -1,5 +1,19 @@
 package entity;
 
+import gnu.io.CommPortIdentifier;
+import gnu.io.NoSuchPortException;
+import gnu.io.PortInUseException;
+import gnu.io.SerialPort;
+import gnu.io.SerialPortEvent;
+import gnu.io.SerialPortEventListener;
+import gnu.io.UnsupportedCommOperationException;
+
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.util.Enumeration;
+
+
 /**
  * ERCSAdapter.java
  * @author 3. Semester Projekt, Gruppe 1
@@ -8,28 +22,48 @@ package entity;
  * Created on 03-12-2012
  */
 
-public class ERCSAdapter implements IERCS
+public class ERCSAdapter implements IERCS/*, SerialPortEventListener*/ 
 {
+
+	RCSStub RCS;
 
     public ERCSAdapter() {}    
 
-    @Override
+   
     public boolean retrieveItem(int stockPosition) {
-        System.out.println("Item has been retrieved from stockposition: "+stockPosition);
-        return true;
+    	
+    	String serialMessage = ("retrieveItem:" + new Integer(stockPosition).toString());    	
+    	String result = sendMessage(serialMessage);
+    	
+        return Boolean.valueOf(result);
     }
 
-    @Override
-    public String scanItem() {
-    	//IMPLEMENT SCANITEM TO BRADLEY ALLEN
-    	System.out.println("Item has been scanned (Constant barcode atm.)");
-        return "323456789999";
-    }
-
-	@Override
-	public boolean storeItem(int stockPosition) {
-		System.out.println("Item has been stored on stockposition: " +stockPosition);
-		return true;
-	}
     
+
+    public String scanItem() {
+    	String serialMessage = "scanItem:";
+    	String result = sendMessage(serialMessage);
+    	
+        return result;
+    }
+
+	
+	public boolean storeItem(int stockPosition) {
+		String serialMessage = ("storeItem:" + new Integer(stockPosition).toString());    	
+		String result = sendMessage(serialMessage);
+    	
+        return Boolean.valueOf(result);
+	}
+	
+	public String sendMessage(String serialMessage){
+		RCS = new RCSStub();
+    	String result = RCS.message(serialMessage);
+    	return result;
+		
+	}
 }
+	
+	
+	
+	
+	
