@@ -2,6 +2,7 @@ package entity;
 import acquaintance.*;
 
 import java.util.ArrayList;
+import java.util.Observable;
 import java.util.TreeSet;
 
 import presentation.PManager;
@@ -14,7 +15,7 @@ import presentation.PManager;
  * Created on 03-12-2012
  */
 
-public class EFacade
+public class EFacade extends Observable
 {
     private ArrayList<EOrder> orders;
     private ArrayList<EItemType> itemTypes;    
