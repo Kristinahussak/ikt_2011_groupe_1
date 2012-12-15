@@ -22,10 +22,10 @@ import java.util.Enumeration;
  * Created on 03-12-2012
  */
 
-public class ERCSAdapter implements IERCS/*, SerialPortEventListener*/ 
+public class ERCSAdapter implements IERCS 
 {
 
-	RCSStub RCS;
+	ERCSStub RCS;
 
     public ERCSAdapter() {}    
 
@@ -56,7 +56,7 @@ public class ERCSAdapter implements IERCS/*, SerialPortEventListener*/
 	}
 	
 	public String sendMessage(String serialMessage){
-		RCS = new RCSStub();
+		RCS = new ERCSStub();
     	String result = RCS.message(serialMessage);
     	return result;
 		
