@@ -157,7 +157,16 @@ public class PAdmin implements Observer
         startSystem = new JMenuItem("Start system",startSystemImg);
         startSystem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_ENTER,
                 Event.ALT_MASK | Event.SHIFT_MASK));
-        startSystem.addActionListener(new NotImplementedActionListener("Start system"));
+        startSystem.addActionListener(new ActionListener(){
+
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				System.out.println("*** Initiating Startup Procedures ***");
+				CSystemStart temp = new CSystemStart();				
+				temp.systemStart();
+				
+				
+			}});
         system.add(startSystem);        
         
         stopSystem = new JMenuItem("Stop system",stopSystemImg);

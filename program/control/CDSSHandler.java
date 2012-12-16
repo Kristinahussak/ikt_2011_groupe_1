@@ -14,44 +14,55 @@ import java.util.*;
  * Created on 03-12-2012
  */
 //test
-public class CDSSHandler extends Observable
+public class CDSSHandler extends Thread
 {
 	private static ServerSocket serverSocket;
 
 	private static final int PORT = 55555;
+	public boolean serverRunning = true;
 
 	
     public CDSSHandler() {
 		try {
 			serverSocket = new ServerSocket(PORT);
+			System.out.println("     - Server Socket was initialized with port: "+PORT);
 		} catch (IOException ioEx) {
-			System.out.println("\nUnable to set up port!");
+			System.out.println("     - Unable to set up port on Server Socket: "+PORT);
 			System.exit(1);
-		}
-
-		do {
-			Socket client = null;
-			try {
-				client = serverSocket.accept();
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-
-			System.out.println("\nNew client accepted.\n");
-
-			DSSHandler handler = new DSSHandler(client);
-			handler.setRunning(true);			
-			new Thread(handler).start();
-		} while (true);
+		}		
 	}
+    
+    public void run()
+    {
+    	System.out.println("     - Server is now running.");
+    	while(serverRunning)
+    	{
+    		Socket client = null;
+    		try {	
+    			System.out.println("     - Server is now awaiting clients.");
+    			client = serverSocket.accept();    			
+    		} catch (IOException e) {
+    			e.printStackTrace();
+    		}
+
+    		System.out.println("     - A new client has been accepted");
+
+    		DSSHandler handler = new DSSHandler(client);
+    		handler.setRunning(true);			
+    		new Thread(handler).start();  
+    	}
+    }
+    
+    public void setServerRunning(boolean state)
+    {
+    	this.serverRunning = state;
+    }
 }
     class DSSHandler extends Observable implements Runnable {
     	private Socket client;
     	private Scanner input;
     	private PrintWriter output;
-    	boolean running;
-    	
-  
+    	boolean running;    
     	
     	public DSSHandler(Socket socket) {
     		client = socket;
@@ -67,6 +78,7 @@ public class CDSSHandler extends Observable
     	this.running = running;
     }
    public void run(){
+	   System.out.println("     - Server is awaiting orders from client: "+client.getRemoteSocketAddress().toString());
 	   while(running==true)
 	   receiveOrder();
     }
@@ -85,9 +97,7 @@ public class CDSSHandler extends Observable
     	else{
     		output.println("Order not accepted");
     	}
-    	return result;
-    	
-    	
+    	return result;    
     }    
     
 
