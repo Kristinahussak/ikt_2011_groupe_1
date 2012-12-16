@@ -42,7 +42,7 @@ public class MBroker implements IAMBroker{
 	
 	public boolean putEntity(IAEntity entity){return db.putEntity(entity);}
 	
-	public IAEntity getEntity(int OID){return db.getEntity(OID);}
+	public IAEntity getEntity(IAEntity entity){return db.getEntity(entity);}
 
 	@Override
 	public IAMBroker getBroker() {			

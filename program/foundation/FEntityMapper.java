@@ -136,6 +136,15 @@ public class FEntityMapper implements IAEntityMapper{
 		return s;
 	}
 	
+	public String getQueryString(IAEntity entity){
+		
+		String sqlq ="SELECT ";
+		for(int k=0;k<relaCount;k++){sqlq = sqlq+ "`"+relations[k].columnName+"`,";}  //r.columnName+
+		sqlq = sqlq.substring(0,sqlq.length()-1)+" FROM "+schema+"."+tableName+" WHERE OID = "+entity.getOID()+";";
+		System.out.println(sqlq);
+		return sqlq;
+	}
+	
 	public String getUpdateString(Object entity){
 		String s ="UPDATE "+schema+"."+tableName+" SET ";
 		Field f;

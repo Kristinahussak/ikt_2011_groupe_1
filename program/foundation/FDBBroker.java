@@ -6,6 +6,7 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.PrintWriter;
 import java.lang.reflect.Field;
+import java.lang.reflect.Method;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
@@ -13,6 +14,9 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
+
+import entity.EItem;
+import entity.EItemType;
 
 import acquaintance.*;
 
@@ -143,8 +147,30 @@ public class FDBBroker
     	return true;
     }
     
-    public IAEntity getEntity(int OID){
-    	
+    public IAEntity getEntity(IAEntity entity){
+    	ResultSet result = null;
+    	FEntityMapper map = null;
+    	for(FEntityMapper m:entities){if(m.getEntity().equals(entity.getClass().getCanonicalName())){map=m;}}
+    	if(!(map==null)){
+    		//System.out.println("debug - map ok - values"+map.getValues(entity));
+   	
+	    	try {
+	    			Class c = Class.forName(map.getEntity());
+	    			Field[] fields = c.getDeclaredFields();
+	    			for(int k=0;k< fields.length;k++) System.out.println("Debug get: field : "+fields[k]);
+	    			result = dbstat.executeQuery(map.getQueryString(entity));
+	    			result.first();
+	    			System.out.println(result.getInt("OID") );
+				//return (IAEntity) oentity;
+			 	//String s = "SELECT `entity` FROM "+"";
+					} 
+	    	catch (ClassNotFoundException e1) {e1.printStackTrace();}
+	    	//catch (SQLException e) {e.printStackTrace();}
+ catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+    	}	
     	return null;
     	
     }
