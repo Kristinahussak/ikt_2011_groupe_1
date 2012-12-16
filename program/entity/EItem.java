@@ -35,10 +35,7 @@ public class EItem extends EComponent
     {
     	int[] position = {this.stockPosition};
         return position;        
-    }    
-    
-    // public boolean updated()
-    // Bruger EComponents metode. Når tilstand ændres OID state mm sættes needUpdate = true;
+    }   
     
     public EItemType getItemType(){return type;}
     
@@ -84,6 +81,12 @@ public class EItem extends EComponent
     	
 		return info;
 	}
+    
+    @Override
+    public boolean update()
+    {
+		return broker.updateEntity(this);    	
+    }
     
     
 }

@@ -14,7 +14,7 @@ import java.util.*;
  * Created on 03-12-2012
  */
 //test
-public class CDSSHandler
+public class CDSSHandler extends Observable
 {
 	private static ServerSocket serverSocket;
 
@@ -40,12 +40,12 @@ public class CDSSHandler
 			System.out.println("\nNew client accepted.\n");
 
 			DSSHandler handler = new DSSHandler(client);
-			handler.setRunning(true);
-			handler.start();
+			handler.setRunning(true);			
+			new Thread(handler).start();
 		} while (true);
 	}
 }
-    class DSSHandler extends Thread {
+    class DSSHandler extends Observable implements Runnable {
     	private Socket client;
     	private Scanner input;
     	private PrintWriter output;
@@ -75,10 +75,12 @@ public class CDSSHandler
     {
     	String orderString;
     	orderString = input.nextLine();
+    	
     	boolean result = EFacade.getInstance().createOrder(orderString);
     	if(result==true){
     		output.println("Order accepted");
-    	
+    		setChanged();
+    		notifyObservers();    		  	
     	}
     	else{
     		output.println("Order not accepted");

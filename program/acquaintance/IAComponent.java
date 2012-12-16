@@ -49,6 +49,10 @@ public interface IAComponent extends IAEntity{
 	public ArrayList<IAComponent> getItems();
 	
 	public int getFirstFreePosition();
+	
+    public void setBroker(IAMBroker broker);
+	
+	public boolean update();
 
 }
 

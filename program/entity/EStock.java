@@ -24,35 +24,7 @@ public class EStock extends EComposite
     	{
     		freePositions.add(i);   
 		}
-    }   
-    
-   
-    public boolean add(IAComponent item)
-    {
-    	
-        return this.items.add(item);
-    }
-    
-    @Override
-    public IAComponent remove(String barcode)
-    {
-    	EItem currentItem = null;
-    	boolean itemFound = false;
-
-    	for(int i = 0;0<items.size() && !itemFound;i++)
-    	{
-    		
-    		currentItem = (EItem) items.get(i);
- 
-
-    		if(barcode.equals(currentItem.getBarcode()))
-    		{
-    			items.remove(i);
-    			itemFound = true;
-    		}
-    	}
-        return currentItem;
-    }
+    } 
     
     @Override
     public int[] getPositions()

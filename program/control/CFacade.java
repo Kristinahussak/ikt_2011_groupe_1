@@ -3,6 +3,7 @@ import entity.*;
 import mediator.*;
 
 import java.util.ArrayList;
+import java.util.Observable;
 import java.util.TreeMap;
 import java.util.TreeSet;
 
@@ -14,7 +15,7 @@ import java.util.TreeSet;
  * Created on 03-12-2012
  */
 
-public class CFacade implements ICManager, ICAdmin
+public class CFacade extends Observable implements ICManager, ICAdmin
 {
 
     public CFacade() {}    
@@ -26,11 +27,21 @@ public class CFacade implements ICManager, ICAdmin
     
     @Override
     public boolean processOrder(int orderNo) {
+    	
+    	if(EFacade.getInstance().processOrder(orderNo)){
+    		setChanged();
+    		notifyObservers();
+    	}        
         return EFacade.getInstance().processOrder(orderNo);
     }
 
     @Override
     public boolean storeItem() {
+    	
+    	if(EFacade.getInstance().storeItem()){
+    		setChanged();
+    		notifyObservers();
+    	} 
         return EFacade.getInstance().storeItem();
     }
 

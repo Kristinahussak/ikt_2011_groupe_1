@@ -2,10 +2,7 @@ package entity;
 import acquaintance.*;
 
 import java.util.ArrayList;
-import java.util.Observable;
-import java.util.TreeSet;
 
-import presentation.PManager;
 
 /**
  * EFacade.java
@@ -15,12 +12,13 @@ import presentation.PManager;
  * Created on 03-12-2012
  */
 
-public class EFacade extends Observable
+public class EFacade
 {
     private ArrayList<EOrder> orders;
     private ArrayList<EItemType> itemTypes;    
     private static EFacade instance = null;
-    private EStock stock = new EStock();
+    private IAComponent stock = new EStock();
+    private IAComponent component = new EComponent();
 
     public EFacade() {
         this.orders = new ArrayList<EOrder>();  
@@ -119,6 +117,11 @@ public class EFacade extends Observable
     	if(instance == null){instance = new EFacade();}
     	return instance;
     }
+    
+    public void setComponentBroker(IAMBroker broker)
+    {
+    	component.setBroker(broker);
+    }
 
 	public ArrayList<ArrayList<String>> viewOrders(int orderState)
 	{		
@@ -170,12 +173,10 @@ public class EFacade extends Observable
 				itemList.remove(currentItem);
 				
 				//CALL AN UPDATE ORDER HERE
-			}
-			
-						
-		}
+			}		
+		}		
     	
-    	return false;    	
+    	return true;    	
     }
     //Creates a Order from at requestOrder
 	public synchronized boolean createOrder(String packetInfo) {
@@ -220,18 +221,19 @@ public class EFacade extends Observable
     {    
     	boolean typeExists = false;
     	
-    	int x = 0;    	
+    	int x = -1;    	
     	while(!typeExists && x < itemTypes.size())
-    	{    	
+    	{    
+    		x++;
     		if(itemTypes.get(x).getBarcode() == barcode){
     			typeExists = true;
     		}    	
-    		x++;
+    		
     	}
     	
-    	if(!typeExists){System.out.println();x = -1;}
+    	if(!typeExists){x = -1;}
     	
-    	return x-1;        
+    	return x;        
     }  
 
 }

@@ -27,43 +27,14 @@ public class EOrder extends EComposite
     	this.storeInfo = storeInfo;
     	this.shippingDate = shippingDate;
     	
-    }
-    
-    @Override
-    public boolean add(IAComponent item)
-    {
-    	item.setOwnerOID(getOID());
-    	this.items.add(item);
-        return true;
-    }
-    
-    @Override
-    public IAComponent remove(String barcode)
-    {
-    	
-    	
-        return null;
-    }
+    } 
     
     @Override
     public int[] getPositions()
     {
         return null;        
-    }
-    
-    
-    // public boolean update() implementeret på EComponent
-    
-    public boolean processOrder()
-    {
-        return false;
-    }
-    
-    private void deleteItem(int itemNo)
-    {
-        
-    }
-    
+    }    
+
     @Override
 	public ArrayList<String> entityToString() {	
     	ArrayList<String> info = new ArrayList<String>();    
@@ -86,5 +57,10 @@ public class EOrder extends EComposite
 		return this.items;
 	}
     
+    @Override
+    public boolean update()
+    {
+    	return broker.updateEntity(this);      	
+    }
     
 }

@@ -21,15 +21,31 @@ public class EComponent implements IAComponent
     private int state = IAComponent.NOT_INITIALIZED;
     private boolean updated = false;
     private ArrayList<IAComponent> items = new ArrayList<IAComponent>();  
+    protected IAMBroker broker;
     
     public boolean add(IAComponent item)
     {
-        return false;
+    	item.setOwnerOID(getOID());    	
+        return this.items.add(item);
     }
     
     public IAComponent remove(String barcode)
     {
-        return null;
+    	EItem currentItem = null;
+    	boolean itemFound = false;
+
+    	for(int i = 0;0<items.size() && !itemFound;i++)
+    	{
+    		
+    		currentItem = (EItem) items.get(i); 
+
+    		if(barcode.equals(currentItem.getBarcode()))
+    		{
+    			items.remove(i);
+    			itemFound = true;
+    		}
+    	}
+        return currentItem;
     }
     
     public int[] getPositions()
@@ -68,6 +84,10 @@ public class EComponent implements IAComponent
         this.state = state;
         updated = false;
     }
+    public void setBroker(IAMBroker broker)
+    {
+    	this.broker = broker;
+    }
 
 	@Override
 	public ArrayList<String> entityToString() {		
@@ -90,6 +110,11 @@ public class EComponent implements IAComponent
 	@Override
 	public int getFirstFreePosition() {
 		return -1;
+	}
+
+	@Override
+	public boolean update() {		
+		return false;
 	}
 
 }
