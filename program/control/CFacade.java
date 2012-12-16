@@ -15,8 +15,9 @@ import java.util.TreeSet;
  * Created on 03-12-2012
  */
 
-public class CFacade extends Observable implements ICManager, ICAdmin
+public class CFacade implements ICManager, ICAdmin
 {
+	private CObservable observable = new CObservable();
 
     public CFacade() {}    
 
@@ -29,8 +30,7 @@ public class CFacade extends Observable implements ICManager, ICAdmin
     public boolean processOrder(int orderNo) {
     	
     	if(EFacade.getInstance().processOrder(orderNo)){
-    		setChanged();
-    		notifyObservers();
+    		observable.notifySubcribers();
     	}        
         return EFacade.getInstance().processOrder(orderNo);
     }
@@ -39,8 +39,7 @@ public class CFacade extends Observable implements ICManager, ICAdmin
     public boolean storeItem() {
     	
     	if(EFacade.getInstance().storeItem()){
-    		setChanged();
-    		notifyObservers();
+    		observable.notifySubcribers();
     	} 
         return EFacade.getInstance().storeItem();
     }

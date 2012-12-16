@@ -15,7 +15,7 @@ import java.util.*;
  */
 //test
 public class CDSSHandler extends Thread
-{
+{	
 	private static ServerSocket serverSocket;
 
 	private static final int PORT = 55555;
@@ -58,7 +58,8 @@ public class CDSSHandler extends Thread
     	this.serverRunning = state;
     }
 }
-    class DSSHandler extends Observable implements Runnable {
+    class DSSHandler  implements Runnable {
+    	private CObservable observable = new CObservable();
     	private Socket client;
     	private Scanner input;
     	private PrintWriter output;
@@ -91,8 +92,7 @@ public class CDSSHandler extends Thread
     	boolean result = EFacade.getInstance().createOrder(orderString);
     	if(result==true){
     		output.println("Order accepted");
-    		setChanged();
-    		notifyObservers();    		  	
+    		observable.notifySubcribers();   		  	
     	}
     	else{
     		output.println("Order not accepted");
