@@ -10,6 +10,7 @@ import java.lang.reflect.Method;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
+import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
@@ -147,6 +148,7 @@ public class FDBBroker
     	return true;
     }
     
+  
     public IAEntity getEntity(IAEntity entity){
     	ResultSet result = null;
     	FEntityMapper map = null;
@@ -157,16 +159,41 @@ public class FDBBroker
 	    	try {
 	    			Class c = Class.forName(map.getEntity());
 	    			Field[] fields = c.getDeclaredFields();
-	    			for(int k=0;k< fields.length;k++) System.out.println("Debug get: field : "+fields[k]);
+	    			for(int k=0;k< fields.length;k++) System.out.println("Debug get: field : "+fields[k]+" ; "+fields[k].getName());
 	    			result = dbstat.executeQuery(map.getQueryString(entity));
+	    			ResultSetMetaData meta = result.getMetaData();
 	    			result.first();
-	    			System.out.println(result.getInt("OID") );
+	    			for(int k=1;k<= meta.getColumnCount();k++){
+	    				//System.out.println("Results : "+meta.getColumnName(k)+" : "+result.getString(k)+" , "+map.getFieldFromColumn(meta.getColumnName(k)));
+	    				for(int kk=0;kk<fields.length;kk++){
+	    					String sColumn = meta.getColumnName(k);
+	    					if(map.getFieldFromColumn(meta.getColumnName(k)).equals(fields[kk].getName())){
+	    						String sValue = result.getString(k);
+	    						String sType = map.getTypeFromColumn(meta.getColumnName(k));
+	    						System.out.println("field: "+fields[kk].getName()+" , "+sValue+" ; "+sType);
+	    						fields[kk].setAccessible(true);
+	    						if(sType.equals("int")) {System.out.println("Go!"); sValue="2000";fields[kk].setInt(entity,(int)Integer.parseInt(sValue));}
+	    						if(sType.equals("String")) { fields[kk].set(entity,sValue);}
+	    						    					}
+	    					
+	    				}
+	    				//for(int kk=0;kk<map.)
+	    				//Field f = getField();
+	    			}
+	    			
+	    			//System.out.println(result.getInt("OID") +result.getStrin);
 				//return (IAEntity) oentity;
 			 	//String s = "SELECT `entity` FROM "+"";
 					} 
 	    	catch (ClassNotFoundException e1) {e1.printStackTrace();}
 	    	//catch (SQLException e) {e.printStackTrace();}
  catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (IllegalArgumentException e) {
+	// TODO Auto-generated catch block
+	e.printStackTrace();
+} catch (IllegalAccessException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
