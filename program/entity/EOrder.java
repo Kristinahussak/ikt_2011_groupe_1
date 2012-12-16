@@ -60,7 +60,7 @@ public class EOrder extends EComposite
     @Override
     public boolean update()
     {
-    	return broker.updateEntity(this);      	
+    	return broker.putEntity(this);      	
     }
     
 }

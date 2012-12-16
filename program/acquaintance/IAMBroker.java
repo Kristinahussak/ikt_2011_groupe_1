@@ -14,7 +14,8 @@ public interface IAMBroker {
 	//public IMBroker getBroker();
 	public boolean setDB(ADBInfo info);
 	public boolean close();
-	public boolean updateEntity(IAEntity entity);
+	public boolean putEntity(IAEntity entity);
+	public IAEntity getEntity(int OID);
 	public IAMBroker getBroker();
 	
 }

@@ -85,7 +85,7 @@ public class EItem extends EComponent
     @Override
     public boolean update()
     {
-		return broker.updateEntity(this);    	
+		return broker.putEntity(this);    	
     }
     
     

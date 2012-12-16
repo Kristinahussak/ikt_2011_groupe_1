@@ -107,7 +107,7 @@ public class FDBBroker
  		return 0;
 	}
 	
-    public boolean updateEntity(IAEntity entity) {
+    public boolean putEntity(IAEntity entity) {
     	// er entitys OID<0 er den ikke i Databasen endnu og skal indsættes ellers updates
     	Integer oid = entity.getOID();
     	ResultSet result = null;
@@ -143,7 +143,7 @@ public class FDBBroker
     	return true;
     }
     
-    public Object get(int OID){
+    public IAEntity getEntity(int OID){
     	
     	return null;
     	
