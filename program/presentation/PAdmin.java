@@ -898,7 +898,6 @@ public class PAdmin implements Observer
         private void refreshItems() {
         	
         	ArrayList<String> currentItems = order;
-        	System.out.println("Hej " +order.size());
             int gridSize = 0;            
             if(currentItems.size() < 9){gridSize = 9;}
             else{gridSize = currentItems.size();}

@@ -174,7 +174,7 @@ public class EFacade
 			EOrder tempOrder = new EOrder(tempPacketInfo[1], tempPacketInfo[3]);
 			for (int k = 4; k < tempPacketInfo.length; k = k + 2) {
 				int currentNumberOfItems = Integer
-						.parseInt(tempPacketInfo[k + 1]);
+						.parseInt(tempPacketInfo[k + 1]);				
 				for (int j = 0; j < currentNumberOfItems; j++) {
 					tempOrder.add(stock.remove(tempPacketInfo[k]));
 				}

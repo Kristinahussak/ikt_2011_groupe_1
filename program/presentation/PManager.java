@@ -159,11 +159,11 @@ public class PManager
         private BufferedImage image;
         private  ArrayList<ArrayList<String>> currentOrders;
         JPanel ordersPanel;
-        JButton searchButton, refreshButton;
+        JButton storeButton, refreshButton;
         JComboBox dropdown;
         
-        private ImageIcon searchButtonImg = new ImageIcon("images/viewMenu/searchButton.png");
-        private ImageIcon searchButtonDownImg = new ImageIcon("images/viewMenu/searchButtonDown.png");
+        private ImageIcon storeButtonImg = new ImageIcon("images/viewMenu/storeButton.png");
+        private ImageIcon storeButtonDownImg = new ImageIcon("images/viewMenu/storeButtonDown.png");
         private ImageIcon refreshButtonImg = new ImageIcon("images/viewMenu/refreshButton.png");
         private ImageIcon refreshButtonDownImg = new ImageIcon("images/viewMenu/refreshButtonDown.png");      
         
@@ -215,19 +215,19 @@ public class PManager
             });
             this.add(refreshButton);
             
-            searchButton = new JButton();
-            searchButton.setBounds(7,45,70,26);
-            searchButton.setBorder(null);
-            searchButton.setIcon(searchButtonImg);
-            searchButton.setPressedIcon(searchButtonDownImg);
-            searchButton.addActionListener(new ActionListener() {
+            storeButton = new JButton();
+            storeButton.setBounds(7,45,70,26);
+            storeButton.setBorder(null);
+            storeButton.setIcon(storeButtonImg);
+            storeButton.setPressedIcon(storeButtonDownImg);
+            storeButton.addActionListener(new ActionListener() {
 
                 @Override
                 public void actionPerformed(ActionEvent e) {
                     
                 }
             });
-            this.add(searchButton);
+            this.add(storeButton);
             
             String[] filter = { "---  filter  ---", "Open orders", "Closed orders"};
             
