@@ -113,8 +113,9 @@ public class EComponent implements IAComponent
 	}
 
 	@Override
-	public boolean update() {		
-		return false;
-	}
+	public boolean update()
+    {
+		return broker.putEntity(this);    	
+    }
 
 }

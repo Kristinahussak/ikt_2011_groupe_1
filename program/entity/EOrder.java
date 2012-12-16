@@ -14,12 +14,10 @@ import java.util.TreeSet;
  */
 
 public class EOrder extends EComposite
-{    
-    private ArrayList<IAComponent> items = new ArrayList<IAComponent>();  
+{       
     private String storeInfo;
     private String shippingDate = "Not shipped yet";
-    private String receivedDate;  
-    
+    private String receivedDate; 
 
     public EOrder(String storeInfo, String shippingDate) {
     	this.setState(IAComponent.ORDER_OPEN);
@@ -47,20 +45,8 @@ public class EOrder extends EComposite
     	info.add(this.getOID()+";"+this.storeInfo+";"+this.receivedDate+";"+this.shippingDate+";"+stringState);    	
     	for (int i = 0; i < this.getItems().size(); i++) 
     	{
-    		info.add(items.get(i).entityToString().get(0));    		    					
+    		info.add(this.getItems().get(i).entityToString().get(0));    		    					
 		}
 		return info;
 	}
-    
-    @Override
-	public ArrayList<IAComponent> getItems() {
-		return this.items;
-	}
-    
-    @Override
-    public boolean update()
-    {
-    	return broker.putEntity(this);      	
-    }
-    
 }

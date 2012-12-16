@@ -14,14 +14,14 @@ import java.util.ArrayList;
 
 public class EFacade
 {
-    private ArrayList<EOrder> orders;
+    private ArrayList<IAComponent> orders;
     private ArrayList<EItemType> itemTypes;    
     private static EFacade instance = null;
     private IAComponent stock = new EStock();
     private IAComponent component = new EComponent();
 
     public EFacade() {
-        this.orders = new ArrayList<EOrder>();  
+        this.orders = new ArrayList<IAComponent>();  
         this.itemTypes = new ArrayList<EItemType>();  
         
         EItemType itemtype1 = new EItemType("HAGALUND Sovesofa 2 personer", "123456789999",2799);
@@ -31,24 +31,24 @@ public class EFacade
         itemTypes.add(itemtype2);
         itemTypes.add(itemtype3);
         
-        EOrder order1 = new EOrder("IKEA Göteborg", "2012-12-12");
-        EOrder order2 = new EOrder("IKEA Odense", "2012-12-12");
-        EOrder order3 = new EOrder("IKEA Aarhus", "2012-12-12");   
+        IAComponent order1 = new EOrder("IKEA Göteborg", "2012-12-12");
+        IAComponent order2 = new EOrder("IKEA Odense", "2012-12-12");
+        IAComponent order3 = new EOrder("IKEA Aarhus", "2012-12-12");   
         
-        EItem item1 = new EItem(1,itemTypes.get(0));
-        EItem item2 = new EItem(2,itemTypes.get(0));              
-        EItem item3 = new EItem(3,itemTypes.get(1));
-        EItem item4 = new EItem(4,itemTypes.get(1));
-        EItem item5 = new EItem(5,itemTypes.get(1));
-        EItem item6 = new EItem(6,itemTypes.get(1));   
-        EItem item7 = new EItem(7,itemTypes.get(2));
+        IAComponent item1 = new EItem(1,itemTypes.get(0));
+        IAComponent item2 = new EItem(2,itemTypes.get(0));              
+        IAComponent item3 = new EItem(3,itemTypes.get(1));
+        IAComponent item4 = new EItem(4,itemTypes.get(1));
+        IAComponent item5 = new EItem(5,itemTypes.get(1));
+        IAComponent item6 = new EItem(6,itemTypes.get(1));   
+        IAComponent item7 = new EItem(7,itemTypes.get(2));
         //item på stock
-        EItem item8 = new EItem(8,itemTypes.get(0));
-        EItem item9 = new EItem(9,itemTypes.get(0)); 
-        EItem item10 = new EItem(10,itemTypes.get(1)); 
-        EItem item11 = new EItem(11,itemTypes.get(1)); 
-        EItem item12 = new EItem(12,itemTypes.get(1));
-        EItem item13 = new EItem(13,itemTypes.get(2));
+        IAComponent item8 = new EItem(8,itemTypes.get(0));
+        IAComponent item9 = new EItem(9,itemTypes.get(0)); 
+        IAComponent item10 = new EItem(10,itemTypes.get(1)); 
+        IAComponent item11 = new EItem(11,itemTypes.get(1)); 
+        IAComponent item12 = new EItem(12,itemTypes.get(1));
+        IAComponent item13 = new EItem(13,itemTypes.get(2));
         
         order1.setState(IAComponent.ORDER_CLOSED);
         
@@ -80,9 +80,8 @@ public class EFacade
         order2.add(item5);
         order2.add(item3);
         order2.add(item4);
-        order2.add(item5);
+        order2.add(item5);        
         
-        
         order3.add(item6);
         order3.add(item6);
         order3.add(item6);
@@ -94,21 +93,11 @@ public class EFacade
         orders.add(order1);
         orders.add(order2);
         orders.add(order3);
-        orders.add(order1);
-        orders.add(order2);
-        orders.add(order3);
-        orders.add(order1);
-        orders.add(order2);
-        orders.add(order3);
-        orders.add(order1);
-        orders.add(order2);
-        orders.add(order3);
-        orders.add(order1);
-        orders.add(order2);
-        orders.add(order3);
-        orders.add(order1);
-        orders.add(order2);
-        orders.add(order3);
+        System.out.println("order1: "+order1.getItems().size());
+        System.out.println("order2: "+order2.getItems().size());
+        System.out.println("order3: "+order3.getItems().size());
+        
+        System.out.println("stock: "+stock.getItems().size());
         
     }
     
@@ -126,7 +115,7 @@ public class EFacade
 	public ArrayList<ArrayList<String>> viewOrders(int orderState)
 	{		
 		//FIND THE SPECIFID ORDERLIST VIA param: ORDERSTATE
-		ArrayList<EOrder> orderList = new ArrayList<EOrder>();
+		ArrayList<IAComponent> orderList = new ArrayList<IAComponent>();
 		for (int x = 0; x < orders.size(); x++)
 		{
 			if (orders.get(x).getState() == orderState)
@@ -170,9 +159,8 @@ public class EFacade
 			IAComponent currentItem = itemList.get(i);			
 			if(EItem.retrieveItem(currentItem.getPositions()[0]))
 			{
-				itemList.remove(currentItem);
-				
-				//CALL AN UPDATE ORDER HERE
+				itemList.remove(currentItem);				
+				currentOrder.update();
 			}		
 		}		
     	

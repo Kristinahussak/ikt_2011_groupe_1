@@ -14,7 +14,6 @@ import java.util.TreeSet;
  */
 
 public class EComposite extends EComponent
-{
-	private ArrayList<IAComponent> items = new ArrayList<IAComponent>();  
+{	
     public EComposite() {}   
 }

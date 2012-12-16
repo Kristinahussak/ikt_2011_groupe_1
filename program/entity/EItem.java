@@ -81,12 +81,6 @@ public class EItem extends EComponent
     	
 		return info;
 	}
-    
-    @Override
-    public boolean update()
-    {
-		return broker.putEntity(this);    	
-    }
-    
+
     
 }

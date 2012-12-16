@@ -13,8 +13,7 @@ import java.util.TreeSet;
  */
 
 public class EStock extends EComposite
-{  
-	private ArrayList<IAComponent> items = new ArrayList<IAComponent>();  
+{  	
 	private TreeSet<Integer> freePositions = new TreeSet<Integer>();
 	private int stockSize = 100;
 

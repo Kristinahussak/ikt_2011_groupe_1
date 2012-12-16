@@ -75,6 +75,7 @@ public class PAdmin implements Observer
 
     public PAdmin() 
     {
+    	
         frame = new JFrame("Central Storage System - Presentation Admin");
         frame.setSize(700, 450);
         frame.setResizable(false);
@@ -119,6 +120,7 @@ public class PAdmin implements Observer
     
     private void initMenu()
     {
+    	
         menuBar = new JMenuBar();//Create the menu bar.           
         
         //_________SYSTEM_______________________
@@ -794,7 +796,7 @@ public class PAdmin implements Observer
             @Override
             public void actionPerformed(ActionEvent e)
             {
-                ViewItems items = new ViewItems(order);
+                ViewItems items = new ViewItems(order);                
                 items.setVisible(true);
             }            
         }
@@ -896,6 +898,7 @@ public class PAdmin implements Observer
         private void refreshItems() {
         	
         	ArrayList<String> currentItems = order;
+        	System.out.println("Hej " +order.size());
             int gridSize = 0;            
             if(currentItems.size() < 9){gridSize = 9;}
             else{gridSize = currentItems.size();}
