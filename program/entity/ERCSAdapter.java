@@ -32,7 +32,7 @@ public class ERCSAdapter implements IERCS
    
     public boolean retrieveItem(int stockPosition) {
     	
-    	String serialMessage = ("retrieveItem:" + new Integer(stockPosition).toString());    	
+    	String serialMessage = ("retrieveItem:" + new Integer(stockPosition).toString() + "/");    	
     	String result = sendMessage(serialMessage);
     	
         return Boolean.valueOf(result);
@@ -41,7 +41,7 @@ public class ERCSAdapter implements IERCS
     
 
     public String scanItem() {
-    	String serialMessage = "scanItem:";
+    	String serialMessage = "scanItem:/";
     	String result = sendMessage(serialMessage);
     	
         return result;
@@ -49,7 +49,7 @@ public class ERCSAdapter implements IERCS
 
 	
 	public boolean storeItem(int stockPosition) {
-		String serialMessage = ("storeItem:" + new Integer(stockPosition).toString());    	
+		String serialMessage = ("storeItem:" + new Integer(stockPosition).toString()+"/");    	
 		String result = sendMessage(serialMessage);
     	
         return Boolean.valueOf(result);
@@ -57,8 +57,26 @@ public class ERCSAdapter implements IERCS
 	
 	public String sendMessage(String serialMessage){
 		RCS = new ERCSStub();
-    	String result = RCS.message(serialMessage);
-    	return result;
+    	String response = RCS.message(serialMessage);    	
+    	String result = revieveMessage(response);    	
+    	return result;		
+	}
+	
+	public String revieveMessage(String message){
+		String returnValue = "false";
+		//remove "/" from end of message
+		String str = message.substring(0, message.length() - 1);
 		
+		
+		String[] parts;
+		parts = str.split(":");
+		String method = parts[0];
+		try{
+			returnValue = parts[1];
+		}catch (Exception e){
+			
+		}
+		
+		return returnValue;
 	}
 }

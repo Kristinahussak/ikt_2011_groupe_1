@@ -20,12 +20,12 @@ import gnu.io.SerialPort;
 
 public class ETest
 {
-   /* public ETest()
+    public ETest()
     {
-        super();
-    }*/
+        //super();
+    }
     
-    public static void main ( String[] args )
+   public static void main ( String[] args )
     {
         ERCSAdapter RCS = new ERCSAdapter();
         RCS.scanItem();
@@ -34,10 +34,23 @@ public class ETest
         
         
     }
-}
+
     
+    /*public static void main ( String[] args )
+    {
+        try
+        {
+            (new ETest()).connect("COM4");
+        }
+        catch ( Exception e )
+        {
+        	System.out.println("Kan ikke åbne porten");
+        	
+        	//System.exit(-1);
+        }
+    } */ 
     
-    /*
+
     void connect ( String portName ) throws Exception
     {
         CommPortIdentifier portIdentifier = CommPortIdentifier.getPortIdentifier(portName);
@@ -47,28 +60,28 @@ public class ETest
         }
         else
         {
-        	System.out.println("Åbner");
-            CommPort commPort = portIdentifier.open("CSS",2000);
-            
-            
-            if ( commPort instanceof SerialPort )
+            CommPort port = portIdentifier.open("CSS",2000);
+           
+            if ( port instanceof SerialPort )
             {
-                SerialPort serialPort = (SerialPort) commPort;
+                SerialPort serialPort = (SerialPort) port;
                 serialPort.setSerialPortParams(19200,SerialPort.DATABITS_8,SerialPort.STOPBITS_1,SerialPort.PARITY_NONE);
                 
                 InputStream in = serialPort.getInputStream();
                 OutputStream out =serialPort.getOutputStream();
                 
-                System.out.println("Sender Hej");
-                String message = "Hej /";
-                out.write(message.getBytes());
-               // in.close();
-                //out.close();
-                //System.exit(-1);
+                String message = "Hej dav" + "/ ";
+            	byte[] test = message.getBytes();
+        	    test[test.length-1] = 13;
+                out.write(test); 
+                
+                in.close();
+                out.close();
+                System.exit(-1);
                 
                 
-                (new Thread(new SerialReader(in))).start();
-                (new Thread(new SerialWriter(out))).start();
+                (new Thread(new Reader(in))).start();
+                (new Thread(new Writer(out))).start();
 
             }
             else
@@ -79,11 +92,11 @@ public class ETest
     }
     
 
-    public static class SerialReader implements Runnable 
+    public static class Reader implements Runnable 
     {
         InputStream in;
         
-        public SerialReader ( InputStream in )
+        public Reader ( InputStream in )
         {
             this.in = in;
         }
@@ -107,11 +120,11 @@ public class ETest
     }
 
   
-    public static class SerialWriter implements Runnable 
+    public static class Writer implements Runnable 
     {
         OutputStream out;
         
-        public SerialWriter ( OutputStream out )
+        public Writer ( OutputStream out )
         {
             this.out = out;
         }
@@ -119,12 +132,12 @@ public class ETest
         public void run ()
         {
             try
-            {                
-                int c = 0;
-                while ( ( c = System.in.read()) > -1 )
-                {
-                    this.out.write(c);
-                }                
+            {      
+                message = message + "/ ";
+            	byte[] test = message.getBytes();
+        	    test[test.length-1] = 13;
+                this.out.write();                          
+                              
             }
             catch ( IOException e )
             {
@@ -133,17 +146,5 @@ public class ETest
         }
     }
     
-    public static void main ( String[] args )
-    {
-        try
-        {
-            (new ETest()).connect("COM4");
-        }
-        catch ( Exception e )
-        {
-        	System.out.println("Kan ikke åbne porten");
-        	
-        	//System.exit(-1);
-        }
-    }
-}*/
+  
+}
