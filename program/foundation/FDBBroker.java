@@ -57,7 +57,7 @@ public class FDBBroker
     }
     
     private void executeSQLLine(String sqlString){
-       	System.out.println("SQL: "+sqlString);
+       	//System.out.println("SQL: "+sqlString);
         try {dbstat.execute(sqlString);} 
     	catch (SQLException e) {e.printStackTrace();}
     }
