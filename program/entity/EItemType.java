@@ -2,6 +2,8 @@ package entity;
 
 import javax.swing.ImageIcon;
 
+import acquaintance.IAEntity;
+
 /**
  * EItemType.java
  * @author 3. Semester Projekt, Gruppe 1
@@ -10,7 +12,7 @@ import javax.swing.ImageIcon;
  * Created on 03-12-2012
  */
 
-public class EItemType
+public class EItemType implements IAEntity
 {   
     private int OID = -1;
 	private String name;
@@ -48,6 +50,11 @@ public class EItemType
     public void setPrice(double price) {
         this.price = price;
     }
+
+	@Override
+	public void setOID(int OID) {
+		this.OID = OID;		
+	}
     
     
 }

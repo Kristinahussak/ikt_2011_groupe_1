@@ -21,7 +21,7 @@ public class EComponent implements IAComponent
     private int state = IAComponent.NOT_INITIALIZED;
     private boolean updated = false;
     private ArrayList<IAComponent> items = new ArrayList<IAComponent>();  
-    protected IAMBroker broker;
+    protected static IAMBroker broker;
     
     public boolean add(IAComponent item)
     {

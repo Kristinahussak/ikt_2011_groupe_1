@@ -44,7 +44,7 @@ public class FDBBroker
     	if(!(dbcon==null)) closeDBConnection();
     	dbInfo = info;
     	try{
-			Class.forName(info.getDriver());
+			Class.forName(info.getDriver());			
 			dbcon = DriverManager.getConnection(info.getUrl(),info.getUser(),info.getPassword());
 			dbstat = dbcon.createStatement();
 		}
@@ -66,7 +66,7 @@ public class FDBBroker
     }
     
     private void executeSQLLine(String sqlString){
-       	System.out.println("SQL: "+sqlString);
+       	//System.out.println("SQL: "+sqlString);
         try {dbstat.execute(sqlString);} 
     	catch (SQLException e) {e.printStackTrace();}
     }
@@ -188,7 +188,6 @@ public class FDBBroker
     	}	
     	return false;
     	
-    }
-    
-    
+    }    
+
 }

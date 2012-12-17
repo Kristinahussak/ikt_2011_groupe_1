@@ -19,10 +19,12 @@ public class EFacade
     private static EFacade instance = null;
     private IAComponent stock = new EStock();
     private IAComponent component = new EComponent();
+    public IAComponent item1;
 
     public EFacade() {
         this.orders = new ArrayList<IAComponent>();  
         this.itemTypes = new ArrayList<EItemType>();  
+        
         
         EItemType itemtype1 = new EItemType("HAGALUND Sovesofa 2 personer", "123456789999",2799);
         EItemType itemtype2 = new EItemType("DAGSTORP Sove 3 antracit", "223456789999",5599);
@@ -35,7 +37,7 @@ public class EFacade
         IAComponent order2 = new EOrder("IKEA Odense", "2012-12-12");
         IAComponent order3 = new EOrder("IKEA Aarhus", "2012-12-12");   
         
-        IAComponent item1 = new EItem(1,itemTypes.get(0));
+        item1 = new EItem(1,itemTypes.get(0));
         IAComponent item2 = new EItem(2,itemTypes.get(0));              
         IAComponent item3 = new EItem(3,itemTypes.get(1));
         IAComponent item4 = new EItem(4,itemTypes.get(1));
@@ -49,6 +51,8 @@ public class EFacade
         IAComponent item11 = new EItem(11,itemTypes.get(1)); 
         IAComponent item12 = new EItem(12,itemTypes.get(1));
         IAComponent item13 = new EItem(13,itemTypes.get(2));
+        
+        
         
         order1.setState(IAComponent.ORDER_CLOSED);
         
@@ -93,12 +97,6 @@ public class EFacade
         orders.add(order1);
         orders.add(order2);
         orders.add(order3);
-        System.out.println("order1: "+order1.getItems().size());
-        System.out.println("order2: "+order2.getItems().size());
-        System.out.println("order3: "+order3.getItems().size());
-        
-        System.out.println("stock: "+stock.getItems().size());
-        
     }
     
     public static EFacade getInstance()
@@ -223,5 +221,20 @@ public class EFacade
     	
     	return x;        
     }  
+    
+    public String getItemTypeCanonical(){ 
+    	EItemType temp = new EItemType("","",0);
+    	return temp.getClass().getCanonicalName();
+    }
+    
+    public String getOrderCanonical(){    	
+    	EOrder temp = new EOrder("","");
+    	return temp.getClass().getCanonicalName();
+    }
+    
+    public String getItemCanonical(){        	
+    	EItem temp = new EItem(0,new EItemType("","",0));
+    	return temp.getClass().getCanonicalName();
+    }
 
 }

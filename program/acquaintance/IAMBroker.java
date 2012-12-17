@@ -16,6 +16,7 @@ public interface IAMBroker {
 	public boolean close();
 	public boolean putEntity(IAEntity entity);
 	public boolean getEntity(IAEntity entity);
+	public IAEntityMapper getEntityMapper(); 
 	public IAMBroker getBroker();
 	
 }

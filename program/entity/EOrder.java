@@ -23,8 +23,7 @@ public class EOrder extends EComposite
     	this.setState(IAComponent.ORDER_OPEN);
     	this.receivedDate = this.getDate();  
     	this.storeInfo = storeInfo;
-    	this.shippingDate = shippingDate;
-    	//this.setOID()
+    	this.shippingDate = shippingDate;    	
     	
     } 
     
