@@ -126,30 +126,37 @@ public class EFacade
     	System.out.println("Jeg er i EFacade");
     	String scannedBarcode = EItem.scanItem();    	
     	EItemType itemType = verifyItemType(scannedBarcode);
+    	System.out.println("Itemtype er: " +itemType);
     	if(itemType == null){return false;}
     	
     	else
     	{
     		int freePosition = stock.getFirstFreePosition();    		  
     		EItem tempItem = new EItem(freePosition,itemType);
+    		System.out.println("Jeg har oprettet et item");
     		stock.add(tempItem);
+    		System.out.println("Jeg har tilføjet det til stock");
     		
-    		tempItem.update();    		
-    		EItem.storeItem(freePosition);    		
+    		tempItem.update();
+    		System.out.println("Jeg har opdateret det i db");
+    		EItem.storeItem(freePosition);  
+    		System.out.println("Jeg har kaldt storeItem");
     		return true;
     	}   
     }
     
     private EItemType verifyItemType(String barcode)
     {    
-    	System.out.println("Jeg er i EFacade.verify");
+    	System.out.println("Jeg er i EFacade.verify med stregkode: "+barcode);
     	boolean typeExists = false;
     	EItemType temp = null;
 
     	int x = 0;    	
     	while(!typeExists && x < itemTypes.size())
     	{   
+    		System.out.println("Looper igennem itemtypes: " +x);
     		if(itemTypes.get(x).getBarcode().equals(barcode)){
+    			System.out.println("Itemtype blev fundet");
     			typeExists = true;
     			temp = itemTypes.get(x);
     		}   
