@@ -43,7 +43,7 @@ public class ERCSAdapter implements IERCS
     public String scanItem() {
     	String serialMessage = "scanItem:/ ";
     	String result = sendMessage(serialMessage);
-    	System.out.println("scanItem " + result);
+    	//System.out.println("scanItem " + result);
         return result;
     }
 
@@ -58,11 +58,11 @@ public class ERCSAdapter implements IERCS
 	public String sendMessage(String serialMessage){
 		RCS = new ERCSStub();
     	String response = RCS.message(serialMessage);    	
-    	String result = revieveMessage(response);    	
+    	String result = retrieveMessage(response);    	
     	return result;		
 	}
 	
-	public String revieveMessage(String message){
+	public String retrieveMessage(String message){
 		String returnValue = "false";
 		//remove "/13" from end of message
 		String str = message.substring(0, message.length() - 3);		
@@ -74,8 +74,7 @@ public class ERCSAdapter implements IERCS
 			returnValue = parts[1];
 		}catch (Exception e){
 			
-		}
-		
+		}		
 		return returnValue;
 	}
 }

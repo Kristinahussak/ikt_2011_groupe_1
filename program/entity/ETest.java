@@ -27,9 +27,11 @@ public class ETest
     
    public static void main ( String[] args )
     {
-        ERCSAdapter RCS = new ERCSAdapter();
-        RCS.scanItem();
+        IERCS RCS = new ERCSAdapter();
+        String temp = RCS.scanItem();
+        System.out.println("scanItem " + temp);
         RCS.storeItem(1234567);
+        
         RCS.retrieveItem(1234567);        
     }
 }
