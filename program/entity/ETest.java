@@ -30,13 +30,12 @@ public class ETest
         ERCSAdapter RCS = new ERCSAdapter();
         RCS.scanItem();
         RCS.storeItem(1234567);
-        RCS.retrieveItem(1234567);  
-        
-        
+        RCS.retrieveItem(1234567);        
     }
 }
-    /*
-    public static void main ( String[] args )
+    
+
+/*    public static void main ( String[] args )
     {
         try
         {
@@ -99,13 +98,7 @@ public class ETest
                     e.printStackTrace();
                 }            
 
-                
-
-                
-                
-
-                
-                
+                              
                 //(new Thread(new Reader(in))).start();
                 //(new Thread(new Writer(out))).start();
 
@@ -161,7 +154,7 @@ public class ETest
         {
             try
             {   
-            	String message = "Hej dav" + "/ ";
+            	
             	byte[] test = message.getBytes();
         	    test[test.length-1] = 13;
                 this.out.write(test);               
@@ -172,7 +165,5 @@ public class ETest
                 e.printStackTrace();
             }            
         }
-    }
-    
-  
+    } 
 }*/

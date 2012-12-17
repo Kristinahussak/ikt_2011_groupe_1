@@ -43,7 +43,7 @@ public class ERCSAdapter implements IERCS
     public String scanItem() {
     	String serialMessage = "scanItem:/ ";
     	String result = sendMessage(serialMessage);
-    	//System.out.println("scanItem " + result);
+    	System.out.println("scanItem " + result);
         return result;
     }
 
