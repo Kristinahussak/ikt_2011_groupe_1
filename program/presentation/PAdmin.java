@@ -112,7 +112,7 @@ public class PAdmin implements Observer
             Logger.getLogger(PAdmin.class.getName()).log(Level.SEVERE, null, ex);
         }  
         
-        this.setMenuStatus(false); //disable untill user is logged in
+        //this.setMenuStatus(false); //disable untill user is logged in
         controlInterface.addSubscriber(this);
         
     }

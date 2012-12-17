@@ -24,11 +24,6 @@ public class EFacade
     public EFacade() {
         this.orders = new ArrayList<IAComponent>();  
         this.itemTypes = new ArrayList<EItemType>();  
-        
-        IAComponent order1 = new EOrder("IKEA Göteborg", "2012-12-12");
-        IAComponent order2 = new EOrder("IKEA Odense", "2012-12-12");
-        IAComponent order3 = new EOrder("IKEA Aarhus", "2012-12-12");   
-
     }
     
     public static EFacade getInstance()
@@ -126,11 +121,12 @@ public class EFacade
     	else
     	{
     		int freePosition = stock.getFirstFreePosition();
-    		EItemType itemType = itemTypes.get(itemtypeIndex);    		   		
-    		stock.add(new EItem(freePosition,itemType));
+    		EItemType itemType = itemTypes.get(itemtypeIndex);   
+    		EItem tempItem = new EItem(freePosition,itemType);
+    		stock.add(tempItem);
     		
-    		EItem.storeItem(freePosition);
-    		
+    		tempItem.update();    		
+    		EItem.storeItem(freePosition);    		
     		return true;
     	}   
     }
@@ -194,7 +190,13 @@ public class EFacade
     		}
 		}
     	
-    	orders.get(orderIndex).add(new EItem(OID, itemTypes.get(itemTypeIndex)));
+    	if(orderID == -1){
+    		stock.add(new EItem(OID, itemTypes.get(itemTypeIndex)));
+    	}
+    	else{
+    		orders.get(orderIndex).add(new EItem(OID, itemTypes.get(itemTypeIndex)));
+    	}
+    	
     }
     
     public String getItemTypeCanonical(){ 
@@ -212,10 +214,22 @@ public class EFacade
     	return temp.getClass().getCanonicalName();
     }
     
+    public IAComponent getStock()
+    {    	
+		return this.stock;
+    }
+    
+    public ArrayList<EItemType> getItemTypes()
+    {
+		return itemTypes;
+    	
+    }
+    
     public void hej()
     {
-    	System.out.println(itemTypes.size());
+    	System.out.println("Stock: " +stock.getItems().size());
     }
+    
     
 
 }

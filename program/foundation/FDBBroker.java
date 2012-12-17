@@ -93,7 +93,7 @@ public class FDBBroker
     	for(FEntityMapper m:entities){if(m.getEntity().equals(entity)){map=m;}}
     	if(!(map==null)){
     		String s = "SELECT * FROM "+map.getSchema()+"."+map.getTableName()+";";
-    		System.out.println("Debug query "+s);
+    		//System.out.println("Debug query "+s);
     		try {
 				return dbstat.executeQuery(s);
 			} catch (SQLException e) {

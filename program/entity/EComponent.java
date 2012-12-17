@@ -24,28 +24,13 @@ public class EComponent implements IAComponent
     protected static IAMBroker broker;
     
     public boolean add(IAComponent item)
-    {
-    	item.setOwnerOID(getOID());    	
-        return this.items.add(item);
+    {    	   	
+        return false;
     }
     
     public IAComponent remove(String barcode)
     {
-    	EItem currentItem = null;
-    	boolean itemFound = false;
-
-    	for(int i = 0;0<items.size() && !itemFound;i++)
-    	{
-    		
-    		currentItem = (EItem) items.get(i); 
-
-    		if(barcode.equals(currentItem.getBarcode()))
-    		{
-    			items.remove(i);
-    			itemFound = true;
-    		}
-    	}
-        return currentItem;
+    	return null;
     }
     
     public int[] getPositions()
@@ -114,7 +99,7 @@ public class EComponent implements IAComponent
 
 	@Override
 	public boolean update()
-    {
+    {		
 		return broker.putEntity(this);    	
     }
 

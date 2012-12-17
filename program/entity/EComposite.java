@@ -15,5 +15,30 @@ import java.util.TreeSet;
 
 public class EComposite extends EComponent
 {	
-    public EComposite() {}   
+    public EComposite() {}
+    
+    public boolean add(IAComponent item)
+    {
+    	item.setOwnerOID(getOID());    	
+        return getItems().add(item);
+    }
+    
+    public IAComponent remove(String barcode)
+    {
+    	EItem currentItem = null;
+    	boolean itemFound = false;
+
+    	for(int i = 0;0<getItems().size() && !itemFound;i++)
+    	{
+    		
+    		currentItem = (EItem) getItems().get(i); 
+
+    		if(barcode.equals(currentItem.getBarcode()))
+    		{
+    			getItems().remove(i);
+    			itemFound = true;
+    		}
+    	}
+        return currentItem;
+    }
 }
