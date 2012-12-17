@@ -1,5 +1,7 @@
 package mediator;
 
+import java.sql.ResultSet;
+
 import entity.EItem;
 import entity.EOrder;
 import acquaintance.*;
@@ -43,6 +45,8 @@ public class MBroker implements IAMBroker{
 	public boolean putEntity(IAEntity entity){return db.putEntity(entity);}
 	
 	public boolean getEntity(IAEntity entity){return db.getEntity(entity);}
+	
+	public ResultSet queryTable(IAEntity entity){return db.queryTable(entity);}
 
 	@Override
 	public IAMBroker getBroker() {			

@@ -16,8 +16,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
-import entity.EItem;
-import entity.EItemType;
+
 
 import acquaintance.*;
 
@@ -86,6 +85,23 @@ public class FDBBroker
     	if(map.getDebugDropTable()){executeSQLLine("DROP TABLE IF EXISTS "+map.getSchema()+"."+map.getTableName()+";");}
     	executeSQLLine("CREATE TABLE IF NOT EXISTS "+map.getSchema()+"."+map.getTableName()+map.getCreateColumns()+";");
  		return true;
+    }
+    
+    public ResultSet queryTable(IAEntity entity){
+     	
+        FEntityMapper map = null;
+    	for(FEntityMapper m:entities){if(m.getEntity().equals(entity.getClass().getCanonicalName())){map=m;}}
+    	if(!(map==null)){
+    		String s = "SELECT * FROM "+map.getSchema()+"."+map.getTableName()+";";
+    		System.out.println("Debug query "+s);
+    		try {
+				return dbstat.executeQuery(s);
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+    	}
+    	return null;
     }
     
 	private Field getField(Class c,String fname) throws NoSuchFieldException{
