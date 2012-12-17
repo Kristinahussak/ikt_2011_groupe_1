@@ -154,9 +154,47 @@ public class EFacade
     	return x;        
     }  
     
-    public void addItemType(String name, String barcode, double price)
+    public void addItemType(int OID, String name, String barcode, double price)
     {
-    	this.itemTypes.add(new EItemType(name, barcode, price));
+    	EItemType temp = new EItemType(name, barcode, price);
+    	temp.setOID(OID);
+    	this.itemTypes.add(temp);
+    	
+    }
+    
+    public void addOrder(int OID, String storeInfo, String receivalDate, String shippingDate)
+    {
+    	EOrder temp = new EOrder(storeInfo, shippingDate);
+    	temp.setOID(OID);
+    	temp.setReceivedDate(receivalDate);
+    	this.orders.add(temp);    	
+    }
+    
+    public void addItem(int OID, int stockPosition, int  itemTypeID, int orderID)
+    {
+    	boolean foundItemType = false;
+    	int itemTypeIndex = 0;
+    	for (int i = 0; i < this.itemTypes.size() && !foundItemType; i++) 
+    	{
+    		if(itemTypes.get(i).getOID() == itemTypeID) 	
+    		{
+    			foundItemType = true;
+    			itemTypeIndex = i;
+    		}
+		}
+    	
+    	boolean foundOrder = false;
+    	int orderIndex = 0;
+    	for (int i = 0; i < this.orders.size() && !foundOrder; i++) 
+    	{
+    		if(orders.get(i).getOID() == orderID) 	
+    		{
+    			foundOrder = true;
+    			orderIndex = i;
+    		}
+		}
+    	
+    	orders.get(orderIndex).add(new EItem(OID, itemTypes.get(itemTypeIndex)));
     }
     
     public String getItemTypeCanonical(){ 
@@ -174,6 +212,10 @@ public class EFacade
     	return temp.getClass().getCanonicalName();
     }
     
+    public void hej()
+    {
+    	System.out.println(itemTypes.size());
+    }
     
 
 }

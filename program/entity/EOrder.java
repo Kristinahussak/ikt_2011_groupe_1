@@ -27,6 +27,11 @@ public class EOrder extends EComposite
     	
     } 
     
+    public void setReceivedDate(String date)
+    {
+    	this.receivedDate = date;
+    }
+    
     @Override
     public int[] getPositions()
     {
