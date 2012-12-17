@@ -90,7 +90,7 @@ public class FDBBroker
     public ResultSet queryTable(String entity){
      	
         FEntityMapper map = null;
-    	for(FEntityMapper m:entities){if(m.getEntity().equals(entity.getClass().getCanonicalName())){map=m;}}
+    	for(FEntityMapper m:entities){if(m.getEntity().equals(entity)){map=m;}}
     	if(!(map==null)){
     		String s = "SELECT * FROM "+map.getSchema()+"."+map.getTableName()+";";
     		System.out.println("Debug query "+s);
