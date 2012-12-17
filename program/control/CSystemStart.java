@@ -28,12 +28,13 @@ public class CSystemStart
 		generateMappers.mapOrder();
 		
 		System.out.println(" - Loading previously exsiting entities..");	
+		broker.putEntity(new EItemType("HAGALUND Sovesofa 2 personer", "123456789999", 2799));
+		broker.putEntity(new EItemType("DAGSTORP Sove 3 antracit", "223456789999", 5599));
+		broker.putEntity(new EItemType("TIDAFORS Sovesofa mellembrun", "323456789999", 5999));
+		
 		try {
 			System.out.println("     - Loading Itemtypes from database.");
             ResultSet itemTypes = broker.queryTable(EFacade.getInstance().getItemTypeCanonical());
-            System.out.println("Hej");
-            System.out.println(itemTypes.getMetaData().getColumnCount());
-
             while (itemTypes.next()) {  
             	
             	int OID = itemTypes.getInt("OID");
@@ -70,7 +71,7 @@ public class CSystemStart
             while (items.next()) {  
             	int OID = items.getInt("OID");
             	int stockPosition = items.getInt("StockPosition");
-            	int itemTypeID = items.getInt("ItemTypeID");
+            	int itemTypeID = items.getInt("ItemType");
             	int orderID = items.getInt("OrderID");
               
                 EFacade.getInstance().addItem(OID, stockPosition, itemTypeID, orderID);
