@@ -60,10 +60,6 @@ public class EItem extends EComponent
     	System.out.println("Jeg er i EItem.storeItem");
     	boolean success = false;
     	success = rcsInterface.storeItem(stockPosition);
-    	
-    	//UPDATE IN DATABASE HERE
-    	//BY CALLING UPDATEITEM()
-    	
         return success;
     }
     
