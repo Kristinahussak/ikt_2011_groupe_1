@@ -147,7 +147,6 @@ public class FEntityMapper implements IAEntityMapper{
 	  public String getFieldFromColumn(String column){
 	    	
 	    	for(int k=0;k<relaCount;k++){
-	    		//System.out.println("debug : FEM151 : "+column+" "+relations[k].columnName);
 	    		if(relations[k].columnName.equals(column)) return relations[k].field;}
 	    	return null;
 	    }
@@ -155,7 +154,6 @@ public class FEntityMapper implements IAEntityMapper{
 	  public String getTypeFromColumn(String column){
 	    	
 	    	for(int k=0;k<relaCount;k++){
-	    		//System.out.println("debug : FEM151 : "+column+" "+relations[k].columnName);
 	    		if(relations[k].columnName.equals(column)) return relations[k].dataType;}
 	    	return null;
 	    }
