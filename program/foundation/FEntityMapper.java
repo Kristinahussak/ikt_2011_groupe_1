@@ -60,26 +60,25 @@ public class FEntityMapper implements IAEntityMapper{
 		this.tableName = "`"+tableName+"`";
 	}
 
-	@Override
+	
 	public void setEntity(String entity) {
 		this.entity = (entity);
 	}
 
-	@Override
+	
 	public void setRelation(String field, String columnName, String dataType, String attributes,int keys) {
 		if(relaCount<relaMax){
 			// ingen kontrol af de 4 felters syntaks
 			String vtype = dataType;if(vtype.contains("String")){vtype = "text";}
 			relations[relaCount] = new Relation(field,columnName,vtype,attributes);
-			
 			if((keys==IAEntityMapper.EM_PRIMARY_KEY)){
 				primaryKey = "primary key (`"+columnName+"`)";
 				pkField = field;
 				pkColumn = columnName;
 			}
+			if((keys==IAEntityMapper.EM_FOREIGN_KEY)){/* Not implemented*/}
 			relaCount++;
-				}
-		
+			}
 	}
 
 	// gettere

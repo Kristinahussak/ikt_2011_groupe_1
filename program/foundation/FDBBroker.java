@@ -1,12 +1,6 @@
 package foundation;
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.PrintWriter;
+
 import java.lang.reflect.Field;
-import java.lang.reflect.Method;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
@@ -15,8 +9,6 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
-
-
 
 import acquaintance.*;
 
@@ -31,17 +23,17 @@ import acquaintance.*;
 public class FDBBroker
 {    
 	private int nextOID = -1;
-    private ADBInfo dbInfo = null;
+    //private ADBInfo dbInfo = null;
     private Connection dbcon = null; 
     private Statement dbstat = null;
-    private ResultSet dbresult = null;
-    private String[] sqlLines = null;
+ //   private ResultSet dbresult = null;
+ //   private String[] sqlLines = null;
     private List<FEntityMapper> entities = new ArrayList<FEntityMapper>();
     private Class lastSuperClass = null;
     
     public boolean setDBConnection(ADBInfo info){
     	if(!(dbcon==null)) closeDBConnection();
-    	dbInfo = info;
+    	//dbInfo = info;
     	try{
 			Class.forName(info.getDriver());			
 			dbcon = DriverManager.getConnection(info.getUrl(),info.getUser(),info.getPassword());
@@ -73,15 +65,12 @@ public class FDBBroker
     public boolean registerMapper(IAEntityMapper mapper) throws SQLException{
     	// er egentlig private men kan kun 'ses' af MBroker der ikke bruger den.
     	// Kaldes fra FEntityMapper.registerMapper()
-    	ResultSet result = null;
     	FEntityMapper map = (FEntityMapper)mapper;
     	entities.add(map);
     	executeSQLLine("CREATE SCHEMA IF NOT EXISTS "+map.getSchema()+";");
-    	
     	executeSQLLine("CREATE TABLE IF NOT EXISTS "+map.getSchema()+".`oid` (`oid` INT ,`entity` TEXT,PRIMARY KEY (`oid`));");
     	nextOID = getLastOID(map.getSchema());
     	if(nextOID<0){nextOID=0;}
-    	//System.out.println("DEBUG First OID = "+nextOID);
     	if(map.getDebugDropTable()){executeSQLLine("DROP TABLE IF EXISTS "+map.getSchema()+"."+map.getTableName()+";");}
     	executeSQLLine("CREATE TABLE IF NOT EXISTS "+map.getSchema()+"."+map.getTableName()+map.getCreateColumns()+";");
  		return true;
@@ -96,10 +85,8 @@ public class FDBBroker
     		//System.out.println("Debug query "+s);
     		try {
 				return dbstat.executeQuery(s);
-			} catch (SQLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
 			}
+    		catch (SQLException e) {e.printStackTrace();}
     	}
     	return null;
     }
@@ -130,37 +117,24 @@ public class FDBBroker
 	
     public boolean putEntity(IAEntity entity) {
     	// er entitys OID<0 er den ikke i Databasen endnu og skal indsættes ellers updates
-    	Integer oid = entity.getOID();
-    	ResultSet result = null;
-    	String entityName = entity.getClass().getCanonicalName();
     	FEntityMapper map = null;
-    	for(FEntityMapper m:entities){if(m.getEntity().equals(entityName)){map=m;}}
+    	for(FEntityMapper m:entities){if(m.getEntity().equals(entity.getClass().getCanonicalName())){map=m;}}
     	if(!(map==null)){
-    		//System.out.println("debug - map ok - values"+map.getValues(entity));
     		try {
     			String s = null;
     			Field f = getField(entity.getClass(),map.getPKField());
     			f.setAccessible(true);
-    			//Class c = entity.getClass();while(!(c.getSuperClass()==null)){c = c.getSuperclass();}
     			if(entity.getOID()<0){ // entity er uinitialiseret!!!
-       				//System.out.println("Debug select : "+s+" , next id : "+nextOID);
        				entity.setOID(1+getLastOID(map.getSchema()));
-       			   	s="INSERT INTO "+map.getSchema()+".`oid`(`oid`,`entity`) VALUES ("+entity.getOID()+",'"+entityName+"');";
-    				executeSQLLine(s);
-    				//executeSQLLine("INSERT INTO "+map.getSchema()+".`oid` (`oid`,`entity`) VALUES ("+entity.getOID()+",'"+entityName+"');");
-  					s = "INSERT INTO "+map.getSchema()+"."+map.getTableName()+map.getColumns()+" values "+map.getValues(entity)+";";
+       				executeSQLLine("INSERT INTO "+map.getSchema()+".`oid`(`oid`,`entity`) VALUES ("+entity.getOID()+",'"+entity.getClass().getCanonicalName()+"');");
     			}
    				else{s=map.getUpdateString(entity);} 
-      			//System.out.println("SQL: exeUpd. : "+s);
-      		  	executeSQLLine(s);
+      		  	executeSQLLine("INSERT INTO "+map.getSchema()+"."+map.getTableName()+map.getColumns()+" values "+map.getValues(entity)+";");
    		}
-    		//catch (SQLException e) {e.printStackTrace();}
-			catch (SecurityException e) {e.printStackTrace();}
+    		catch (SecurityException e) {e.printStackTrace();}
 			catch (NoSuchFieldException e) {e.printStackTrace();} catch (IllegalArgumentException e) {e.printStackTrace();}
-    		
     	}
     	else return false; // pågældende entity findes ikke blandt maps!
-    	
     	return true;
     }
     
@@ -182,7 +156,7 @@ public class FDBBroker
 	   			for(int k=1;k<= meta.getColumnCount();k++){
 	    			//System.out.println("Results : "+meta.getColumnName(k)+" : "+result.getString(k)+" , "+map.getFieldFromColumn(meta.getColumnName(k)));
 	   				for(int kk=0;kk<fields.length;kk++){
-	    				String sColumn = meta.getColumnName(k);
+	    		//		String sColumn = meta.getColumnName(k);
 	    				//System.out.println("Compare "+sColumn+" = "+fields[kk].getName());
 	    				if(map.getFieldFromColumn(meta.getColumnName(k)).equals(fields[kk].getName())){
 	   						String sValue = result.getString(k);
