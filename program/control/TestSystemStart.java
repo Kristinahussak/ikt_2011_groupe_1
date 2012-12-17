@@ -8,9 +8,6 @@ public class TestSystemStart
 	{
 		CSystemStart temp = new CSystemStart();
 		temp.systemStart();
-		
-		EItem tempItem = new EItem(1, new EItemType("","",0));
-		tempItem.update();
 	}
 
 }

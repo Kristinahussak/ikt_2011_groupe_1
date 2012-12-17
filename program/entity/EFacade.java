@@ -25,78 +25,10 @@ public class EFacade
         this.orders = new ArrayList<IAComponent>();  
         this.itemTypes = new ArrayList<EItemType>();  
         
-        
-        EItemType itemtype1 = new EItemType("HAGALUND Sovesofa 2 personer", "123456789999",2799);
-        EItemType itemtype2 = new EItemType("DAGSTORP Sove 3 antracit", "223456789999",5599);
-        EItemType itemtype3 = new EItemType("TIDAFORS Sovesofa mellembrun", "323456789999",5999);        
-        itemTypes.add(itemtype1);
-        itemTypes.add(itemtype2);
-        itemTypes.add(itemtype3);
-        
         IAComponent order1 = new EOrder("IKEA Göteborg", "2012-12-12");
         IAComponent order2 = new EOrder("IKEA Odense", "2012-12-12");
         IAComponent order3 = new EOrder("IKEA Aarhus", "2012-12-12");   
-        
-        item1 = new EItem(1,itemTypes.get(0));
-        IAComponent item2 = new EItem(2,itemTypes.get(0));              
-        IAComponent item3 = new EItem(3,itemTypes.get(1));
-        IAComponent item4 = new EItem(4,itemTypes.get(1));
-        IAComponent item5 = new EItem(5,itemTypes.get(1));
-        IAComponent item6 = new EItem(6,itemTypes.get(1));   
-        IAComponent item7 = new EItem(7,itemTypes.get(2));
-        //item på stock
-        IAComponent item8 = new EItem(8,itemTypes.get(0));
-        IAComponent item9 = new EItem(9,itemTypes.get(0)); 
-        IAComponent item10 = new EItem(10,itemTypes.get(1)); 
-        IAComponent item11 = new EItem(11,itemTypes.get(1)); 
-        IAComponent item12 = new EItem(12,itemTypes.get(1));
-        IAComponent item13 = new EItem(13,itemTypes.get(2));
-        
-        
-        
-        order1.setState(IAComponent.ORDER_CLOSED);
-        
-        stock.add(item8);
-        stock.add(item9);
-        stock.add(item10);
-        stock.add(item11);
-        stock.add(item12);
-        stock.add(item13);
-        
-        order1.add(item1);
-        order1.add(item2);
-        order1.add(item7);
-        order1.add(item1);
-        order1.add(item2);
-        order1.add(item7);
-        order1.add(item1);
-        order1.add(item2);
-        order1.add(item7);
-        order1.add(item1);
-        order1.add(item2);
-        order1.add(item7);
-        
-        order2.add(item3);
-        order2.add(item4);
-        order2.add(item5);
-        order2.add(item3);
-        order2.add(item4);
-        order2.add(item5);
-        order2.add(item3);
-        order2.add(item4);
-        order2.add(item5);        
-        
-        order3.add(item6);
-        order3.add(item6);
-        order3.add(item6);
-        order3.add(item6);
-        order3.add(item6);
-        order3.add(item6);
-        order3.add(item6);
-        
-        orders.add(order1);
-        orders.add(order2);
-        orders.add(order3);
+
     }
     
     public static EFacade getInstance()
@@ -222,6 +154,11 @@ public class EFacade
     	return x;        
     }  
     
+    public void addItemType(String name, String barcode, double price)
+    {
+    	this.itemTypes.add(new EItemType(name, barcode, price));
+    }
+    
     public String getItemTypeCanonical(){ 
     	EItemType temp = new EItemType("","",0);
     	return temp.getClass().getCanonicalName();
@@ -236,5 +173,7 @@ public class EFacade
     	EItem temp = new EItem(0,new EItemType("","",0));
     	return temp.getClass().getCanonicalName();
     }
+    
+    
 
 }
