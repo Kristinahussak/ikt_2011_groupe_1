@@ -485,7 +485,7 @@ public class PAdmin implements Observer
                         setMenuStatus(true);
                         
                         JOptionPane.showMessageDialog(frame,
-                                "You know have access to the system",
+                                "You now have access to the system",
                                 "Login successful",
                                 JOptionPane.INFORMATION_MESSAGE);
                         showCard("SystemStart");
