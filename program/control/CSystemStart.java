@@ -30,7 +30,10 @@ public class CSystemStart
 		System.out.println(" - Loading previously exsiting entities..");	
 		try {
 			System.out.println("     - Loading Itemtypes from database.");
-            ResultSet itemTypes = broker.queryTable(new EItemType(null, null, 0));
+            ResultSet itemTypes = broker.queryTable(EFacade.getInstance().getItemTypeCanonical());
+            System.out.println("Hej");
+            System.out.println(itemTypes.getMetaData().getColumnCount());
+
             while (itemTypes.next()) {  
             	
             	int OID = itemTypes.getInt("OID");
@@ -47,7 +50,7 @@ public class CSystemStart
 		
 		try {
 			System.out.println("     - Loading orders from database.");
-			ResultSet orders = broker.queryTable(new EOrder(null, null));
+			ResultSet orders = broker.queryTable(EFacade.getInstance().getOrderCanonical());
             while (orders.next()) {  
             	int OID = orders.getInt("OID");
                 String store = orders.getString("Store");
@@ -63,7 +66,7 @@ public class CSystemStart
 		
 		try {
 			System.out.println("     - Loading items from database.");
-			ResultSet items = broker.queryTable(new EItem(0, null));
+			ResultSet items = broker.queryTable(EFacade.getInstance().getItemCanonical());
             while (items.next()) {  
             	int OID = items.getInt("OID");
             	int stockPosition = items.getInt("StockPosition");
