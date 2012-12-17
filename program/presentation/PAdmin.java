@@ -969,6 +969,8 @@ public class PAdmin implements Observer
     
     @Override
 	public void update(Observable arg0, Object arg1) {		
+    	
+    	System.out.println("Updating some shit");
 		int tempOrderState;
 		if(viewOrdersPanel.dropdown.getSelectedIndex() == 0)
 		{tempOrderState= 101;}
