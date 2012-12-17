@@ -125,13 +125,12 @@ public class EFacade
     {    
     	System.out.println("Jeg er i EFacade");
     	String scannedBarcode = EItem.scanItem();    	
-    	int itemtypeIndex = verifyItemType(scannedBarcode);
-    	if(itemtypeIndex < 0){return false;}
+    	EItemType itemType = verifyItemType(scannedBarcode);
+    	if(itemType == null){return false;}
     	
     	else
     	{
-    		int freePosition = stock.getFirstFreePosition();
-    		EItemType itemType = itemTypes.get(itemtypeIndex);   
+    		int freePosition = stock.getFirstFreePosition();    		  
     		EItem tempItem = new EItem(freePosition,itemType);
     		stock.add(tempItem);
     		
@@ -141,24 +140,24 @@ public class EFacade
     	}   
     }
     
-    private int verifyItemType(String barcode)
+    private EItemType verifyItemType(String barcode)
     {    
     	System.out.println("Jeg er i EFacade.verify");
     	boolean typeExists = false;
-    	
-    	int x = -1;    	
+    	EItemType temp = null;
+
+    	int x = 0;    	
     	while(!typeExists && x < itemTypes.size())
-    	{    
-    		x++;
-    		if(itemTypes.get(x).getBarcode() == barcode){
+    	{   
+    		if(itemTypes.get(x).getBarcode().equals(barcode)){
     			typeExists = true;
-    		}    	
-    		
+    			temp = itemTypes.get(x);
+    		}   
+    		x++;    		
     	}
-    	
-    	if(!typeExists){x = -1;}
-    	
-    	return x;        
+
+    	System.out.println("Jeg er færdig i EFacade.verify");
+    	return temp;        
     }  
     
     public void addItemType(int OID, String name, String barcode, double price)
