@@ -57,7 +57,7 @@ public class FDBBroker
     }
     
     private void executeSQLLine(String sqlString){
-       	//System.out.println("SQL: "+sqlString);
+       	System.out.println("SQL: "+sqlString);
         try {dbstat.execute(sqlString);} 
     	catch (SQLException e) {e.printStackTrace();}
     }
@@ -126,10 +126,13 @@ public class FDBBroker
     			f.setAccessible(true);
     			if(entity.getOID()<0){ // entity er uinitialiseret!!!
        				entity.setOID(1+getLastOID(map.getSchema()));
-       				executeSQLLine("INSERT INTO "+map.getSchema()+".`oid`(`oid`,`entity`) VALUES ("+entity.getOID()+",'"+entity.getClass().getCanonicalName()+"');");
+       				s = "INSERT INTO "+map.getSchema()+".`oid`(`oid`,`entity`) VALUES ("+entity.getOID()+",'"+entity.getClass().getCanonicalName()+"');";
+       				executeSQLLine(s);
+       	   			s = "INSERT INTO "+map.getSchema()+"."+map.getTableName()+map.getColumns()+" values "+map.getValues(entity)+";"; 
+       	         
     			}
    				else{s=map.getUpdateString(entity);} 
-      		  	executeSQLLine("INSERT INTO "+map.getSchema()+"."+map.getTableName()+map.getColumns()+" values "+map.getValues(entity)+";");
+    			executeSQLLine(s); //
    		}
     		catch (SecurityException e) {e.printStackTrace();}
 			catch (NoSuchFieldException e) {e.printStackTrace();} catch (IllegalArgumentException e) {e.printStackTrace();}
@@ -140,44 +143,39 @@ public class FDBBroker
     
   
     public boolean getEntity(IAEntity entity){
-    	ResultSet result = null;
-    	FEntityMapper map = null;
-    	for(FEntityMapper m:entities){if(m.getEntity().equals(entity.getClass().getCanonicalName())){map=m;}}
-    	if(!(map==null)){
-    		//System.out.println("debug - map ok - values"+map.getValues(entity));
-   	
-	    	try {
-	   			Class c = Class.forName(map.getEntity());
-	   			Field[] fields = c.getDeclaredFields();
-	   			//for(int k=0;k< fields.length;k++) System.out.println("Debug get: field : "+fields[k]+" ; "+fields[k].getName());
-	   			result = dbstat.executeQuery(map.getQueryString(entity));
-	   			ResultSetMetaData meta = result.getMetaData();
-	   			result.first();
-	   			for(int k=1;k<= meta.getColumnCount();k++){
-	    			//System.out.println("Results : "+meta.getColumnName(k)+" : "+result.getString(k)+" , "+map.getFieldFromColumn(meta.getColumnName(k)));
-	   				for(int kk=0;kk<fields.length;kk++){
-	    		//		String sColumn = meta.getColumnName(k);
-	    				//System.out.println("Compare "+sColumn+" = "+fields[kk].getName());
-	    				if(map.getFieldFromColumn(meta.getColumnName(k)).equals(fields[kk].getName())){
-	   						String sValue = result.getString(k);
-	   						String sType = map.getTypeFromColumn(meta.getColumnName(k));
-	   						//System.out.println("field: "+fields[kk].getName()+" , "+sValue+" ; "+sType);
-	    					fields[kk].setAccessible(true);
-	    					if(sType.equals("int")) {System.out.println("Go!");/* sValue="2000";*/fields[kk].setInt(entity,(int)Integer.parseInt(sValue));}
-	    					if(sType.equals("double")) {System.out.println("Go!"); /*sValue="2000";*/fields[kk].setDouble(entity,(double)Double.parseDouble(sValue));}
-	    					if(sType.equals("String")) { fields[kk].set(entity,sValue);}
-	    				}
-	    			}
-	    		}
-	    		return true;
-	 		} 
-	    	catch (ClassNotFoundException e1) {e1.printStackTrace();}
-	     	catch (SQLException e) {e.printStackTrace();} 
-	    	catch (IllegalArgumentException e) {e.printStackTrace();}
-	    	catch (IllegalAccessException e) {e.printStackTrace();}
-    	}	
+    	if(!(entity==null))if(entity.getOID()>-1){
+	    	ResultSet result = null;
+	    	FEntityMapper map = null;
+	    	for(FEntityMapper m:entities){if(m.getEntity().equals(entity.getClass().getCanonicalName())){map=m;}}
+	    	if(!(map==null)){
+		    	try {
+		   			Class c = Class.forName(map.getEntity());
+		   			Field[] fields = c.getDeclaredFields();
+		   			result = dbstat.executeQuery(map.getQueryString(entity));
+		   			ResultSetMetaData meta = result.getMetaData();
+		   			result.first();
+		   			for(int k=1;k<= meta.getColumnCount();k++){
+		   				for(int kk=0;kk<fields.length;kk++){
+		    				if(map.getFieldFromColumn(meta.getColumnName(k)).equals(fields[kk].getName())){
+		   						String sValue = result.getString(k);
+		   						String sType = map.getTypeFromColumn(meta.getColumnName(k));
+		    					fields[kk].setAccessible(true);
+		    					if(sType.equals("int")) {System.out.println("Go!");/* sValue="2000";*/fields[kk].setInt(entity,(int)Integer.parseInt(sValue));}
+		    					if(sType.equals("double")) {System.out.println("Go!"); /*sValue="2000";*/fields[kk].setDouble(entity,(double)Double.parseDouble(sValue));}
+		    					if(sType.equals("String")) { fields[kk].set(entity,sValue);}
+		    				}
+		    			}
+		    		}
+		    		return true;
+		 		} 
+		    	catch (ClassNotFoundException e1) {e1.printStackTrace();}
+		     	catch (SQLException e) {e.printStackTrace();} 
+		    	catch (IllegalArgumentException e) {e.printStackTrace();}
+		    	catch (IllegalAccessException e) {e.printStackTrace();}
+	    	}	
+	    	
+    	}
     	return false;
-    	
     }    
 
 }
