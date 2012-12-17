@@ -967,6 +967,18 @@ public class PAdmin implements Observer
         
     }
     
+    public static void main(String[] args)
+    {
+        PAdmin gui = new PAdmin(); 
+        
+        JFrame frame = gui.getFrame();
+        
+        frame.setVisible(true);
+        frame.setLocationRelativeTo(null);
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);                
+    }    
+    
+
     @Override
 	public void update(Observable arg0, Object arg1) {		
     	
@@ -977,18 +989,10 @@ public class PAdmin implements Observer
 		else
 		{tempOrderState = viewOrdersPanel.dropdown.getSelectedIndex()+100;}		
 		viewOrdersPanel.refreshOrders(tempOrderState);		
+		
+		showCard("SystemStart");
+		showCard("ViewOrders");
 	}    
-    
-    public static void main(String[] args)
-    {
-        PAdmin gui = new PAdmin(); 
-        
-        JFrame frame = gui.getFrame();
-        
-        frame.setVisible(true);
-        frame.setLocationRelativeTo(null);
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-    }
 
 	
 }

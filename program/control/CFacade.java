@@ -18,8 +18,6 @@ import java.util.TreeSet;
 
 public class CFacade implements ICManager, ICAdmin
 {
-	private CObservable observable = new CObservable();
-
     public CFacade() {}    
 
     @Override
@@ -31,7 +29,7 @@ public class CFacade implements ICManager, ICAdmin
     public boolean processOrder(int orderNo) {
     	
     	if(EFacade.getInstance().processOrder(orderNo)){
-    		observable.notifySubcribers();
+    		CObservable.getInstance().notifySubcribers();
     	}        
         return EFacade.getInstance().processOrder(orderNo);
     }
@@ -40,14 +38,14 @@ public class CFacade implements ICManager, ICAdmin
     public boolean storeItem() {
     	
     	if(EFacade.getInstance().storeItem()){
-    		observable.notifySubcribers();
+    		CObservable.getInstance().notifySubcribers();
     	} 
         return EFacade.getInstance().storeItem();
     }
 
 	@Override
 	public boolean addSubscriber(Observer o) {		
-		return observable.addSubscriber(o);
+		return CObservable.getInstance().addSubscriber(o);
 	}
 
 }

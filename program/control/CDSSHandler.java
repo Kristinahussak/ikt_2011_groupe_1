@@ -58,8 +58,7 @@ public class CDSSHandler extends Thread
     	this.serverRunning = state;
     }
 }
-    class DSSHandler  implements Runnable {
-    	private CObservable observable = new CObservable();
+    class DSSHandler  implements Runnable {    	
     	private Socket client;
     	private Scanner input;
     	private PrintWriter output;
@@ -91,7 +90,7 @@ public class CDSSHandler extends Thread
     	boolean result = EFacade.getInstance().createOrder(orderString);
     	if(result==true){
     		output.println("Order accepted");
-    		observable.notifySubcribers();   		  	
+    		CObservable.getInstance().notifySubcribers();   		  	
     	}
     	else{
     		output.println("Order not accepted");

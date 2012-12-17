@@ -47,10 +47,8 @@ public class CSystemStart
             	int OID = itemTypes.getInt("OID");
                 String name = itemTypes.getString("ItemtypeName");
                 String barcode = itemTypes.getString("Barcode");
-                double price = itemTypes.getDouble("Price"); 
-                
+                double price = itemTypes.getDouble("Price");                 
                 EFacade.getInstance().addItemType(OID, name, barcode, price);
-                System.out.println("        - Itemtype created");
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -66,7 +64,6 @@ public class CSystemStart
                 String shippingDate = orders.getString("ShippingDate"); 
               
                 EFacade.getInstance().addOrder(OID, store, receivalDate, shippingDate);
-                System.out.println("        - Order created");
             }
         } catch (SQLException e) {            
             e.printStackTrace();
@@ -82,7 +79,6 @@ public class CSystemStart
             	int orderID = items.getInt("OrderID");
               
                 EFacade.getInstance().addItem(OID, stockPosition, itemTypeID, orderID);
-                System.out.println("        - Item created");
             }
         } catch (SQLException e) {            
             e.printStackTrace();
@@ -101,8 +97,6 @@ public class CSystemStart
 //					       EFacade.getInstance().getItemTypes().get(j)));
 //			}			
 //		}
-		
-		EFacade.getInstance().hej();
 		
 		//Start TCP server for incoming orderhandling
 		System.out.println(" - Initializing TCP Server for orderhandling..");	
