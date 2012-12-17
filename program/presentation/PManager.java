@@ -10,9 +10,15 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Observable;
+import java.util.Observer;
+
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import javax.swing.plaf.basic.BasicScrollBarUI;
+
+import presentation.PAdmin.SystemStart;
+import presentation.PAdmin.ViewOrders;
 
 
 
@@ -25,12 +31,14 @@ import javax.swing.plaf.basic.BasicScrollBarUI;
  * Created on 05-12-2012
  */
 
-public class PManager
+public class PManager implements Observer
 {    
 	private static PManager instance;
     private JPanel content;
     GridBagConstraints c;
     CardLayout cl;
+    private ViewOrders viewOrdersPanel;
+    private SystemStart sysStartPanel;
     private ICManager controlInterface = new CFacade();
     
     private JFrame frame;
@@ -48,8 +56,12 @@ public class PManager
             content = new JPanel();
             cl = new CardLayout();
             content.setLayout(cl); 
-            content.add(new SystemStart(), "SystemStart");           
-            content.add(new ViewOrders(), "ViewOrders");
+            
+            sysStartPanel = new SystemStart();
+            viewOrdersPanel = new ViewOrders();
+            
+            content.add(sysStartPanel, "SystemStart");           
+            content.add(viewOrdersPanel, "ViewOrders");
             
             
             c = new GridBagConstraints();
@@ -96,6 +108,7 @@ public class PManager
             
         }  
 
+        controlInterface.addSubscriber(this);
     }
     
     
@@ -602,9 +615,21 @@ public class PManager
         try {
 			Thread.sleep(2000);
 			gui.showCard("ViewOrders");
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
+		} catch (InterruptedException e) {			
 			e.printStackTrace();
 		}
     }
+
+
+
+	@Override
+	public void update(Observable arg0, Object arg1) {
+		int tempOrderState;
+		if(viewOrdersPanel.dropdown.getSelectedIndex() == 0)
+		{tempOrderState= 101;}
+		else
+		{tempOrderState = viewOrdersPanel.dropdown.getSelectedIndex()+100;}		
+		viewOrdersPanel.refreshOrders(tempOrderState);	
+		
+	}
 }

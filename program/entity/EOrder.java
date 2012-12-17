@@ -24,6 +24,7 @@ public class EOrder extends EComposite
     	this.receivedDate = this.getDate();  
     	this.storeInfo = storeInfo;
     	this.shippingDate = shippingDate;
+    	//this.setOID()
     	
     } 
     

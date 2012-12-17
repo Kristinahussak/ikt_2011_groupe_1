@@ -4,6 +4,7 @@ import mediator.*;
 
 import java.util.ArrayList;
 import java.util.Observable;
+import java.util.Observer;
 import java.util.TreeMap;
 import java.util.TreeSet;
 
@@ -43,5 +44,10 @@ public class CFacade implements ICManager, ICAdmin
     	} 
         return EFacade.getInstance().storeItem();
     }
+
+	@Override
+	public boolean addSubscriber(Observer o) {		
+		return observable.addSubscriber(o);
+	}
 
 }

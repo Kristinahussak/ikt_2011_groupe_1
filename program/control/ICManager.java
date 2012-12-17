@@ -3,6 +3,7 @@ import entity.*;
 import mediator.*;
 
 import java.util.ArrayList;
+import java.util.Observer;
 import java.util.TreeSet;
 
 
@@ -18,9 +19,8 @@ public interface ICManager
 {  
     public ArrayList<ArrayList<String>> viewOrders(int orderState);   
     
-    public boolean processOrder(int orderNo);
-    
+    public boolean processOrder(int orderNo);    
     public boolean storeItem();
-    
+    public boolean addSubscriber(Observer o);   
 }
 

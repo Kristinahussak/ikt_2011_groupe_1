@@ -33,7 +33,7 @@ public class PAdmin implements Observer
     private JPanel content;
     GridBagConstraints c;
     CardLayout cl; 
-    private CFacade controlInterface = new CFacade();
+    private ICAdmin controlInterface = new CFacade();
     
     private String[] usernames = {"admin" , "admin","admin", "admin"};
     private String[] passwords = {"admin" , "admin","admin", "admin"};
@@ -74,8 +74,7 @@ public class PAdmin implements Observer
     
 
     public PAdmin() 
-    {
-    	
+    {    	
         frame = new JFrame("Central Storage System - Presentation Admin");
         frame.setSize(700, 450);
         frame.setResizable(false);
@@ -113,8 +112,8 @@ public class PAdmin implements Observer
             Logger.getLogger(PAdmin.class.getName()).log(Level.SEVERE, null, ex);
         }  
         
-        //this.setMenuStatus(false); //disable untill user is logged in
-        
+        this.setMenuStatus(false); //disable untill user is logged in
+        controlInterface.addSubscriber(this);
         
     }
     

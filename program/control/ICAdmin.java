@@ -16,6 +16,7 @@ import java.util.TreeSet;
 
 public interface ICAdmin
 {    
-     public ArrayList<ArrayList<String>> viewOrders(int orderState);         
+     public ArrayList<ArrayList<String>> viewOrders(int orderState);   
+     public boolean addSubscriber(Observer o); 
 }
 

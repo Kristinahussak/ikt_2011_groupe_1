@@ -88,7 +88,6 @@ public class CDSSHandler extends Thread
     {
     	String orderString;
     	orderString = input.nextLine();
-    	
     	boolean result = EFacade.getInstance().createOrder(orderString);
     	if(result==true){
     		output.println("Order accepted");
