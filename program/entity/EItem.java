@@ -30,6 +30,8 @@ public class EItem extends EComponent
       
     protected  void setOrderOID(int orderOID){this.orderOID = orderOID;}
     
+    public int getStockPosition(){return stockPosition;}
+    
     @Override
     public int[] getPositions()
     {
