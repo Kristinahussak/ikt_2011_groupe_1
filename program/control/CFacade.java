@@ -37,6 +37,7 @@ public class CFacade implements ICManager, ICAdmin
     @Override
     public boolean storeItem() {
     	
+    	System.out.println("Jeg er i CFacade");
     	if(EFacade.getInstance().storeItem()){
     		CObservable.getInstance().notifySubcribers();
     	} 

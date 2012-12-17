@@ -33,7 +33,8 @@ public class PAdmin implements Observer
     private JPanel content;
     GridBagConstraints c;
     CardLayout cl; 
-    private ICAdmin controlInterface = new CFacade();
+    private ICAdmin adminInterface = new CFacade();
+    private ICManager managerInterface = new CFacade();
     
     private String[] usernames = {"admin" , "admin","admin", "admin"};
     private String[] passwords = {"admin" , "admin","admin", "admin"};
@@ -113,7 +114,7 @@ public class PAdmin implements Observer
         }  
         
         //this.setMenuStatus(false); //disable untill user is logged in
-        controlInterface.addSubscriber(this);
+        adminInterface.addSubscriber(this);
         
     }
     
@@ -530,11 +531,11 @@ public class PAdmin implements Observer
         private BufferedImage image;
         private  ArrayList<ArrayList<String>> currentOrders;
         JPanel ordersPanel;
-        JButton searchButton, refreshButton;
+        JButton storeButton, refreshButton;
         JComboBox dropdown;
         
-        private ImageIcon searchButtonImg = new ImageIcon("images/viewMenu/searchButton.png");
-        private ImageIcon searchButtonDownImg = new ImageIcon("images/viewMenu/searchButtonDown.png");
+        private ImageIcon storeButtonImg = new ImageIcon("images/viewMenu/storeButton.png");
+        private ImageIcon storeButtonDownImg = new ImageIcon("images/viewMenu/storeButtonDown.png");
         private ImageIcon refreshButtonImg = new ImageIcon("images/viewMenu/refreshButton.png");
         private ImageIcon refreshButtonDownImg = new ImageIcon("images/viewMenu/refreshButtonDown.png");      
         
@@ -546,8 +547,7 @@ public class PAdmin implements Observer
         private ImageIcon processWhiteImg = new ImageIcon("images/viewMenu/processWhite.png");  
         private ImageIcon processWhiteDownImg = new ImageIcon("images/viewMenu/processWhiteDown.png");  
         private ImageIcon processGreyImg = new ImageIcon("images/viewMenu/processGrey.png");  
-        private ImageIcon processGreyDownImg = new ImageIcon("images/viewMenu/processGreyDown.png"); 
-        
+        private ImageIcon processGreyDownImg = new ImageIcon("images/viewMenu/processGreyDown.png");         
         
         public ViewOrders()
         {      
@@ -586,20 +586,19 @@ public class PAdmin implements Observer
             });
             this.add(refreshButton);
             
-            searchButton = new JButton();
-            searchButton.setBounds(7,45,70,26);
-            searchButton.setBorder(null);
-            searchButton.setIcon(searchButtonImg);
-            searchButton.setPressedIcon(searchButtonDownImg);
-            searchButton.addActionListener(new ActionListener() {
+            storeButton = new JButton();
+            storeButton.setBounds(7,45,70,26);
+            storeButton.setBorder(null);
+            storeButton.setIcon(storeButtonImg);
+            storeButton.setPressedIcon(storeButtonDownImg);
+            storeButton.addActionListener(new ActionListener() {
 
                 @Override
-                public void actionPerformed(ActionEvent e) {
-                	
-                	                    
+                public void actionPerformed(ActionEvent e) {                	
+                	managerInterface.storeItem();                	                    
                 }
             });
-            this.add(searchButton);
+            this.add(storeButton);
             
             String[] filter = { "---  filter  ---", "Open orders", "Closed orders"};
             
@@ -689,7 +688,7 @@ public class PAdmin implements Observer
 
         private void refreshOrders(int state) {
         	ordersPanel.removeAll();
-            currentOrders = controlInterface.viewOrders(state);
+            currentOrders = adminInterface.viewOrders(state);
             System.out.println("refreshing orders: " +state);
             int gridSize = 0;
             
@@ -981,8 +980,6 @@ public class PAdmin implements Observer
 
     @Override
 	public void update(Observable arg0, Object arg1) {		
-    	
-    	System.out.println("Updating some shit");
 		int tempOrderState;
 		if(viewOrdersPanel.dropdown.getSelectedIndex() == 0)
 		{tempOrderState= 101;}
@@ -993,6 +990,4 @@ public class PAdmin implements Observer
 		showCard("SystemStart");
 		showCard("ViewOrders");
 	}    
-
-	
 }

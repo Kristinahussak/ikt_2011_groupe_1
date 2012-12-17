@@ -97,13 +97,22 @@ public class EFacade
 		tempPacketInfo = packetInfo.split(";");
 		if (tempPacketInfo[0].equals("01")) {
 			EOrder tempOrder = new EOrder(tempPacketInfo[1], tempPacketInfo[3]);
+			tempOrder.update();
 			for (int k = 4; k < tempPacketInfo.length; k = k + 2) {
 				int currentNumberOfItems = Integer
 						.parseInt(tempPacketInfo[k + 1]);				
 				for (int j = 0; j < currentNumberOfItems; j++) {
-					tempOrder.add(stock.remove(tempPacketInfo[k]));
+					try{
+						EItem temp = (EItem) stock.remove(tempPacketInfo[k]);		
+						tempOrder.add(temp);	
+						temp.update();
+					}
+					catch(IndexOutOfBoundsException e)
+					{
+						System.out.println("An item was out of stock: " +tempPacketInfo[k]);
+					}					
 				}
-			}
+			}			
 			orders.add(tempOrder);
 			return true;
 		} else {
@@ -114,6 +123,7 @@ public class EFacade
 
     public boolean storeItem()
     {    
+    	System.out.println("Jeg er i EFacade");
     	String scannedBarcode = EItem.scanItem();    	
     	int itemtypeIndex = verifyItemType(scannedBarcode);
     	if(itemtypeIndex < 0){return false;}
@@ -133,6 +143,7 @@ public class EFacade
     
     private int verifyItemType(String barcode)
     {    
+    	System.out.println("Jeg er i EFacade.verify");
     	boolean typeExists = false;
     	
     	int x = -1;    	

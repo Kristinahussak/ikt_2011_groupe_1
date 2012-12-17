@@ -20,19 +20,14 @@ public class CObservable extends Observable
 	
 	public boolean addSubscriber(Observer o)
 	{	
-		System.out.println("Adding obersver: " +o.getClass());
 		this.addObserver(o);
-		System.out.println(this.countObservers());
-
 		return true;
 	}
 	
 	public void notifySubcribers()
 	{			
-		System.out.println(this.countObservers());		
 		setChanged();
 		notifyObservers();		
-		System.out.println("Notifying subscribers");
 	}
 	
 }

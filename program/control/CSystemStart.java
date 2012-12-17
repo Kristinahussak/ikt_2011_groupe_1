@@ -35,8 +35,7 @@ public class CSystemStart
 		System.out.println(" - Loading previously exsiting entities..");	
 //		broker.putEntity(new EItemType("HAGALUND Sovesofa 2 personer", "123456789999", 2799));
 //		broker.putEntity(new EItemType("DAGSTORP Sove 3 antracit", "223456789999", 5599));
-//		broker.putEntity(new EItemType("TIDAFORS Sovesofa mellembrun", "323456789999", 5999));
-		
+//		broker.putEntity(new EItemType("TIDAFORS Sovesofa mellembrun", "323456789999", 5999));		
 		
 		
 		try {
@@ -69,6 +68,15 @@ public class CSystemStart
             e.printStackTrace();
         }
 		
+//		for (int i = 0; i < 500; i++)
+//		{
+//			for (int j = 0; j < EFacade.getInstance().getItemTypes().size(); j++) 
+//			{
+//				broker.putEntity(new EItem(EFacade.getInstance().getStock().getFirstFreePosition(),
+//					       EFacade.getInstance().getItemTypes().get(j)));
+//			}			
+//		}
+		
 		try {
 			System.out.println("     - Loading items from database.");
 			ResultSet items = broker.queryTable(EFacade.getInstance().getItemCanonical());
@@ -85,23 +93,14 @@ public class CSystemStart
         }
 		
 		
-//		ResultSet orders = broker.queryTable(new EOrder(null, null));
-//		ResultSet items = broker.queryTable(new EItem(0, null));
 		
-		
-//		for (int i = 0; i < 30; i++)
-//		{
-//			for (int j = 0; j < EFacade.getInstance().getItemTypes().size(); j++) 
-//			{
-//				broker.putEntity(new EItem(EFacade.getInstance().getStock().getFirstFreePosition(),
-//					       EFacade.getInstance().getItemTypes().get(j)));
-//			}			
-//		}
 		
 		//Start TCP server for incoming orderhandling
 		System.out.println(" - Initializing TCP Server for orderhandling..");	
 		CDSSHandler orderHandler = new CDSSHandler();		
 		orderHandler.start();
+		
+		CObservable.getInstance().notifySubcribers();
 		
 	}
 }

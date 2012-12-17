@@ -15,7 +15,7 @@ import java.util.TreeSet;
 public class EStock extends EComposite
 {  	
 	private TreeSet<Integer> freePositions = new TreeSet<Integer>();
-	private int stockSize = 100;
+	private int stockSize = 10000;
 
     public EStock()
     {

@@ -51,11 +51,13 @@ public class EItem extends EComponent
     
     public static String scanItem()
     {  
+    	System.out.println("Jeg er i EItem.scanItem");
         return rcsInterface.scanItem();
     }
     
     public static boolean storeItem(int stockPosition)
     {  
+    	System.out.println("Jeg er i EItem.storeItem");
     	boolean success = false;
     	success = rcsInterface.storeItem(stockPosition);
     	
@@ -63,6 +65,11 @@ public class EItem extends EComponent
     	//BY CALLING UPDATEITEM()
     	
         return success;
+    }
+    
+    public void setOrderID(int orderID)
+    {    	
+    	this.orderOID = orderID;
     }
     
     @Override
