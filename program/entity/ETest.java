@@ -34,9 +34,9 @@ public class ETest
         
         
     }
-
-    
-    /*public static void main ( String[] args )
+}
+    /*
+    public static void main ( String[] args )
     {
         try
         {
@@ -48,7 +48,7 @@ public class ETest
         	
         	//System.exit(-1);
         }
-    } */ 
+    }  
     
 
     void connect ( String portName ) throws Exception
@@ -70,25 +70,53 @@ public class ETest
                 InputStream in = serialPort.getInputStream();
                 OutputStream out =serialPort.getOutputStream();
                 
-                String message = "Hej dav" + "/ ";
+
+            	String message = "storeItem:12345678" + "/ ";
             	byte[] test = message.getBytes();
         	    test[test.length-1] = 13;
-                out.write(test); 
+                out.write(test);
                 
-                in.close();
-                out.close();
-                System.exit(-1);
+                Thread.sleep(10000);
+                
+                byte[] buffer = new byte[1024];
+                int len = -1;
+                
+                                
+                try
+                {
+                	//in.read(buffer);
+                	while ( ( len = in.read(buffer)) > -1 )
+                    {            
+                    System.out.print(new String(buffer,0,len));
+                    len = -1;
+                    in.close();
+                    out.close();
+                    System.exit(-1);
+                    }
+                }
+                catch ( IOException e )
+                {
+                    e.printStackTrace();
+                }            
+
+                
+
                 
                 
-                (new Thread(new Reader(in))).start();
-                (new Thread(new Writer(out))).start();
+
+                
+                
+                //(new Thread(new Reader(in))).start();
+                //(new Thread(new Writer(out))).start();
 
             }
             else
             {
                 System.out.println("Error: Only serial ports are handled by this example.");
             }
-        }     
+        }   
+        
+        
     }
     
 
@@ -132,11 +160,11 @@ public class ETest
         public void run ()
         {
             try
-            {      
-                message = message + "/ ";
+            {   
+            	String message = "Hej dav" + "/ ";
             	byte[] test = message.getBytes();
         	    test[test.length-1] = 13;
-                this.out.write();                          
+                this.out.write(test);               
                               
             }
             catch ( IOException e )
@@ -147,4 +175,4 @@ public class ETest
     }
     
   
-}
+}*/
