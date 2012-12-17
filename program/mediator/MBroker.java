@@ -46,7 +46,7 @@ public class MBroker implements IAMBroker{
 	
 	public boolean getEntity(IAEntity entity){return db.getEntity(entity);}
 	
-	public ResultSet queryTable(IAEntity entity){return db.queryTable(entity);}
+	public ResultSet queryTable(String entity){return db.queryTable(entity);}
 
 	@Override
 	public IAMBroker getBroker() {			

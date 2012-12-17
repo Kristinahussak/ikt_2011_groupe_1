@@ -87,7 +87,7 @@ public class FDBBroker
  		return true;
     }
     
-    public ResultSet queryTable(IAEntity entity){
+    public ResultSet queryTable(String entity){
      	
         FEntityMapper map = null;
     	for(FEntityMapper m:entities){if(m.getEntity().equals(entity.getClass().getCanonicalName())){map=m;}}
