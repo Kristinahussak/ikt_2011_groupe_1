@@ -25,14 +25,14 @@ package entity;
 public class ERCSAdapter implements IERCS 
 {
 
-	ERCSStub RCS;
+	ERCSStub testStub;
 
     public ERCSAdapter() {}    
 
    
     public boolean retrieveItem(int stockPosition) {
     	
-    	String serialMessage = ("retrieveItem:" + new Integer(stockPosition).toString() + "/ ");    	
+    	String serialMessage = ("retrieveItem:" + new Integer(stockPosition).toString() + "/13");    	
     	String result = sendMessage(serialMessage);
     	//System.out.println("retrieveItem " + result);
     	return Boolean.valueOf(result);
@@ -41,7 +41,7 @@ public class ERCSAdapter implements IERCS
     
 
     public String scanItem() {
-    	String serialMessage = "scanItem:/ ";
+    	String serialMessage = "scanItem:/13";
     	String result = sendMessage(serialMessage);
     	//System.out.println("scanItem " + result);
         return result;
@@ -49,7 +49,7 @@ public class ERCSAdapter implements IERCS
 
 	
 	public boolean storeItem(int stockPosition) {
-		String serialMessage = ("storeItem:" + new Integer(stockPosition).toString()+"/ ");    	
+		String serialMessage = ("storeItem:" + new Integer(stockPosition).toString()+"/13");    	
 		String result = sendMessage(serialMessage);
 		
 		//System.out.println("storeItem " + result);    	
@@ -57,16 +57,16 @@ public class ERCSAdapter implements IERCS
 	}
 	
 	public String sendMessage(String serialMessage){
-		RCS = new ERCSStub();
-    	String response = RCS.message(serialMessage);    	
+		testStub = new ERCSStub();
+    	String response = testStub.message(serialMessage);    	
     	System.out.println("response " + response);
     	String result = retrieveMessage(response); 
-    	System.out.println("result " + result);
+    	
     	return result;		
 	}
 	
 	public String retrieveMessage(String message){
-		String returnValue = "false";
+		//String returnValue = "false";
 		//remove "/13" from end of message
 		String str = message.substring(0, message.length());		
 		
