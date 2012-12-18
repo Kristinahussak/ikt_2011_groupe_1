@@ -36,6 +36,11 @@ public class EStock extends EComposite
     	return freePositions.pollFirst();
     }
     
+    public void removeStockPosition()
+    {
+    	freePositions.remove(freePositions.)
+    }
+    
     @Override
 	public ArrayList<String> entityToString() {
 		ArrayList<String> info = new ArrayList<String>();
