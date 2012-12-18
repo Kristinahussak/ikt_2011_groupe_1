@@ -5,10 +5,13 @@ import java.util.Random;
 
 public class ERCSStub {
 
-	//message format retrieveItem:stockPosition
+	//message format retrieveItem:stockPosition/13
     public String message(String message) {
     	String result = "true";
     	String parametre = "";
+
+    	//removing "/13" from massage
+    	String msg = message.substring(0, message.length() - 3);
 
     	String[] parts;
 		parts = message.split(":");
@@ -30,14 +33,14 @@ public class ERCSStub {
 
     }
     public String retrieveItem(String message) {
-    	String result = "true";
-    	System.out.println("retrieveItem " + message);
+    	String result = "retrieveItem:true/13";
+    	//System.out.println("retrieveItem " + message);
     	return result;
     }
 
     public String storeItem(String message) {
-    	String result = "true";
-    	System.out.println("storeItem " + message);
+    	String result = "storeItem:true/13";
+    	//System.out.println("storeItem " + message);
     	return result;
     }
 
@@ -49,15 +52,15 @@ public class ERCSStub {
     	itemTypes.add("223456789999");
     	itemTypes.add("323456789999");
 
-    	String barcode;
+    	String barcode = "scanItem:";
 
     	Random randomGenerator = new Random();
 
     	int number = randomGenerator.nextInt(3);
 
-     	barcode = itemTypes.get(number);
-     	System.out.println("random: " + new Integer(number).toString());
-    	System.out.println("scanItem " + barcode);
+     	barcode = barcode + itemTypes.get(number);
+     	//System.out.println("random: " + new Integer(number).toString()+"/");
+    	System.out.println("Hej dav " + barcode);
     	number = 0;
     	return barcode;
     }
