@@ -58,9 +58,9 @@ public class ERCSStub {
 
     	int number = randomGenerator.nextInt(3);
 
-     	barcode = barcode + itemTypes.get(number);
+     	barcode = barcode + itemTypes.get(number) + "/13";
      	//System.out.println("random: " + new Integer(number).toString()+"/");
-    	System.out.println("Hej dav " + barcode);
+    	
     	number = 0;
     	return barcode;
     }

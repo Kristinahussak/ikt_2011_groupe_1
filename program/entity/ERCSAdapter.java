@@ -59,14 +59,14 @@ public class ERCSAdapter implements IERCS
 	public String sendMessage(String serialMessage){
 		testStub = new ERCSStub();
     	String response = testStub.message(serialMessage);    	
-    	System.out.println("response " + response);
+    	//System.out.println("response " + response);
     	String result = retrieveMessage(response); 
     	
     	return result;		
 	}
 	
 	public String retrieveMessage(String message){
-		//String returnValue = "false";
+		String returnValue = "false";
 		//remove "/13" from end of message
 		String str = message.substring(0, message.length()-3);		
 		
