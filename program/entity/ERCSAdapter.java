@@ -68,7 +68,7 @@ public class ERCSAdapter implements IERCS
 	public String retrieveMessage(String message){
 		String returnValue = "false";
 		//remove "/13" from end of message
-		String str = message.substring(0, message.length() - 3);		
+		String str = message.substring(0, message.length());		
 		
 		String[] parts;
 		parts = str.split(":");
