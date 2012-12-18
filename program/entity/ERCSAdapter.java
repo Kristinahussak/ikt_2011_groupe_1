@@ -51,6 +51,7 @@ public class ERCSAdapter implements IERCS
 	public boolean storeItem(int stockPosition) {
 		String serialMessage = ("storeItem:" + new Integer(stockPosition).toString()+"/ ");    	
 		String result = sendMessage(serialMessage);
+		
 		//System.out.println("storeItem " + result);    	
         return Boolean.valueOf(result);
 	}
@@ -58,7 +59,9 @@ public class ERCSAdapter implements IERCS
 	public String sendMessage(String serialMessage){
 		RCS = new ERCSStub();
     	String response = RCS.message(serialMessage);    	
-    	String result = retrieveMessage(response);    	
+    	System.out.println("response " + response);
+    	String result = retrieveMessage(response); 
+    	System.out.println("result " + result);
     	return result;		
 	}
 	

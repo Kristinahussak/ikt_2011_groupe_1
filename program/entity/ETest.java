@@ -28,11 +28,15 @@ public class ETest
    public static void main ( String[] args )
     {
         IERCS RCS = new ERCSAdapter();
+       
         String temp = RCS.scanItem();
         System.out.println("scanItem " + temp);
-        RCS.storeItem(1234567);
         
-        RCS.retrieveItem(1234567);        
+        boolean temp2 = RCS.storeItem(1234567);
+        System.out.println("storeItem " + Boolean.valueOf(temp2));
+        
+        boolean temp3 = RCS.retrieveItem(1234567);    
+        System.out.println("retrieveItem " + Boolean.valueOf(temp3));
     }
 }
     
