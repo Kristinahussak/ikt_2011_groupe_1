@@ -129,11 +129,9 @@ public class FDBBroker
        				s = "INSERT INTO "+map.getSchema()+".`oid`(`oid`,`entity`) VALUES ("+entity.getOID()+",'"+entity.getClass().getCanonicalName()+"');";
        				executeSQLLine(s);
        	   			s = "INSERT INTO "+map.getSchema()+"."+map.getTableName()+map.getColumns()+" values "+map.getValues(entity)+";"; 
-       	         System.out.println("if" + s);
     			}
    				else{s=map.getUpdateString(entity);} 
     			executeSQLLine(s); //
-    			System.out.println("else" + s);
    		}
     		catch (SecurityException e) {e.printStackTrace();}
 			catch (NoSuchFieldException e) {e.printStackTrace();} catch (IllegalArgumentException e) {e.printStackTrace();}

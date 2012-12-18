@@ -24,7 +24,6 @@ public class EOrder extends EComposite
     	this.receivedDate = this.getDate();  
     	this.storeInfo = storeInfo;
     	this.shippingDate = shippingDate;    
-    	System.out.println("order have been made");
     } 
     
     public void setReceivedDate(String date)

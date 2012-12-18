@@ -689,7 +689,6 @@ public class PGeneral implements Observer
         private void refreshOrders(int state) {
         	ordersPanel.removeAll();
             currentOrders = adminInterface.viewOrders(state);
-            System.out.println("refreshing orders: " +state);
             int gridSize = 0;
             
             if(currentOrders.size() < 12){gridSize = 12;}
