@@ -36,9 +36,9 @@ public class EStock extends EComposite
     	return freePositions.pollFirst();
     }
     
-    public void removeStockPosition()
+    public void removeStockPosition(int object)
     {
-    	freePositions.remove(freePositions.)
+    	freePositions.remove(object);
     }
     
     @Override

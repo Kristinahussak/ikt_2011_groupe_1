@@ -17,7 +17,7 @@ public class EFacade
     private ArrayList<IAComponent> orders;
     private ArrayList<EItemType> itemTypes;    
     private static EFacade instance = null;
-    private IAComponent stock = new EStock();
+    private EStock stock = new EStock();
     private IAComponent component = new EComponent();
     public IAComponent item1;
 
@@ -139,6 +139,7 @@ public class EFacade
     		
     		tempItem.update();
     		System.out.println("Jeg har opdateret det i db");
+    		stock.removeStockPosition(freePosition);
     		EItem.storeItem(freePosition);  
     		System.out.println("Jeg har kaldt storeItem");
     		return true;
