@@ -27,9 +27,9 @@ import acquaintance.IAComponent;
  * Created on 05-12-2012
  */
 
-public class PAdmin implements Observer
+public class PGeneral implements Observer
 {
-    private static PAdmin instance;
+    private static PGeneral instance;
     private JPanel content;
     GridBagConstraints c;
     CardLayout cl; 
@@ -74,9 +74,9 @@ public class PAdmin implements Observer
     
     
 
-    public PAdmin() 
+    public PGeneral() 
     {    	
-        frame = new JFrame("Central Storage System - Presentation Admin");
+        frame = new JFrame("Central Storage System");
         frame.setSize(700, 450);
         frame.setResizable(false);
         
@@ -110,10 +110,10 @@ public class PAdmin implements Observer
             
  
         } catch (IOException ex) {
-            Logger.getLogger(PAdmin.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(PGeneral.class.getName()).log(Level.SEVERE, null, ex);
         }  
         
-        //this.setMenuStatus(false); //disable untill user is logged in
+        this.setMenuStatus(false); //disable untill user is logged in
         adminInterface.addSubscriber(this);
         
     }
@@ -292,9 +292,9 @@ public class PAdmin implements Observer
         cl.show(content,cardName);
     }
     
-    public static PAdmin getInstance()
+    public static PGeneral getInstance()
     {
-        if(instance == null){instance = new PAdmin();}
+        if(instance == null){instance = new PGeneral();}
         return instance;
     }
     
@@ -364,7 +364,7 @@ public class PAdmin implements Observer
             try {
                 image = ImageIO.read(new File("images/helpMenu/aboutBackground.png"));
             } catch (IOException ex) {
-                Logger.getLogger(PAdmin.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(PGeneral.class.getName()).log(Level.SEVERE, null, ex);
             }
             this.setSize(350, 180);
             this.setLocationRelativeTo(frame);
@@ -426,7 +426,7 @@ public class PAdmin implements Observer
             try {
                 image = ImageIO.read(new File("images/systemMenu/loginBackground.png"));
             } catch (IOException ex) {
-                Logger.getLogger(PAdmin.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(PGeneral.class.getName()).log(Level.SEVERE, null, ex);
             }
             
             final JTextField usernameField;    
@@ -554,7 +554,7 @@ public class PAdmin implements Observer
             try {
                 image = ImageIO.read(new File("images/viewMenu/viewOrdersBackground.png"));
             } catch (IOException ex) {
-                Logger.getLogger(PAdmin.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(PGeneral.class.getName()).log(Level.SEVERE, null, ex);
             }
             
             //headline: 218,218,218
@@ -828,7 +828,7 @@ public class PAdmin implements Observer
             try {
                 image = ImageIO.read(new File("images/viewMenu/viewItemsBackground.png"));
             } catch (IOException ex) {
-                Logger.getLogger(PAdmin.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(PGeneral.class.getName()).log(Level.SEVERE, null, ex);
             }
            
             this.setSize(550, 330);
@@ -968,7 +968,7 @@ public class PAdmin implements Observer
     
     public static void main(String[] args)
     {
-        PAdmin gui = new PAdmin(); 
+        PGeneral gui = new PGeneral(); 
         
         JFrame frame = gui.getFrame();
         

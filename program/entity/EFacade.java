@@ -96,16 +96,16 @@ public class EFacade
 		String[] tempPacketInfo;
 		tempPacketInfo = packetInfo.split(";");
 		if (tempPacketInfo[0].equals("01")) {
-			EOrder tempOrder = new EOrder(tempPacketInfo[1], tempPacketInfo[3]);
+			EOrder tempOrder = new EOrder(tempPacketInfo[1], tempPacketInfo[3]);			
 			tempOrder.update();
 			for (int k = 4; k < tempPacketInfo.length; k = k + 2) {
 				int currentNumberOfItems = Integer
 						.parseInt(tempPacketInfo[k + 1]);				
 				for (int j = 0; j < currentNumberOfItems; j++) {
 					try{
-						EItem temp = (EItem) stock.remove(tempPacketInfo[k]);		
-						tempOrder.add(temp);	
-						temp.update();
+						EItem tempItem = (EItem) stock.remove(tempPacketInfo[k]);	
+						tempOrder.add(tempItem);	
+						tempItem.update();
 					}
 					catch(IndexOutOfBoundsException e)
 					{
@@ -132,16 +132,11 @@ public class EFacade
     	else
     	{
     		int freePosition = stock.getFirstFreePosition();    		  
-    		EItem tempItem = new EItem(freePosition,itemType);
-    		System.out.println("Jeg har oprettet et item");
-    		stock.add(tempItem);
-    		System.out.println("Jeg har tilføjet det til stock");
-    		
+    		EItem tempItem = new EItem(freePosition,itemType);    		
+    		stock.add(tempItem);    
     		tempItem.update();
-    		System.out.println("Jeg har opdateret det i db");
     		stock.removeStockPosition(freePosition);
     		EItem.storeItem(freePosition);  
-    		System.out.println("Jeg har kaldt storeItem");
     		return true;
     	}   
     }
@@ -208,8 +203,12 @@ public class EFacade
     		}
 		}
     	
-    	if(orderID == -1){
-    		stock.add(new EItem(OID, itemTypes.get(itemTypeIndex)));
+    	if(orderID == -1){    		
+    		EItem tempItem = new EItem(stockPosition, itemTypes.get(itemTypeIndex));
+    		tempItem.setOID(OID);
+    		tempItem.setOrderID(orderID);
+    		stock.add(tempItem); 
+			EFacade.getInstance().getStock().removeStockPosition(stockPosition);
     	}
     	else{
     		orders.get(orderIndex).add(new EItem(OID, itemTypes.get(itemTypeIndex)));
@@ -232,7 +231,7 @@ public class EFacade
     	return temp.getClass().getCanonicalName();
     }
     
-    public IAComponent getStock()
+    public EStock getStock()
     {    	
 		return this.stock;
     }
@@ -245,7 +244,10 @@ public class EFacade
     
     public void hej()
     {
-    	System.out.println("Stock: " +stock.getItems().size());
+    	for (int i = 0; i < stock.getItems().size(); i++)
+    	{
+    		System.out.println("Systemstart OID: " +stock.getItems().get(i).getOID());
+		}
     }
     
     

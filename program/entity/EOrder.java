@@ -23,7 +23,8 @@ public class EOrder extends EComposite
     	this.setState(IAComponent.ORDER_OPEN);
     	this.receivedDate = this.getDate();  
     	this.storeInfo = storeInfo;
-    	this.shippingDate = shippingDate;        	
+    	this.shippingDate = shippingDate;    
+    	System.out.println("order have been made");
     } 
     
     public void setReceivedDate(String date)

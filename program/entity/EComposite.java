@@ -19,9 +19,10 @@ public class EComposite extends EComponent
     
     public boolean add(IAComponent item)
     {     	
-    	EItem tempItem = (EItem) item;  
+    	EItem tempItem = (EItem) item;     	
     	tempItem.setOrderID(this.getOID());   	
         return getItems().add(tempItem);
+        
     }
     
     public IAComponent remove(String barcode)
@@ -29,18 +30,19 @@ public class EComposite extends EComponent
     	EItem currentItem = null;
     	boolean itemFound = false;
 
-    	for(int i = 0;0<getItems().size() && !itemFound;i++)
+    	
+    	for(int i = 0; i  < getItems().size() && !itemFound;i++)
     	{
-    		
-    		currentItem = (EItem) getItems().get(i); 
+    		currentItem =  (EItem) getItems().get(i); 
+    		System.out.println("EComposite item: " +currentItem.getOID());
 
     		if(barcode.equals(currentItem.getBarcode()))
     		{
-    			getItems().remove(i);
+    			currentItem = (EItem) getItems().remove(i);
     			itemFound = true;
     		}
-    	}
-    	System.out.println("In remove item is: " +currentItem);
+    	}  	
+    	
         return currentItem;
     }
     

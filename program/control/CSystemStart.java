@@ -33,9 +33,9 @@ public class CSystemStart
 		generateMappers.mapOrder();
 		
 		System.out.println(" - Loading previously exsiting entities..");	
-//		broker.putEntity(new EItemType("HAGALUND Sovesofa 2 personer", "123456789999", 2799));
-//		broker.putEntity(new EItemType("DAGSTORP Sove 3 antracit", "223456789999", 5599));
-//		broker.putEntity(new EItemType("TIDAFORS Sovesofa mellembrun", "323456789999", 5999));		
+		broker.putEntity(new EItemType("HAGALUND Sovesofa 2 personer", "123456789999", 2799));
+		broker.putEntity(new EItemType("DAGSTORP Sove 3 antracit", "223456789999", 5599));
+		broker.putEntity(new EItemType("TIDAFORS Sovesofa mellembrun", "323456789999", 5999));		
 		
 		
 		try {
@@ -68,14 +68,14 @@ public class CSystemStart
             e.printStackTrace();
         }
 		
-//		for (int i = 0; i < 500; i++)
-//		{
-//			for (int j = 0; j < EFacade.getInstance().getItemTypes().size(); j++) 
-//			{
-//				broker.putEntity(new EItem(EFacade.getInstance().getStock().getFirstFreePosition(),
-//					       EFacade.getInstance().getItemTypes().get(j)));
-//			}			
-//		}
+		for (int i = 0; i < 500; i++)
+		{
+			for (int j = 0; j < EFacade.getInstance().getItemTypes().size(); j++) 
+			{
+				broker.putEntity(new EItem(EFacade.getInstance().getStock().getFirstFreePosition(),
+					       EFacade.getInstance().getItemTypes().get(j)));				
+			}			
+		}
 		
 		try {
 			System.out.println("     - Loading items from database.");
@@ -86,14 +86,13 @@ public class CSystemStart
             	int itemTypeID = items.getInt("ItemType");
             	int orderID = items.getInt("OrderID");
               
+            	
                 EFacade.getInstance().addItem(OID, stockPosition, itemTypeID, orderID);
             }
         } catch (SQLException e) {            
             e.printStackTrace();
         }
-		
-		
-		
+
 		
 		//Start TCP server for incoming orderhandling
 		System.out.println(" - Initializing TCP Server for orderhandling..");	
