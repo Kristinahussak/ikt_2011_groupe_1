@@ -24,7 +24,6 @@ package entity;
 //
 public class ERCSAdapter implements IERCS 
 {
-
 	ERCSStub testStub;
 
     public ERCSAdapter() {}    
