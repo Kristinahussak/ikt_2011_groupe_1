@@ -16,7 +16,7 @@ public class CSystemStart
 		System.out.println(" - Setting up database..");	
 		ADBInfo dbinfo = new ADBInfo();
 		dbinfo.setUser("root");
-		dbinfo.setPassword("123");		
+		dbinfo.setPassword("root");		
 		broker.setDB(dbinfo);
 		
 		
