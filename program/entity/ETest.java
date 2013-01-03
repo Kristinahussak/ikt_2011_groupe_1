@@ -24,8 +24,9 @@ public class ETest
     {
         //super();
     }
+}
 
-   public static void main ( String[] args )
+  /* public static void main ( String[] args )
     {
         IERCS RCS = new ERCSAdapter();
 
@@ -38,7 +39,7 @@ public class ETest
         boolean temp3 = RCS.retrieveItem(1234567);
         System.out.println("retrieveItem " + Boolean.valueOf(temp3));
     }
-}
+}*/
 
 
 /*    public static void main ( String[] args )
