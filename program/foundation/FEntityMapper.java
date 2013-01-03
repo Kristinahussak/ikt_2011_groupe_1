@@ -164,11 +164,16 @@ public class FEntityMapper implements IAEntityMapper{
 		try {
 			for(int k=0;k<relaCount;k++){
 				//System.out.println("Debug getUpdString Loop: "+relations[k][0]);
+				f = getField(entity.getClass(),relations[k].field);
+				f.setAccessible(true);
 				if(!(relations[k].field==pkField)){
-					f = getField(entity.getClass(),relations[k].field);
-					f.setAccessible(true);
+
 					if(relations[k].dataType=="text"){s=s+ relations[k].columnName+" = '"+f.get(entity)+"',";}
 					else{s=s+ relations[k].columnName+" = "+f.get(entity)+",";}
+				}
+				else{
+				 OID=(Integer) f.get(entity);
+				
 				}
 			}
 			s=s.substring(0,s.length()-1)+" WHERE "+pkField+" = "+OID+";";
